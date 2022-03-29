@@ -1,5 +1,6 @@
 package com.example.antip
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,9 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.AppHolder>() {
     class AppHolder(item: View) : RecyclerView.ViewHolder(item) {
         val binding = AppItemBinding.bind(item)
         fun bind(app: App) = with(binding) {
-            imageView.setImageResource(app.imageId)
+            imageView.setImageDrawable(app.image)
             scores.text = app.scores
+            packageName.text=app.packageName
 
         }
 

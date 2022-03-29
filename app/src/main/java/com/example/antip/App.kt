@@ -1,3 +1,5 @@
 package com.example.antip
 
-data class App(val imageId:Int,val scores:String)
+import android.graphics.drawable.Drawable
+
+data class App(val image:Drawable,val packageName:String,val scores:String)
