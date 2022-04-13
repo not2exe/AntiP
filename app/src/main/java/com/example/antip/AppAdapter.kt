@@ -14,7 +14,7 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.AppHolder>() {
         val binding = AppItemBinding.bind(item)
         fun bind(app: App) = with(binding) {
             imageView.setImageDrawable(app.image)
-            scores.text = app.scores
+            scores.text = app.scores.toString()
             packageName.text=app.packageName
 
         }
