@@ -18,20 +18,29 @@ import com.example.antip.db.GetUsageTime
 
 class MainFragmentViewModel(application: Application):AndroidViewModel(application) {
 
-
+    private val getUsageTime=GetUsageTime()
     @RequiresApi(Build.VERSION_CODES.Q)
-    val currentAppsLD= MutableLiveData<ArrayList<App>> (onScreenStarted())
+    val allApps:ArrayList<App> =getUsageTime.getAppsInfo(getApplication())
 
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun onScreenStarted():ArrayList<App> {
-        val getUsageTime=GetUsageTime()
-        return getUsageTime.getAppsInfo(getApplication())
+
+    val usefulApps= MutableLiveData<ArrayList<App>> (getUsefulApps())
+
+
+    private fun getUsefulApps():ArrayList<App> {
+        return allApps
+
+
+
     }
-    fun clear(){
-        currentAppsLD.value?.clear()
+
+    private fun getUselessApps():ArrayList<App>{
+        return allApps
+
 
     }
 
 
-
+}
+enum class State {
+    USEFUL,USELESS
 }
