@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="40dp">
 
-        <LinearLayout
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_view"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="20dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/app1" />
+                app:srcCompat="@drawable/app1"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
-                android:id="@+id/packageName"
+                android:id="@+id/package_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
-
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/scores"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="20dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:text="100"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                android:layout_gravity="center_vertical"
 
                 />
 
-        </LinearLayout>
+        </TableRow>
+
+
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

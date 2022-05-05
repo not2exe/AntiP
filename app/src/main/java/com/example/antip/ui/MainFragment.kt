@@ -1,5 +1,8 @@
 package com.example.antip.ui
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -46,25 +51,35 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
+        
         bindingOrNull = FragmentMainBinding.bind(view)
-        binding.button.setOnClickListener {
-            when (state){
-                State.USEFUL-> {
-                    binding.MainTable.adapter=newAdapter
-                    state=State.USELESS
-                }
-                State.USELESS->{
-                    binding.MainTable.adapter=adapter
-                    state=State.USEFUL
-                }
 
-            }
-
-
-
+        binding.buttonChangeAdapter.setOnClickListener {
+            onClickChangeButton()
         }
-
+        binding.buttonSettings.setOnClickListener {
+            onClickSettingsButton()
+        }
         initObservers()
+
+
+    }
+    
+    private fun onClickChangeButton(){
+        when (state){
+            State.USEFUL-> {
+                binding.MainTable.adapter=newAdapter
+                state=State.USELESS
+            }
+            State.USELESS->{
+                binding.MainTable.adapter=adapter
+                state=State.USEFUL
+            }
+        }
+        
+    }
+    private fun onClickSettingsButton(){
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToSettingsFragment())
 
 
     }
