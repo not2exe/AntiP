@@ -15,7 +15,7 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.AppHolder>() {
         fun bind(app: App) = with(binding) {
             imageView.setImageDrawable(app.image)
             scores.text = app.scores.toString()
-            packageName.text=app.packageName
+            name.text=app.name
 
         }
 
@@ -34,6 +34,7 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.AppHolder>() {
     override fun getItemCount(): Int {
         return appList.size
     }
+    fun getList(): ArrayList<App> = this.appList
 
     fun addApp(app: App) {
         appList.add(app)

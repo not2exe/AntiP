@@ -14,7 +14,9 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/harmful"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUseful"
@@ -27,7 +29,9 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/useful"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUseless"
@@ -40,7 +44,9 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/notstate"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvUndefined"

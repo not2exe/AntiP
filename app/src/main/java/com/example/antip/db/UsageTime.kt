@@ -5,55 +5,59 @@ import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Context.USAGE_STATS_SERVICE
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import com.example.antip.App
 import com.example.antip.R
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class GetUsageTime()  {
+class UsageTime()  {
+    private val nameOfUsefulApps = arrayOf(
+        "CoolReader", "InShot", "KineMaster", "PicsArt", "Strava",
+        "Sleep Cycle", "Daylio", "Calm", "Seven", "Brainly",
+        "English", "TED", "GitHub", "Canva", "WolframAlpha",
+        "Кинопоиск", "Webinar", "Kapersky", "Lumosicty", "AccuBatery",
+        "GetCourse", "MyBook"
+    )
+    private val nameOfHarmfulApps = arrayOf(
+        "TikTok", "Instagram", "Facebook", "Zoom", "Netflix",
+        "YouTube", "Twitter", "Pinterest", "Snapchat", "WhatsApp",
+        "Reddit", "Twitch", "VK", "Spotify", "Hearthstone", "Discord"
+    )
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     fun getAppsInfo(context: Context):ArrayList<App> {
         val usageStatsManager: UsageStatsManager =context.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager
         val lzero:Long=0
         var Apps= arrayListOf<App>()
         val cal: Calendar = Calendar.getInstance()
         cal.add(Calendar.DAY_OF_MONTH,-1)
-
-
         val queryUsageStats:List<UsageStats> = usageStatsManager.queryUsageStats(
             UsageStatsManager.INTERVAL_BEST,
             cal.timeInMillis,
             System.currentTimeMillis()
         )
-
-
-
-
         for (i in queryUsageStats.indices){
             if (queryUsageStats[i].totalTimeVisible != lzero)
             {
+                var isRepeat=false
 
                 val app = App(
                     getIconApp(context,queryUsageStats[i].packageName),
-                    queryUsageStats[i].packageName,
+                    getName(context,queryUsageStats[i].packageName),
                     ((queryUsageStats[i].totalTimeInForeground/1000)).toInt()
                 )
-
-                Apps.add(app)
-
-
-                
-
-
-
+                for (i in 0 until Apps.size){
+                    if(Apps[i].name==app.name){
+                        Apps[i].scores+=app.scores
+                        isRepeat=true
+                    }
+                }
+                if(!isRepeat)
+                    Apps.add(app)
             }
         }
         Apps.sortByDescending{ it.scores }
@@ -67,35 +71,40 @@ class GetUsageTime()  {
             return icon
         }
         catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            Log.d("NameNotFoundException","yes")
 
         }
-        return ContextCompat.getDrawable(context, R.drawable.app1)!!
+        return context.getDrawable(R.drawable.undefined)!!
 
 
     }
+    private fun getName(context: Context,packageName: String): String{
+        val Apps:List<ApplicationInfo> =context.packageManager.getInstalledApplications(0)
+        for (i in Apps.indices){
+            if (Apps[i].packageName==packageName)
+                return Apps[i].loadLabel(context.packageManager).toString()
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
-    fun getAppsInfoV2(context: Context, startTime:Long, endTime:Long):HashMap<String,AppUsageInfo> {
+        }
+        return "gTime"
+
+    }
+
+
+
+    fun getAppsInfoV2(context: Context, startTime:Long, endTime:Long):HashMap<String,ArrayList<Long>> {
         var currentEvent: UsageEvents.Event
         val allEvents: ArrayList<UsageEvents.Event> = ArrayList()
-        val map: HashMap<String, AppUsageInfo> = HashMap()
+        val map: HashMap<String, ArrayList<Long>> = HashMap()
         val mUsageStatsManager =
-            (context.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager)!!
+            (context.getSystemService(USAGE_STATS_SERVICE) as UsageStatsManager)
 
-        val usageEvents = mUsageStatsManager!!.queryEvents(startTime, endTime)
+        val usageEvents = mUsageStatsManager.queryEvents(startTime, endTime)
 
         while (usageEvents.hasNextEvent()) {
             currentEvent = UsageEvents.Event()
             usageEvents.getNextEvent(currentEvent)
             val packageName = currentEvent.packageName
             if (currentEvent.eventType == UsageEvents.Event.ACTIVITY_RESUMED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_PAUSED || currentEvent.eventType == UsageEvents.Event.ACTIVITY_STOPPED) {
-                allEvents.add(currentEvent) // an extra event is found, add to all events list.
-                // taking it into a collection to access by package name
-                if (!map.containsKey(packageName)) {
-                    map[packageName] = AppUsageInfo()
-                }
+                allEvents.add(currentEvent)
             }
         }
 
@@ -103,22 +112,23 @@ class GetUsageTime()  {
             val event0 = allEvents[i]
             val event1 = allEvents[i + 1]
 
-            //for launchCount of apps in time range
-            if (event0.packageName != event1.packageName && event1.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
-                // if true, E1 (launch event of an app) app launched
-                Objects.requireNonNull(map[event1.packageName])!!.launchCount++
-            }
-
-            //for UsageTime of apps in time range
             if (event0.eventType == UsageEvents.Event.ACTIVITY_RESUMED &&
                 (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)
                 && event0.packageName == event1.packageName
             ) {
                 val diff = event1.timeStamp - event0.timeStamp
-                Objects.requireNonNull(map[event0.packageName])!!.timeInForeground += diff
+                if(map.containsKey(event0.packageName)){
+                    map[event0.packageName]?.add(diff)
+
+                }
+                else{
+                    map[event0.packageName]= arrayListOf(diff)
+                }
+
+
             }
         }
-        // and return the map.
+
 
         return map
 
@@ -128,7 +138,3 @@ class GetUsageTime()  {
 
 }
 
-class AppUsageInfo internal constructor() {
-    var timeInForeground: Long = 0
-    var launchCount = 0
-}

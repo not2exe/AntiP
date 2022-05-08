@@ -1,7 +1,6 @@
 package com.example.antip.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,52 +10,39 @@ import com.example.antip.App
 import com.example.antip.R
 import com.example.antip.databinding.FragmentSettingsBinding
 import com.example.antip.viewmodels.CustomAdapter
-import com.example.antip.viewmodels.CustomListener
 import com.example.antip.viewmodels.MainFragmentViewModel
 
 
-class SettingsFragment : Fragment(R.layout.fragment_settings), CustomListener {
+class SettingsFragment : Fragment(R.layout.fragment_settings){
     private var bindingOrNull: FragmentSettingsBinding? = null // ? is for nullable variable type
     private val binding get() = bindingOrNull!! // !! is for turning off null safety
-    private var useful= arrayListOf<App>()
-    private var useless= arrayListOf<App>()
-    private val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
 
-    private fun initObservers() = with(binding) {
+    private var harmuflApps:ArrayList<App> = ArrayList<App>()
+    private var usefulApps:ArrayList<App> = ArrayList<App>()
+    private var otherApps:ArrayList<App> = ArrayList<App>()
 
-        viewModel.usefulApps.observe(viewLifecycleOwner) {
-            for (i in it.indices) {
-                if (i % 2 == 0)
-                    useful.add(it[i])
-                else
-                    useless.add(it[i])
-            }
-        }
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindingOrNull = FragmentSettingsBinding.bind(view)
-        initObservers()
-        binding.rvUseful.init(useful)
-        binding.rvUseless.init(useless)
-        binding.rvUndefined.init(useful)
+        binding.rvUseless.init(harmuflApps)
+        binding.rvUseful.init(usefulApps)
+        binding.rvUndefined.init(otherApps)
 
 
     }
 
-    private fun RecyclerView.init(list: List<App>) {
+    private fun RecyclerView.init(list: ArrayList<App>) {
         this.layoutManager = LinearLayoutManager(context)
-        val adapter = CustomAdapter(list, this@SettingsFragment)
+        val adapter = CustomAdapter(list, this@SettingsFragment,App(context.getDrawable(R.drawable.undefined)!!,"Empty",0))
         this.adapter = adapter
         this.setOnDragListener(adapter.dragInstance)
+
     }
 
-    override fun setEmptyList(visibility: Int, recyclerView: Int) {
-        TODO("Not yet implemented")
-    }
+
+
 
 
 }

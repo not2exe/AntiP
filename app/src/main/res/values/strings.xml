@@ -2,4 +2,7 @@
     <string name="app_name">AntiP</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="harmful">Harmful</string>
+    <string name="useful">Usefull</string>
+    <string name="notstate">Undefineds</string>
 </resources>

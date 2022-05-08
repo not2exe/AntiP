@@ -2,9 +2,13 @@ package com.example.antip.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,30 +33,48 @@ import com.example.antip.viewmodels.State
 class MainFragment : Fragment(R.layout.fragment_main) {
     private var bindingOrNull: FragmentMainBinding?  = null // ? is for nullable variable type
     private val binding get() = bindingOrNull!! // !! is for turning off null safety
-    private val adapter=AppAdapter()
-    private val newAdapter=AppAdapter()
+    private val usefulAdapter=AppAdapter()
+    private val harmfulAdapter=AppAdapter()
     private var state:State=State.USEFUL
+    private var otherApps:ArrayList<App> = ArrayList<App>()
 
-    private val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
+    var cash:SharedPreferences?=null
+
+    val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
+
 
 
     private fun initObservers()= with(binding){
-        MainTable.adapter=adapter
+        MainTable.adapter=usefulAdapter
         MainTable.layoutManager=LinearLayoutManager(context)
 
         viewModel.usefulApps.observe(viewLifecycleOwner){
             for (i in it.indices){
-                adapter.addApp(it[i])
+                it[i]?.let { it1 -> usefulAdapter.addApp(it1) }
             }
 
         }
+        viewModel.harmfulApps.observe(viewLifecycleOwner){
+            for (i in it.indices){
+                it[i]?.let { it1 -> harmfulAdapter.addApp(it1) }
+            }
+
+        }
+        viewModel.otherApps.observe(viewLifecycleOwner){
+            for (i in it.indices){
+                it[i]?.let { it1 -> otherApps.add(it1) }
+            }
+
+        }
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-        
         bindingOrNull = FragmentMainBinding.bind(view)
+        viewModel.initApps()
+        viewModel.gang()
 
         binding.buttonChangeAdapter.setOnClickListener {
             onClickChangeButton()
@@ -68,11 +90,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun onClickChangeButton(){
         when (state){
             State.USEFUL-> {
-                binding.MainTable.adapter=newAdapter
+                binding.MainTable.adapter=harmfulAdapter
                 state=State.USELESS
             }
             State.USELESS->{
-                binding.MainTable.adapter=adapter
+                binding.MainTable.adapter=usefulAdapter
                 state=State.USEFUL
             }
         }
@@ -83,6 +105,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
 
     }
+
 
 
 }
