@@ -8,13 +8,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" android:background="@color/colorAccent"
+        >
 
-        <TextView
-            android:id="@+id/textView3"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textUseful"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/harmful"
+            android:text="@string/useful"
             style="@style/TextAppearance.AppCompat.Headline"
             android:gravity="center"/>
 
@@ -25,33 +26,33 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/textView2"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textHarmful"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/useful"
+            android:text="@string/harmful"
             style="@style/TextAppearance.AppCompat.Headline"
             android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUseless"
+            android:id="@+id/rvHarmful"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/textView"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textOthers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/notstate"
+            android:text="@string/others"
             style="@style/TextAppearance.AppCompat.Headline"
             android:gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvUndefined"
+            android:id="@+id/rvOthers"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

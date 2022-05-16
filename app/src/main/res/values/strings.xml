@@ -3,6 +3,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="harmful">Harmful</string>
-    <string name="useful">Usefull</string>
-    <string name="notstate">Undefineds</string>
+    <string name="useful">Useful</string>
+    <string name="others">Others</string>
+    <string name="settings">Settings</string>
+    <string name="_0">0</string>
+    <string name="manageApps">Manage Apps</string>
+    <string name="check_stats">Check Stats</string>
+    <string name="change_mode">Change Mode</string>
 </resources>

@@ -1,111 +1,131 @@
 package com.example.antip.ui
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.PackageManager
-import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getDrawable
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.antip.App
-import com.example.antip.AppAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
+import com.example.antip.adapters.AppAdapter
 import com.example.antip.databinding.FragmentMainBinding
+import com.example.antip.model.App
 import com.example.antip.viewmodels.MainFragmentViewModel
 import com.example.antip.viewmodels.State
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
-    private var bindingOrNull: FragmentMainBinding?  = null // ? is for nullable variable type
+    private var bindingOrNull: FragmentMainBinding? = null // ? is for nullable variable type
     private val binding get() = bindingOrNull!! // !! is for turning off null safety
-    private val usefulAdapter=AppAdapter()
-    private val harmfulAdapter=AppAdapter()
-    private var state:State=State.USEFUL
-    private var otherApps:ArrayList<App> = ArrayList<App>()
-
-    var cash:SharedPreferences?=null
-
-    val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
+    private var state: State = State.USEFUL
+    private var harmfulApps: ArrayList<App> = ArrayList<App>()
+    private var usefulApps: ArrayList<App> = ArrayList<App>()
+    private var lastTimeClicked:Long=0
 
 
+    private val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
 
-    private fun initObservers()= with(binding){
-        MainTable.adapter=usefulAdapter
-        MainTable.layoutManager=LinearLayoutManager(context)
 
-        viewModel.usefulApps.observe(viewLifecycleOwner){
-            for (i in it.indices){
-                it[i]?.let { it1 -> usefulAdapter.addApp(it1) }
+    private fun initObservers() = with(binding) {
+        usefulApps.clear()
+        harmfulApps.clear()
+        viewModel.usefulApps.observe(viewLifecycleOwner) {
+            for (i in it.indices) {
+                it[i]?.let { it1 -> usefulApps.add(it1) }
             }
 
         }
-        viewModel.harmfulApps.observe(viewLifecycleOwner){
-            for (i in it.indices){
-                it[i]?.let { it1 -> harmfulAdapter.addApp(it1) }
+        viewModel.harmfulApps.observe(viewLifecycleOwner) {
+            for (i in it.indices) {
+
+                it[i]?.let { it1 -> harmfulApps.add(it1) }
             }
 
-        }
-        viewModel.otherApps.observe(viewLifecycleOwner){
-            for (i in it.indices){
-                it[i]?.let { it1 -> otherApps.add(it1) }
-            }
 
         }
+        viewModel.scoresAll.observe(viewLifecycleOwner) {
+            scores.text = it.toString()
 
+        }
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingOrNull = FragmentMainBinding.bind(view)
         viewModel.initApps()
-        viewModel.gang()
-
+        initObservers()
+        initRv()
         binding.buttonChangeAdapter.setOnClickListener {
             onClickChangeButton()
         }
         binding.buttonSettings.setOnClickListener {
             onClickSettingsButton()
         }
-        initObservers()
+        binding.refreshButton.setOnClickListener {
+            onClickRefreshButton(it)
+        }
 
 
     }
-    
-    private fun onClickChangeButton(){
-        when (state){
-            State.USEFUL-> {
-                binding.MainTable.adapter=harmfulAdapter
-                state=State.USELESS
+
+    private fun initRv() = with(binding) {
+        when (state) {
+            State.USEFUL -> {
+                MainTable.init(usefulApps)
+                buttonChangeAdapter.setText(R.string.useful)
             }
-            State.USELESS->{
-                binding.MainTable.adapter=usefulAdapter
-                state=State.USEFUL
+            State.HARMFUL -> {
+                MainTable.init(harmfulApps)
+                buttonChangeAdapter.setText(R.string.harmful)
             }
         }
+
+    }
+
+
+    private fun onClickChangeButton() = with(binding) {
+        when (state) {
+            State.USEFUL -> {
+                (MainTable.adapter as AppAdapter).updateList(harmfulApps)
+                state = State.HARMFUL
+                buttonChangeAdapter.setText(R.string.harmful)
+            }
+            State.HARMFUL -> {
+                (MainTable.adapter as AppAdapter).updateList(usefulApps)
+                state = State.USEFUL
+                buttonChangeAdapter.setText(R.string.useful)
+            }
+        }
+    }
+
+    private fun RecyclerView.init(list: ArrayList<App>) {
+        this.layoutManager = LinearLayoutManager(context)
+        val adapter = AppAdapter(list)
+        this.adapter = adapter
+    }
+
+    private fun onClickRefreshButton(view: View) {
+        if(System.currentTimeMillis()>lastTimeClicked+10000){
+            viewModel.refresh()
+            initObservers()
+            lastTimeClicked=System.currentTimeMillis()
+            
+
+        }
+        else
+            Toast.makeText(context, "Wait a little", Toast.LENGTH_SHORT).show()
         
     }
-    private fun onClickSettingsButton(){
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToSettingsFragment())
+
+    private fun onClickSettingsButton() {
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToMenuFragment())
 
 
     }
-
 
 
 }
