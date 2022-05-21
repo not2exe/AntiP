@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.example.antip.databinding.AppItemSettingsBinding
-import com.example.antip.ui.SettingsFragment
-import com.example.antip.viewmodels.AppS
+import com.example.antip.ui.AppManagerFragment
+import com.example.antip.model.AppManager
 import com.example.antip.viewmodels.DragListener
 
 
-class CustomAdapter(
-    private var list: ArrayList<AppS>,
-    private val listener: SettingsFragment,
-    private val undefined: AppS
-) : RecyclerView.Adapter<CustomAdapter.CustomViewHolder?>(), View.OnLongClickListener
+class ManagerAdapter(
+    private var list: ArrayList<AppManager>,
+    private val listener: AppManagerFragment,
+) : RecyclerView.Adapter<ManagerAdapter.CustomViewHolder?>(), View.OnLongClickListener
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -26,15 +25,15 @@ class CustomAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    fun updateList(list: ArrayList<AppS>) {
+    fun updateList(list: ArrayList<AppManager>) {
         this.list = list
         notifyDataSetChanged()
     }
 
-    fun getList(): ArrayList<AppS> = this.list
+    fun getList(): ArrayList<AppManager> = this.list
 
     val dragInstance: DragListener
-        get() = DragListener(listener, undefined)
+        get() = DragListener(listener)
 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -47,12 +46,12 @@ class CustomAdapter(
     class CustomViewHolder(item: View) :
         RecyclerView.ViewHolder(item) {
         private val binding = AppItemSettingsBinding.bind(item)
-        fun bind(app: AppS,position: Int,customAdapter: CustomAdapter,dragInstance:DragListener)
+        fun bind(app: AppManager, position: Int, managerAdapter: ManagerAdapter, dragInstance:DragListener)
          = with(binding) {
             imageViewSettings.setImageDrawable(app.image)
             nameSettings.text=app.name
             frameLayoutSettings.tag = position
-            frameLayoutSettings.setOnLongClickListener(customAdapter)
+            frameLayoutSettings.setOnLongClickListener(managerAdapter)
             frameLayoutSettings.setOnDragListener(dragInstance)
 
         }

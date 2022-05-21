@@ -3,9 +3,12 @@ package com.example.antip.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ProgressBar
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.antip.R
 import com.example.antip.databinding.FragmentMenuBinding
+import kotlinx.coroutines.launch
 
 class MenuFragment : Fragment(R.layout.fragment_menu) {
     private var bindingOrNull: FragmentMenuBinding? = null // ? is for nullable variable type
@@ -14,6 +17,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingOrNull= FragmentMenuBinding.bind(view)
+
         with(binding){
             buttonChangeMode.setOnClickListener{
 
@@ -23,6 +27,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
             }
             buttonCheckStats.setOnClickListener{
+                onStatsClick()
 
             }
         }
@@ -30,7 +35,14 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
     }
 
     private fun onManageAppsClick(){
+        lifecycleScope.launch {
+            binding.pBar.visibility=View.VISIBLE
+        }
         findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToSettingsFragment())
+
+    }
+    private fun onStatsClick(){
+        findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToStatsFragment())
     }
 
 }

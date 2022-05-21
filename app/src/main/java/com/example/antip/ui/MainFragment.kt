@@ -1,9 +1,13 @@
 package com.example.antip.ui
 
+import android.app.AppOpsManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,15 +27,49 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private var state: State = State.USEFUL
     private var harmfulApps: ArrayList<App> = ArrayList<App>()
     private var usefulApps: ArrayList<App> = ArrayList<App>()
-    private var lastTimeClicked:Long=0
+    private var lastTimeClicked: Long = 0
 
 
     private val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
 
 
-    private fun initObservers() = with(binding) {
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindingOrNull = FragmentMainBinding.bind(view)
+
+        if (!checkUsagePerm())
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToDialogUsageSettings2())
+
+        initRv()
+
+
+        viewModel.provideTimeInModel()
+        viewModel.initApps()
+        initObservers()
+
+
+
+        binding.buttonChangeAdapter.setOnClickListener {
+            onClickChangeButton()
+        }
+        binding.buttonSettings.setOnClickListener {
+            onClickSettingsButton()
+        }
+        binding.refreshButton.setOnClickListener {
+            onClickRefreshButton(it)
+        }
+
+
+    }
+
+    override fun onDestroyView() {
         usefulApps.clear()
         harmfulApps.clear()
+        super.onDestroyView()
+    }
+
+    private fun initObservers() = with(binding) {
         viewModel.usefulApps.observe(viewLifecycleOwner) {
             for (i in it.indices) {
                 it[i]?.let { it1 -> usefulApps.add(it1) }
@@ -50,26 +88,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             scores.text = it.toString()
 
         }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindingOrNull = FragmentMainBinding.bind(view)
-        viewModel.initApps()
-        initObservers()
-        initRv()
-        binding.buttonChangeAdapter.setOnClickListener {
-            onClickChangeButton()
-        }
-        binding.buttonSettings.setOnClickListener {
-            onClickSettingsButton()
-        }
-        binding.refreshButton.setOnClickListener {
-            onClickRefreshButton(it)
-        }
-
-
     }
 
     private fun initRv() = with(binding) {
@@ -109,22 +127,42 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun onClickRefreshButton(view: View) {
-        if(System.currentTimeMillis()>lastTimeClicked+10000){
+        if (System.currentTimeMillis() > lastTimeClicked + 10000) {
+            usefulApps.clear()
+            harmfulApps.clear()
             viewModel.refresh()
             initObservers()
-            lastTimeClicked=System.currentTimeMillis()
-            
+            lastTimeClicked = System.currentTimeMillis()
 
-        }
-        else
-            Toast.makeText(context, "Wait a little", Toast.LENGTH_SHORT).show()
-        
+
+        } else
+            Toast.makeText(context, R.string.wait, Toast.LENGTH_SHORT).show()
+
+
     }
 
     private fun onClickSettingsButton() {
         findNavController().navigate(MainFragmentDirections.actionMainFragmentToMenuFragment())
 
 
+    }
+
+    private fun checkUsagePerm(): Boolean {
+        return try {
+
+            val applicationInfo =
+                requireContext().packageManager.getApplicationInfo(requireContext().packageName, 0)
+            val appOpsManager =
+                requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+            val mode = appOpsManager.checkOpNoThrow(
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                applicationInfo.uid,
+                applicationInfo.packageName
+            )
+            mode == AppOpsManager.MODE_ALLOWED
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
     }
 
 

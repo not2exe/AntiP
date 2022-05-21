@@ -7,25 +7,43 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.antip.ui.SettingsFragment"
-        tools:layout="@layout/fragment_settings"
-        android:label="Manage Apps"/>
+        android:name="com.example.antip.ui.AppManagerFragment"
+        tools:layout="@layout/fragment_app_manager"
+        android:label="Manager"/>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.antip.ui.MainFragment"
         tools:layout="@layout/fragment_main"
-        android:label="gTime">
+        android:label="GTIME">
         <action
             android:id="@+id/action_mainFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_dialogUsageSettings2"
+            app:destination="@id/dialogUsageSettings" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.example.antip.ui.MenuFragment"
-        android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
+        tools:layout="@layout/fragment_menu"
+        android:label="Menu">
         <action
             android:id="@+id/action_menuFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/dialogUsageSettings"
+        android:name="com.example.antip.ui.DialogUsageSettings" >
+        <action
+            android:id="@+id/action_dialogUsageSettings_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.antip.ui.StatsFragment"
+        android:label="Stats"
+        tools:layout="@layout/fragment_stats" />
 </navigation>

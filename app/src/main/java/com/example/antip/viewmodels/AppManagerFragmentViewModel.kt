@@ -10,16 +10,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.antip.R
-import kotlin.collections.ArrayList
+import com.example.antip.model.AppManager
 
-class SettingsFragmentViewModel(application: Application) : AndroidViewModel(application) {
-    @SuppressLint("StaticFieldLeak")
-    private val context: Context = application
+class AppManagerFragmentViewModel(application: Application) : AndroidViewModel(application) {
+    private val context=getApplication<Application>()
 
-    val usefulApps = MutableLiveData<ArrayList<AppS?>>(arrayListOf(null))
-    val harmfulApps = MutableLiveData<ArrayList<AppS?>>(arrayListOf(null))
-    val otherApps = MutableLiveData<ArrayList<AppS?>>(arrayListOf(null))
 
+    val usefulApps = MutableLiveData<ArrayList<AppManager?>>(arrayListOf(null))
+    val harmfulApps = MutableLiveData<ArrayList<AppManager?>>(arrayListOf(null))
+    val otherApps = MutableLiveData<ArrayList<AppManager?>>(arrayListOf(null))
 
 
     fun initApps() {
@@ -28,18 +27,19 @@ class SettingsFragmentViewModel(application: Application) : AndroidViewModel(app
 
         val mapOfUseful = context.getSharedPreferences("nameOfUseful", 0).all.values
         val mapOfHarmful = context.getSharedPreferences("nameOfHarmful", 0).all.values
-        var appS: AppS
+        var appManager: AppManager
         for (i in list.indices) {
             if (context.packageManager.getLaunchIntentForPackage(list[i].packageName) != null
                 && (list[i].flags and ApplicationInfo.FLAG_SYSTEM) == 0
                 && (list[i].flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0
             ) {
 
-                appS = AppS(getIconApp(list[i].packageName), getName(list[i].packageName))
-                when (appS.name) {
-                    in mapOfHarmful -> harmfulApps.value?.add(appS)
-                    in mapOfUseful -> usefulApps.value?.add(appS)
-                    else -> otherApps.value?.add(appS)
+                appManager =
+                    AppManager(getIconApp(list[i].packageName), getName(list[i].packageName))
+                when (appManager.name) {
+                    in mapOfHarmful -> harmfulApps.value?.add(appManager)
+                    in mapOfUseful -> usefulApps.value?.add(appManager)
+                    else -> otherApps.value?.add(appManager)
                 }
             }
         }
@@ -65,10 +65,9 @@ class SettingsFragmentViewModel(application: Application) : AndroidViewModel(app
                 return apps[i].loadLabel(context.packageManager).toString()
 
         }
-        return "gTime"
+        return "GTIME"
     }
 
 
 }
 
-data class AppS(val image: Drawable, val name: String)

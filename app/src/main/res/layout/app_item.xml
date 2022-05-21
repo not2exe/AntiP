@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-
-        app:cardCornerRadius="40dp"
+        app:cardCornerRadius="8dp"
         >
 
 
@@ -29,7 +28,6 @@
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/undefined"
-
                  />
 
             <com.google.android.material.textview.MaterialTextView
@@ -52,7 +50,7 @@
                 android:id="@+id/scores"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="100"
+                android:text="107"
                 style="@style/Text.Item"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"

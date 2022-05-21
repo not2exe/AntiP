@@ -4,14 +4,16 @@ import android.view.DragEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
-import com.example.antip.adapters.CustomAdapter
-import com.example.antip.ui.SettingsFragment
+import com.example.antip.adapters.ManagerAdapter
+import com.example.antip.model.AppManager
+import com.example.antip.ui.AppManagerFragment
 
 class DragListener internal constructor(
-    private val listener: SettingsFragment,
-    private val undefined: AppS
+    private val listener: AppManagerFragment
 ) :
     View.OnDragListener {
+    private val undefined: AppManager =
+        AppManager(listener.requireContext().getDrawable(R.drawable.undefined)!!, "Empty")
     private var isDropped = false
     override fun onDrag(v: View, event: DragEvent): Boolean {
         when (event.action) {
@@ -24,8 +26,10 @@ class DragListener internal constructor(
                     positionTarget = v.tag as Int
                     if (viewSource != null) {
                         val source = viewSource.parent as RecyclerView
-                        val adapterSource = source.adapter as CustomAdapter?
+                        val adapterSource = source.adapter as ManagerAdapter?
                         val sourceList = adapterSource?.getList()
+                        val adapterTarget = target.adapter as ManagerAdapter?
+                        val customListTarget = adapterTarget?.getList()
 
                         if (adapterSource?.getList()?.get(0)?.name == undefined.name)
                             return false
@@ -38,7 +42,7 @@ class DragListener internal constructor(
 
 
                         val positionSource = viewSource.tag as Int
-                        val list: AppS? = adapterSource?.getList()?.get(positionSource)
+                        val list: AppManager? = adapterSource?.getList()?.get(positionSource)
 
 
                         val listSource = adapterSource?.getList()?.apply {
@@ -47,8 +51,7 @@ class DragListener internal constructor(
                         listSource?.let { adapterSource.updateList(it) }
 
 
-                        val adapterTarget = target.adapter as CustomAdapter?
-                        val customListTarget = adapterTarget?.getList()
+
                         if (positionTarget >= 0) {
                             list?.let { customListTarget?.add(positionTarget, it) }
 
@@ -68,10 +71,12 @@ class DragListener internal constructor(
                         customListTarget?.let { adapterTarget.updateList(it) }
                         adapterTarget?.notifyDataSetChanged()
 
-                        val usefulEdit=listener.context?.getSharedPreferences("nameOfUseful", 0)?.edit()
-                        val harmfulEdit=listener.context?.getSharedPreferences("nameOfHarmful", 0)?.edit()
+                        val usefulEdit =
+                            listener.context?.getSharedPreferences("nameOfUseful", 0)?.edit()
+                        val harmfulEdit =
+                            listener.context?.getSharedPreferences("nameOfHarmful", 0)?.edit()
 
-                        when((viewSource.parent as RecyclerView).id) {
+                        when ((viewSource.parent as RecyclerView).id) {
                             R.id.rvUseful -> {
                                 usefulEdit?.remove(list?.name)
                                 usefulEdit?.apply()

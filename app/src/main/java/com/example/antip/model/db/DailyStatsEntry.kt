@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "stats_table")
 data class DailyStatsEntry(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val date: String,
+    @PrimaryKey val date: String,
     val scores: Int
 )

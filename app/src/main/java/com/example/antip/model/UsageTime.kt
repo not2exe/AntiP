@@ -45,7 +45,7 @@ class UsageTime() {
                 App(
                     getIconApp(context, it),
                     getName(context, it),
-                    sumArray(mapOfTime[it]!!)
+                    listTimeToScores(mapOfTime[it]!!)
                 )
             )
         }
@@ -83,12 +83,12 @@ class UsageTime() {
                 && event0.packageName == event1.packageName
             ) {
                 val diff = event1.timeStamp - event0.timeStamp
-                if (map.containsKey(event0.packageName)) {
+                if(map.containsKey(event0.packageName))
                     map[event0.packageName]?.add(diff)
+                else
+                    map[event0.packageName]= arrayListOf(diff)
 
-                } else {
-                    map[event0.packageName] = arrayListOf(diff)
-                }
+
 
 
             }
@@ -119,7 +119,7 @@ class UsageTime() {
         return "gTime"
     }
 
-    private fun sumArray(arr: ArrayList<Long>): Int {
+    private fun listTimeToScores(arr: ArrayList<Long>): Int {
         var result: Long = 0
         arr.forEach {
             result += it
