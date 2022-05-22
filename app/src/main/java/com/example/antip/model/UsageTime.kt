@@ -14,10 +14,14 @@ import java.util.*
 
 class UsageTime() {
     private val arrayOfAll: ArrayList<App> = ArrayList<App>()
+    private var scoresAll:Int=0
 
     fun getArrayListOfAllApps(): ArrayList<App> {
         return arrayOfAll
 
+    }
+    fun getScores():Int{
+        return scoresAll
     }
 
 
@@ -38,16 +42,19 @@ class UsageTime() {
         val mapOfHarmful = context.getSharedPreferences("nameOfHarmful", Context.MODE_PRIVATE).all
         arrayOfAll.clear()
 
-        var temp: Int
+        var app:App
 
         mapOfTime.keys.forEach {
-            arrayOfAll.add(
-                App(
-                    getIconApp(context, it),
-                    getName(context, it),
-                    listTimeToScores(mapOfTime[it]!!)
-                )
+            app=App(
+                getIconApp(context, it),
+                getName(context, it),
+                listTimeToScores(mapOfTime[it]!!)
             )
+            when(app.name){
+                in mapOfHarmful.values ->scoresAll-=app.scores
+                in mapOfUseful.values->scoresAll+=app.scores
+            }
+            arrayOfAll.add(app)
         }
 
     }

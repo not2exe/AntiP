@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.StatsFragment">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tableStats"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.StatsFragment"
+    android:background="@drawable/back"
+    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:text="@string/back"
+            android:textColor="#63739E"
+            android:textAppearance="@style/settings"
+            />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.db.williamchart.view.BarChartView
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:chart_spacing="64dp"
+        app:chart_barsRadius="20dp">
+
+</com.db.williamchart.view.BarChartView>
 
 
 
 
 
-</FrameLayout>
+</LinearLayout>

@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="md_theme_dark_primary">#000000</color>
-    <color name="md_theme_dark_onPrimary">#FFFFFF</color>
-    <color name="md_theme_dark_primaryContainer">#004F59</color>
-    <color name="md_theme_dark_onPrimaryContainer">#90F1FF</color>
-    <color name="md_theme_dark_secondary">#B1CBD0</color>
-    <color name="md_theme_dark_onSecondary">#1C3438</color>
-    <color name="md_theme_dark_secondaryContainer">#334B4F</color>
-    <color name="md_theme_dark_onSecondaryContainer">#CDE7EC</color>
-    <color name="md_theme_dark_tertiary">#BAC6EA</color>
-    <color name="md_theme_dark_onTertiary">#24304D</color>
-    <color name="md_theme_dark_tertiaryContainer">#3B4664</color>
-    <color name="md_theme_dark_onTertiaryContainer">#D9E2FF</color>
-    <color name="md_theme_dark_error">#FFB4A9</color>
-    <color name="md_theme_dark_errorContainer">#930006</color>
-    <color name="md_theme_dark_onError">#680003</color>
-    <color name="md_theme_dark_onErrorContainer">#FFDAD4</color>
-    <color name="md_theme_dark_background">#191C1D</color>
-    <color name="md_theme_dark_onBackground">#E0E3E3</color>
-    <color name="md_theme_dark_surface">#191C1D</color>
-    <color name="md_theme_dark_onSurface">#E0E3E3</color>
-    <color name="md_theme_dark_surfaceVariant">#3F484A</color>
-    <color name="md_theme_dark_onSurfaceVariant">#BFC8CA</color>
-    <color name="md_theme_dark_outline">#899294</color>
-    <color name="md_theme_dark_inverseOnSurface">#191C1D</color>
-    <color name="md_theme_dark_inverseSurface">#E0E3E3</color>
-    <color name="md_theme_dark_inversePrimary">#006874</color>
-    <color name="md_theme_dark_shadow">#000000</color>
-    <color name="md_theme_dark_primaryInverse">#FFFFFF</color>
+    <color name="md_theme_dark_primary">#1A1831</color>
+    <color name="md_theme_dark_onPrimary">#000000</color>
+    <color name="md_theme_dark_primaryContainer">#060A36</color>
+    <color name="cardView_back">#80B9D3ED</color>
 </resources>

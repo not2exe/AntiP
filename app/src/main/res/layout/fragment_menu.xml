@@ -1,47 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/gtime"
-    tools:context=".ui.MenuFragment"
-    >
+    android:background="@drawable/back"
+    tools:context=".ui.MenuFragment">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:text="@string/back"
+        android:textColor="#63739E"
+        android:textAppearance="@style/settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/background_settings"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingTop="100dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textColor="@color/md_theme_dark_primary"
+            android:textAllCaps="true"
+
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_change_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingTop="60dp"
+            android:textSize="24sp"
             android:text="@string/change_mode"
-            style="@style/Button.Style"
+
             />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_manage_apps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/manageApps"
-            style="@style/Button.Style"/>
+            android:background="@android:color/transparent"
+            android:textSize="24sp"
+            android:text="@string/manageApps" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_check_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/check_stats"
-            style="@style/Button.Style"/>
-        <ProgressBar
-            android:layout_marginTop="80dp"
-            android:id="@+id/pBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:indeterminate="true"/>
+            android:textSize="24sp"
+            android:background="@android:color/transparent"
+            android:text="@string/check_stats" />
+
 
     </LinearLayout>
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/pBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

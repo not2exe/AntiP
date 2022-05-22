@@ -6,11 +6,6 @@
     app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.example.antip.ui.AppManagerFragment"
-        tools:layout="@layout/fragment_app_manager"
-        android:label="Manager"/>
-    <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.antip.ui.MainFragment"
         tools:layout="@layout/fragment_main"
@@ -28,11 +23,14 @@
         tools:layout="@layout/fragment_menu"
         android:label="Menu">
         <action
-            android:id="@+id/action_menuFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
             android:id="@+id/action_menuFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_appManagerFragment"
+            app:destination="@id/appManagerFragment" />
     </fragment>
     <dialog
         android:id="@+id/dialogUsageSettings"
@@ -45,5 +43,18 @@
         android:id="@+id/statsFragment"
         android:name="com.example.antip.ui.StatsFragment"
         android:label="Stats"
-        tools:layout="@layout/fragment_stats" />
+        tools:layout="@layout/fragment_stats" >
+        <action
+            android:id="@+id/action_statsFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appManagerFragment"
+        android:name="com.example.antip.ui.AppManagerFragment"
+        android:label="fragment_app_manager"
+        tools:layout="@layout/fragment_app_manager" >
+        <action
+            android:id="@+id/action_appManagerFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
 </navigation>

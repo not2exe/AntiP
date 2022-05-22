@@ -18,14 +18,15 @@ import com.example.antip.viewmodels.StatsFragmentViewModel
 class StatsFragment : Fragment(R.layout.fragment_stats) {
     private var bindingOrNull: FragmentStatsBinding? = null // ? is for nullable variable type
     private val binding get() = bindingOrNull!! // !! is for turning off null safety
-    private val statsList: ArrayList<DailyStatsEntry> = ArrayList<DailyStatsEntry>()
+    private val statsList: ArrayList<DailyStatsEntry> = ArrayList()
 
     private val viewModel by viewModels<StatsFragmentViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         bindingOrNull = FragmentStatsBinding.bind(view)
-        val mySet = linkedMapOf("label1" to 4F,"label2" to 7F,"label3" to 2F)
-        binding.tableStats.init(statsList)
+        val mySet = linkedMapOf("16" to 200f,"17" to -800f,"18" to 100f,"19" to 200f,"20" to -505f,"21" to -300f,"22" to -550f)
+        binding.barChart.show(mySet)
+        //binding.tableStats.init(statsList)
 
 
 
@@ -44,7 +45,7 @@ class StatsFragment : Fragment(R.layout.fragment_stats) {
                 it[i]?.let { it1 -> statsList.add(it1) }
             }
             Log.d("StatsFragment",it.toString())
-            (binding.tableStats.adapter as StatsAdapter).updateList(statsList)
+            //(binding.tableStats.adapter as StatsAdapter).updateList(statsList)
         }
 
 

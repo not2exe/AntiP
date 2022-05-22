@@ -1,6 +1,5 @@
 package com.example.antip.service
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -23,14 +22,16 @@ import java.util.*
 class DailyStatsBroadcast : BroadcastReceiver() {
     private val myScope = CoroutineScope(Job())
 
-    @SuppressLint("InvalidWakeLockTag")
     override fun onReceive(context: Context?, intent: Intent?) {
+        val tag: String = "Tag:PW"
         val pm: PowerManager = context?.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wl: PowerManager.WakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "TAKE_STATS")
+        val wl: PowerManager.WakeLock = pm.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            tag
+        )
         wl.acquire(10 * 60 * 1000L /*10 minutes*/)
 
-        val usageTime: UsageTime = UsageTime()
-        Log.d("Service", "Service is started")
+        val usageTime= UsageTime()
         val database =
             Room.databaseBuilder(context, DailyStatsDatabase::class.java, "stats_table")
                 .build()
@@ -39,7 +40,7 @@ class DailyStatsBroadcast : BroadcastReceiver() {
 
         myScope.launch {
             dailyStatsDao.insertStats(
-                DailyStatsEntry(formatDate(Calendar.getInstance()), 0)
+                DailyStatsEntry(formatDate(Calendar.getInstance()), usageTime.getScores())
             )
 
         }
@@ -52,7 +53,7 @@ class DailyStatsBroadcast : BroadcastReceiver() {
         val cal: Calendar = Calendar.getInstance()
         cal.set(Calendar.HOUR, 23)
         cal.set(Calendar.MINUTE, 59)
-        cal.set(Calendar.SECOND, 59)
+        cal.set(Calendar.SECOND, 0)
         val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, DailyStatsBroadcast::class.java)
         val pi = PendingIntent.getBroadcast(context, 0, intent, 0)
@@ -66,8 +67,8 @@ class DailyStatsBroadcast : BroadcastReceiver() {
 
 
     private fun formatDate(calendar: Calendar): String {
-        val date:Date=calendar.time
-        val dateFormat: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val date: Date = calendar.time
+        val dateFormat= SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return dateFormat.format(date)
 
     }

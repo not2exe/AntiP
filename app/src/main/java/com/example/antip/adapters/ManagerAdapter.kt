@@ -9,7 +9,7 @@ import com.example.antip.R
 import com.example.antip.databinding.AppItemSettingsBinding
 import com.example.antip.ui.AppManagerFragment
 import com.example.antip.model.AppManager
-import com.example.antip.viewmodels.DragListener
+import com.example.antip.listeners.DragListener
 
 
 class ManagerAdapter(
@@ -46,7 +46,7 @@ class ManagerAdapter(
     class CustomViewHolder(item: View) :
         RecyclerView.ViewHolder(item) {
         private val binding = AppItemSettingsBinding.bind(item)
-        fun bind(app: AppManager, position: Int, managerAdapter: ManagerAdapter, dragInstance:DragListener)
+        fun bind(app: AppManager, position: Int, managerAdapter: ManagerAdapter, dragInstance: DragListener)
          = with(binding) {
             imageViewSettings.setImageDrawable(app.image)
             nameSettings.text=app.name

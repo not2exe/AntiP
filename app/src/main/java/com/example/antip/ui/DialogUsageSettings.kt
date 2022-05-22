@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import kotlin.system.exitProcess
 
 class DialogUsageSettings: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(R.string.permission_message)
@@ -30,6 +32,7 @@ class DialogUsageSettings: DialogFragment() {
                 .setNegativeButton(
                     R.string.cancel,
                     DialogInterface.OnClickListener { dialog, id ->
+                        Toast.makeText(context, R.string.canceled, Toast.LENGTH_SHORT).show()
                         findNavController().navigate(DialogUsageSettingsDirections.actionDialogUsageSettingsToMenuFragment())
 
                     })

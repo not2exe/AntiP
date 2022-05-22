@@ -19,6 +19,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         bindingOrNull= FragmentMenuBinding.bind(view)
 
         with(binding){
+
             buttonChangeMode.setOnClickListener{
 
             }
@@ -30,15 +31,23 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
                 onStatsClick()
 
             }
+            buttonBack.setOnClickListener {
+                findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToMainFragment())
+            }
         }
 
     }
 
     private fun onManageAppsClick(){
         lifecycleScope.launch {
-            binding.pBar.visibility=View.VISIBLE
+            with(binding){
+                linear.visibility=View.INVISIBLE
+                pBar.visibility=View.VISIBLE
+
+            }
+
         }
-        findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToSettingsFragment())
+        findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToAppManagerFragment())
 
     }
     private fun onStatsClick(){

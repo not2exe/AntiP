@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
@@ -17,9 +18,9 @@ class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
     private var bindingOrNull: FragmentAppManagerBinding? = null // ? is for nullable variable type
     private val binding get() = bindingOrNull!! // !! is for turning off null safety
     private val viewModel by viewModels<AppManagerFragmentViewModel>()
-    private val harmfulApps: ArrayList<AppManager> = ArrayList<AppManager>()
-    private val usefulApps: ArrayList<AppManager> = ArrayList<AppManager>()
-    private val otherApps: ArrayList<AppManager> = ArrayList<AppManager>()
+    private val harmfulApps: ArrayList<AppManager> = ArrayList()
+    private val usefulApps: ArrayList<AppManager> = ArrayList()
+    private val otherApps: ArrayList<AppManager> = ArrayList()
 
 
     private fun initObservers()=with(binding) {
@@ -51,14 +52,18 @@ class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingOrNull = FragmentAppManagerBinding.bind(view)
-        binding.rvHarmful.init(harmfulApps)
-        binding.rvUseful.init(usefulApps)
-        binding.rvOthers.init(otherApps)
+        with(binding){
+            rvHarmful.init(harmfulApps)
+            rvUseful.init(usefulApps)
+            rvOthers.init(otherApps)
+            buttonBack.setOnClickListener {
+                findNavController().navigate(AppManagerFragmentDirections.actionAppManagerFragmentToMenuFragment())
+            }
+
+        }
+
         viewModel.initApps()
         initObservers()
-
-
-
     }
 
 
