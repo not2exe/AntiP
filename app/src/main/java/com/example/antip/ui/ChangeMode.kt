@@ -23,10 +23,10 @@ class ChangeMode : Fragment(R.layout.fragment_change_mode) {
             initRadioButtons()
 
             normalModeButton.setOnClickListener {
-                viewModel.onNormalButtonClick(!normalModeButton.isChecked)
+                viewModel.onNormalButtonClick()
             }
             hardcoreModeButton.setOnClickListener {
-                viewModel.onHardcoreButtonClick(!hardcoreModeButton.isChecked)
+                viewModel.onHardcoreButtonClick()
             }
         }
 
@@ -35,7 +35,7 @@ class ChangeMode : Fragment(R.layout.fragment_change_mode) {
     private fun initRadioButtons() = with(binding) {
         if (viewModel.getIsLostHardcore()) {
             hardcoreModeButton.visibility = View.INVISIBLE
-            viewModel.onNormalButtonClick(normalModeButton.isChecked)
+            viewModel.onNormalButtonClick()
             normalModeButton.isChecked = true
 
         }

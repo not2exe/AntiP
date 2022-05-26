@@ -85,11 +85,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         }
         viewModel.scoresAll.observe(viewLifecycleOwner) {
-            if (it < 0) {
-                scores.setTextColor(Color.RED)
-            } else {
-                scores.setTextColor(Color.GREEN)
-            }
             scores.text = it.toString()
 
         }

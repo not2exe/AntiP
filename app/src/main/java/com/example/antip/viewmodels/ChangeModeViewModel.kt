@@ -20,19 +20,16 @@ class ChangeModeViewModel(application: Application) : AndroidViewModel(applicati
         return cash.getFromBoolean("HardcoreMode")
     }
 
-    fun onNormalButtonClick(key: Boolean) {
-        if (key)
-            cash.inputIntoBoolean("NormalMode", false)
-        else
-            cash.inputIntoBoolean("NormalMode", true)
+    fun onNormalButtonClick() {
+        cash.inputIntoBoolean("NormalMode", true)
+        cash.inputIntoBoolean("HardcoreMode", false)
+
 
     }
 
-    fun onHardcoreButtonClick(key: Boolean) {
-        if (key)
-            cash.inputIntoBoolean("HardcoreMode", false)
-        else
-            cash.inputIntoBoolean("HardcoreMode", true)
+    fun onHardcoreButtonClick() {
+        cash.inputIntoBoolean("HardcoreMode", true)
+        cash.inputIntoBoolean("NormalMode", false)
 
     }
 }
