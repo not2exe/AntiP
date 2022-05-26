@@ -14,11 +14,17 @@ import java.util.*
 
 
 class UsageTime() {
-    private val arrayOfAll: ArrayList<App> = ArrayList<App>()
+    private val arrayOfHarmful: ArrayList<App?> = ArrayList<App?>()
+    private val arrayOfUseful: ArrayList<App?> = ArrayList<App?>()
     private var scoresAll: Int = 0
 
-    fun getArrayListOfAllApps(): ArrayList<App> {
-        return arrayOfAll
+    fun getArrayListOfHarmful(): ArrayList<App?>? {
+        return arrayOfHarmful
+
+    }
+
+    fun getArrayListOfUseful(): ArrayList<App?>? {
+        return arrayOfUseful
 
     }
 
@@ -43,7 +49,8 @@ class UsageTime() {
             getAppsInfo(context, start.timeInMillis, end.timeInMillis)
         val mapOfUseful = cash.getAllUseful()
         val mapOfHarmful = cash.getAllHarmful()
-        arrayOfAll.clear()
+        arrayOfHarmful.clear()
+        arrayOfUseful.clear()
 
         var app: App
 
@@ -54,10 +61,15 @@ class UsageTime() {
                 listTimeToScores(mapOfTime[it]!!)
             )
             when (app.name) {
-                in mapOfHarmful -> scoresAll -= app.scores
-                in mapOfUseful -> scoresAll += app.scores
+                in mapOfHarmful -> {
+                    arrayOfHarmful.add(app)
+                    scoresAll -= app.scores
+                }
+                in mapOfUseful -> {
+                    arrayOfUseful.add(app)
+                    scoresAll += app.scores
+                }
             }
-            arrayOfAll.add(app)
         }
 
     }
