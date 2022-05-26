@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/heart_broken-48px.xml" value="0.2655" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/heart_broken.xml" value="0.25" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1395" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/refresh-48px.xml" value="0.143" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/refresh.xml" value="0.331" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/refresh_48px.xml" value="0.2385" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable-v24/shr_menu.xml" value="0.21" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/android_lar.xml" value="0.25" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/background_settings.xml" value="0.297" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/done.xml" value="0.3505" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/eclipse1.xml" value="0.18" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/favorite-48px.xml" value="0.2955" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/heart.xml" value="0.25" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/ic_baseline_autorenew_24.xml" value="0.278" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1395" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/lock-48px.xml" value="0.3505" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/lock.xml" value="0.15" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/shadow.xml" value="0.1245" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/shadow_background.xml" value="0.331" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/test.xml" value="0.1" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/undefined.xml" value="0.1395" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/drawable/wallpaper.xml" value="0.22" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout-v31/fragment_main.xml" value="0.18659420289855072" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/achievements_item.xml" value="0.14010416666666667" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/app_item.xml" value="0.1" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/app_item_settings.xml" value="0.1" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/backdrop.xml" value="0.1697061803444782" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/change_mode_fragment.xml" value="0.33" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/dialog_usage_settings.xml" value="0.33" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/first_time_screen.xml" value="0.34322916666666664" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragmen_1.xml" value="0.16210739614994935" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_achievements.xml" value="0.3269927536231884" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_app_manager.xml" value="0.22" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_change_mode.xml" value="0.3078125" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_first_time.xml" value="0.33" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_info_about_manager.xml" value="0.11851851851851852" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_main.xml" value="0.2149122807017544" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_menu.xml" value="0.25" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_slide.xml" value="0.2608695652173913" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_stats.xml" value="0.33" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/fragment_table_useless.xml" value="0.31929347826086957" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/meny.xml" value="0.1" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/permission.xml" value="0.33016304347826086" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/shr_product_grid_fragment.xml" value="0.1697061803444782" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/stats_item.xml" value="0.33" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/layout/t.xml" value="0.15070921985815602" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1395" />
+        <entry key="..\:/Users/da/AndroidStudioProjects/AntiP/app/src/main/res/xml/root_preferences.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
