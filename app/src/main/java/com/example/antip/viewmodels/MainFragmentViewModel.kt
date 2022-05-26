@@ -25,24 +25,13 @@ class MainFragmentViewModel(application: Application) : AndroidViewModel(applica
 
 
     fun initApps() {
-        val mapOfUseful = cash.getAllUseful()
-        val mapOfHarmful = cash.getAllHarmful()
-        val arrayOfAll = usageTime.getArrayListOfAllApps()
         usefulApps.value = arrayListOf(null)
         harmfulApps.value = arrayListOf(null)
-        scoresAll.value = 0
-        for (i in arrayOfAll.indices) {
-            when (arrayOfAll[i].name) {
-                in mapOfHarmful -> {
-                    harmfulApps.value?.add(arrayOfAll[i])
-                    scoresAll.value = scoresAll.value?.minus(arrayOfAll[i].scores)
-                }
-                in mapOfUseful -> {
-                    usefulApps.value?.add(arrayOfAll[i])
-                    scoresAll.value = scoresAll.value?.plus(arrayOfAll[i].scores)
-                }
-            }
-        }
+
+        usefulApps.value=usageTime.getArrayListOfUseful()
+        harmfulApps.value=usageTime.getArrayListOfHarmful()
+        scoresAll.value=usageTime.getScores()
+
         usefulApps.value?.sortByDescending { it?.scores }
         harmfulApps.value?.sortByDescending { it?.scores }
 
