@@ -1,45 +1,43 @@
 package com.example.antip.viewmodels
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.antip.model.App
+import com.example.antip.model.Cash
 import com.example.antip.model.UsageTime
+import com.example.antip.model.dataclasses.App
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>()
     private val usageTime = UsageTime()
+    private val cash: Cash = Cash(context)
 
     val usefulApps = MutableLiveData<ArrayList<App?>>(arrayListOf(null))
     val harmfulApps = MutableLiveData<ArrayList<App?>>(arrayListOf(null))
-    val scoresAll= MutableLiveData(0)
+    val scoresAll = MutableLiveData(0)
     fun provideTimeInModel() {
         usageTime.refreshTime(context)
     }
 
 
-
-
     fun initApps() {
-        val mapOfUseful = context.getSharedPreferences("nameOfUseful", Context.MODE_PRIVATE).all
-        val mapOfHarmful = context.getSharedPreferences("nameOfHarmful", Context.MODE_PRIVATE).all
-        val arrayOfAll= usageTime.getArrayListOfAllApps()
-        usefulApps.value=arrayListOf(null)
-        harmfulApps.value=arrayListOf(null)
-        scoresAll.value=0
-        for(i in arrayOfAll.indices){
-            when(arrayOfAll[i].name ){
-                in mapOfHarmful.values -> {
+        val mapOfUseful = cash.getAllUseful()
+        val mapOfHarmful = cash.getAllHarmful()
+        val arrayOfAll = usageTime.getArrayListOfAllApps()
+        usefulApps.value = arrayListOf(null)
+        harmfulApps.value = arrayListOf(null)
+        scoresAll.value = 0
+        for (i in arrayOfAll.indices) {
+            when (arrayOfAll[i].name) {
+                in mapOfHarmful -> {
                     harmfulApps.value?.add(arrayOfAll[i])
                     scoresAll.value = scoresAll.value?.minus(arrayOfAll[i].scores)
                 }
-                in mapOfUseful.values -> {
+                in mapOfUseful -> {
                     usefulApps.value?.add(arrayOfAll[i])
                     scoresAll.value = scoresAll.value?.plus(arrayOfAll[i].scores)
                 }
@@ -49,20 +47,15 @@ class MainFragmentViewModel(application: Application) : AndroidViewModel(applica
         harmfulApps.value?.sortByDescending { it?.scores }
 
     }
-    fun refresh(){
+
+    fun refresh() {
         usageTime.refreshTime(context)
         initApps()
     }
-    private fun formatDate(): String {
-        val dateFormat: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        return dateFormat.format(Date())
 
+    fun getIsLostHardcore():Boolean{
+        return cash.getFromBoolean("IsLostHardcore")
     }
-
-
-
-
-
 
 
 }

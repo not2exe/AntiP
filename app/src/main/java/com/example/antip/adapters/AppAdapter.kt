@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.model.App
 import com.example.antip.R
 import com.example.antip.databinding.AppItemBinding
+import com.example.antip.model.dataclasses.App
 
 class AppAdapter(private var list: ArrayList<App>) : RecyclerView.Adapter<AppAdapter.AppHolder>() {
 
@@ -17,12 +17,11 @@ class AppAdapter(private var list: ArrayList<App>) : RecyclerView.Adapter<AppAda
         fun bind(app: App) = with(binding) {
             imageView.setImageDrawable(app.image)
             scores.text = app.scores.toString()
-            name.text=app.name
+            name.text = app.name
 
         }
 
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppHolder {
@@ -34,13 +33,13 @@ class AppAdapter(private var list: ArrayList<App>) : RecyclerView.Adapter<AppAda
         holder.bind(list[position])
 
     }
+
     override fun getItemCount(): Int = list.size
 
     fun updateList(list: ArrayList<App>) {
         this.list = list
         notifyDataSetChanged()
     }
-
 
 
 }

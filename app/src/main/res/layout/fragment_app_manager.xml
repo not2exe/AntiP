@@ -17,20 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
             android:text="@string/back"
             android:textColor="#63739E"
             android:textAppearance="@style/settings"
+            style="@style/Button"
+            android:background="@android:color/transparent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,6 +41,7 @@
             android:textSize="28sp" />
 
         <androidx.recyclerview.widget.RecyclerView
+
             android:id="@+id/rvUseful"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

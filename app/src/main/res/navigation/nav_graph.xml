@@ -14,8 +14,8 @@
             android:id="@+id/action_mainFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_dialogUsageSettings2"
-            app:destination="@id/dialogUsageSettings" />
+            android:id="@+id/action_mainFragment_to_firstTimeFragment"
+            app:destination="@id/firstTimeFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
@@ -31,19 +31,15 @@
         <action
             android:id="@+id/action_menuFragment_to_appManagerFragment"
             app:destination="@id/appManagerFragment" />
-    </fragment>
-    <dialog
-        android:id="@+id/dialogUsageSettings"
-        android:name="com.example.antip.ui.DialogUsageSettings" >
         <action
-            android:id="@+id/action_dialogUsageSettings_to_menuFragment"
-            app:destination="@id/menuFragment" />
-    </dialog>
+            android:id="@+id/action_menuFragment_to_changeMode"
+            app:destination="@id/changeMode" />
+    </fragment>
     <fragment
         android:id="@+id/statsFragment"
-        android:name="com.example.antip.ui.StatsFragment"
+        android:name="com.example.antip.ui.AchievementsFragment"
         android:label="Stats"
-        tools:layout="@layout/fragment_stats" >
+        tools:layout="@layout/fragment_achievements" >
         <action
             android:id="@+id/action_statsFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
@@ -55,6 +51,27 @@
         tools:layout="@layout/fragment_app_manager" >
         <action
             android:id="@+id/action_appManagerFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/firstTimeFragment"
+        android:name="com.example.antip.ui.FirstTimeFragment"
+        android:label="fragment_first_time"
+        tools:layout="@layout/fragment_first_time" >
+        <action
+            android:id="@+id/action_firstTimeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_firstTimeFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeMode"
+        android:name="com.example.antip.ui.ChangeMode"
+        android:label="fragment_change_mode"
+        tools:layout="@layout/fragment_change_mode" >
+        <action
+            android:id="@+id/action_changeMode_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
 </navigation>

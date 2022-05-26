@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.example.antip.adapters.ManagerAdapter
 import com.example.antip.databinding.FragmentAppManagerBinding
-import com.example.antip.model.AppManager
+import com.example.antip.model.dataclasses.AppManager
 import com.example.antip.viewmodels.AppManagerFragmentViewModel
 
 
@@ -23,7 +23,7 @@ class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
     private val otherApps: ArrayList<AppManager> = ArrayList()
 
 
-    private fun initObservers()=with(binding) {
+    private fun initObservers() = with(binding) {
         viewModel.usefulApps.observe(viewLifecycleOwner) {
             for (i in it.indices) {
                 it[i]?.let { it1 -> usefulApps.add(it1) }
@@ -52,7 +52,7 @@ class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingOrNull = FragmentAppManagerBinding.bind(view)
-        with(binding){
+        with(binding) {
             rvHarmful.init(harmfulApps)
             rvUseful.init(usefulApps)
             rvOthers.init(otherApps)

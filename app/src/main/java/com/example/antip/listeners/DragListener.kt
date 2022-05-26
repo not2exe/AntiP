@@ -1,11 +1,13 @@
 package com.example.antip.listeners
 
+import android.annotation.SuppressLint
 import android.view.DragEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.example.antip.adapters.ManagerAdapter
-import com.example.antip.model.AppManager
+import com.example.antip.model.Cash
+import com.example.antip.model.dataclasses.AppManager
 import com.example.antip.ui.AppManagerFragment
 
 class DragListener internal constructor(
@@ -15,6 +17,8 @@ class DragListener internal constructor(
     private val undefined: AppManager =
         AppManager(listener.requireContext().getDrawable(R.drawable.undefined)!!, "Empty")
     private var isDropped = false
+
+    @SuppressLint("ResourceType")
     override fun onDrag(v: View, event: DragEvent): Boolean {
         when (event.action) {
             DragEvent.ACTION_DROP -> {
@@ -70,45 +74,36 @@ class DragListener internal constructor(
 
                         customListTarget?.let { adapterTarget.updateList(it) }
                         adapterTarget?.notifyDataSetChanged()
+                        if (v.parent != viewSource.parent) {
+                            val cash: Cash = Cash(listener.requireContext())
 
-                        val usefulEdit =
-                            listener.context?.getSharedPreferences("nameOfUseful", 0)?.edit()
-                        val harmfulEdit =
-                            listener.context?.getSharedPreferences("nameOfHarmful", 0)?.edit()
-
-                        when ((viewSource.parent as RecyclerView).id) {
-                            R.id.rvUseful -> {
-                                usefulEdit?.remove(list?.name)
-                                usefulEdit?.apply()
-                                if (target.id == R.id.rvHarmful) {
-                                    harmfulEdit?.putString(list?.name, list?.name)
-                                    harmfulEdit?.apply()
-                                }
-                            }
-                            R.id.rvHarmful -> {
-                                harmfulEdit?.remove(list?.name)
-                                harmfulEdit?.apply()
-                                if (target.id == R.id.rvUseful) {
-                                    usefulEdit?.putString(list?.name, list?.name)
-                                    usefulEdit?.apply()
-
-                                }
-
-                            }
-                            R.id.rvOthers -> {
-                                when (target.id) {
-                                    R.id.rvHarmful -> {
-                                        harmfulEdit?.putString(list?.name, list?.name)
-                                        harmfulEdit?.apply()
-
-                                    }
-                                    R.id.rvUseful -> {
-                                        usefulEdit?.putString(list?.name, list?.name)
-                                        usefulEdit?.apply()
-
+                            when ((viewSource.parent as RecyclerView).id) {
+                                R.id.rvUseful -> {
+                                    list?.name?.let { cash.removeFromUseful(it) }
+                                    if (target.id == R.id.rvHarmful) {
+                                        list?.name?.let { cash.inputIntoHarmful(it) }
                                     }
                                 }
+                                R.id.rvHarmful -> {
+                                    list?.name?.let { cash.removeFromHarmful(it) }
+                                    if (target.id == R.id.rvUseful) {
+                                        list?.name?.let { cash.inputIntoUseful(it) }
 
+                                    }
+
+                                }
+                                R.id.rvOthers -> {
+                                    when (target.id) {
+                                        R.id.rvHarmful -> {
+                                            list?.name?.let { cash.inputIntoHarmful(it) }
+
+                                        }
+                                        R.id.rvUseful -> {
+                                            list?.name?.let { cash.inputIntoUseful(it) }
+                                        }
+                                    }
+
+                                }
                             }
                         }
 

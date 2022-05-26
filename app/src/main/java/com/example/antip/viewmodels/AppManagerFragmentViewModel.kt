@@ -1,8 +1,6 @@
 package com.example.antip.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
@@ -10,10 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.antip.R
-import com.example.antip.model.AppManager
+import com.example.antip.model.Cash
+import com.example.antip.model.dataclasses.AppManager
 
 class AppManagerFragmentViewModel(application: Application) : AndroidViewModel(application) {
-    private val context=getApplication<Application>()
+    private val context = getApplication<Application>()
+    private val cash: Cash = Cash(context)
 
 
     val usefulApps = MutableLiveData<ArrayList<AppManager?>>(arrayListOf(null))
@@ -25,8 +25,8 @@ class AppManagerFragmentViewModel(application: Application) : AndroidViewModel(a
         val list: List<ApplicationInfo> =
             context.packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
 
-        val mapOfUseful = context.getSharedPreferences("nameOfUseful", 0).all.values
-        val mapOfHarmful = context.getSharedPreferences("nameOfHarmful", 0).all.values
+        val mapOfUseful = cash.getAllUseful()
+        val mapOfHarmful = cash.getAllHarmful()
         var appManager: AppManager
         for (i in list.indices) {
             if (context.packageManager.getLaunchIntentForPackage(list[i].packageName) != null

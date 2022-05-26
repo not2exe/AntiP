@@ -10,7 +10,6 @@
     </style>
 
     <style name="settings">
-
         <item name="android:textSize">
             16sp
         </item>
@@ -22,6 +21,10 @@
         <item name="android:textColor">
             #63739E
         </item>
+    </style>
+    <style name="Button">
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
 
     </style>
 </resources>

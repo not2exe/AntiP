@@ -1,9 +1,8 @@
 package com.example.antip.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.antip.R
@@ -16,18 +15,19 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindingOrNull= FragmentMenuBinding.bind(view)
+        bindingOrNull = FragmentMenuBinding.bind(view)
 
-        with(binding){
+        with(binding) {
 
-            buttonChangeMode.setOnClickListener{
+            buttonChangeMode.setOnClickListener {
+                findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToChangeMode())
 
             }
-            buttonManageApps.setOnClickListener{
+            buttonManageApps.setOnClickListener {
                 onManageAppsClick()
 
             }
-            buttonCheckStats.setOnClickListener{
+            buttonCheckStats.setOnClickListener {
                 onStatsClick()
 
             }
@@ -38,11 +38,15 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
     }
 
-    private fun onManageAppsClick(){
+    private fun onManageAppsClick() {
         lifecycleScope.launch {
-            with(binding){
-                linear.visibility=View.INVISIBLE
-                pBar.visibility=View.VISIBLE
+            with(binding) {
+                linear.visibility = View.INVISIBLE
+                buttonBack.visibility = View.INVISIBLE
+                loadImage.visibility = View.VISIBLE
+                loadText.visibility = View.VISIBLE
+                pBar.visibility = View.VISIBLE
+
 
             }
 
@@ -50,7 +54,8 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToAppManagerFragment())
 
     }
-    private fun onStatsClick(){
+
+    private fun onStatsClick() {
         findNavController().navigate(MenuFragmentDirections.actionMenuFragmentToStatsFragment())
     }
 

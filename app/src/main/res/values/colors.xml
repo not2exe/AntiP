@@ -4,4 +4,5 @@
     <color name="md_theme_dark_onPrimary">#000000</color>
     <color name="md_theme_dark_primaryContainer">#060A36</color>
     <color name="cardView_back">#80B9D3ED</color>
+    <color name="transporent">#80000000</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.antip.model
+package com.example.antip.model.dataclasses
 
 import android.graphics.drawable.Drawable
 

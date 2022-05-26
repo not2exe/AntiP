@@ -4,12 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import java.util.*
 
 @Dao
 interface DailyStatsDao {
 
     @Query("SELECT * FROM stats_table WHERE date = :aDate ")
-    suspend fun getStatsByDate(aDate: String): DailyStatsEntry
+    suspend fun getStatsByDate(aDate: Long): DailyStatsEntry
 
     @Query("SELECT * FROM stats_table")
     suspend fun getAllStats():List<DailyStatsEntry>

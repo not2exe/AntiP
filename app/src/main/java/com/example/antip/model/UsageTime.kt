@@ -9,23 +9,26 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.example.antip.R
+import com.example.antip.model.dataclasses.App
 import java.util.*
 
 
 class UsageTime() {
     private val arrayOfAll: ArrayList<App> = ArrayList<App>()
-    private var scoresAll:Int=0
+    private var scoresAll: Int = 0
 
     fun getArrayListOfAllApps(): ArrayList<App> {
         return arrayOfAll
 
     }
-    fun getScores():Int{
+
+    fun getScores(): Int {
         return scoresAll
     }
 
 
     fun refreshTime(context: Context) {
+        val cash: Cash = Cash(context)
 
 
         val start: Calendar = (Calendar.getInstance())
@@ -38,21 +41,21 @@ class UsageTime() {
 
         val mapOfTime: Map<String, ArrayList<Long>> =
             getAppsInfo(context, start.timeInMillis, end.timeInMillis)
-        val mapOfUseful = context.getSharedPreferences("nameOfUseful", Context.MODE_PRIVATE).all
-        val mapOfHarmful = context.getSharedPreferences("nameOfHarmful", Context.MODE_PRIVATE).all
+        val mapOfUseful = cash.getAllUseful()
+        val mapOfHarmful = cash.getAllHarmful()
         arrayOfAll.clear()
 
-        var app:App
+        var app: App
 
         mapOfTime.keys.forEach {
-            app=App(
+            app = App(
                 getIconApp(context, it),
                 getName(context, it),
                 listTimeToScores(mapOfTime[it]!!)
             )
-            when(app.name){
-                in mapOfHarmful.values ->scoresAll-=app.scores
-                in mapOfUseful.values->scoresAll+=app.scores
+            when (app.name) {
+                in mapOfHarmful -> scoresAll -= app.scores
+                in mapOfUseful -> scoresAll += app.scores
             }
             arrayOfAll.add(app)
         }
@@ -90,12 +93,10 @@ class UsageTime() {
                 && event0.packageName == event1.packageName
             ) {
                 val diff = event1.timeStamp - event0.timeStamp
-                if(map.containsKey(event0.packageName))
+                if (map.containsKey(event0.packageName))
                     map[event0.packageName]?.add(diff)
                 else
-                    map[event0.packageName]= arrayListOf(diff)
-
-
+                    map[event0.packageName] = arrayListOf(diff)
 
 
             }

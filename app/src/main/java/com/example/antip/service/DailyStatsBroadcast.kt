@@ -6,20 +6,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
-import android.util.Log
 import androidx.room.Room
+import com.example.antip.model.Cash
 import com.example.antip.model.UsageTime
-import com.example.antip.model.db.DailyStatsDao
 import com.example.antip.model.db.DailyStatsDatabase
 import com.example.antip.model.db.DailyStatsEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DailyStatsBroadcast : BroadcastReceiver() {
+class DailyStatsBroadcast :
+    BroadcastReceiver() {
     private val myScope = CoroutineScope(Job())
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -31,17 +30,27 @@ class DailyStatsBroadcast : BroadcastReceiver() {
         )
         wl.acquire(10 * 60 * 1000L /*10 minutes*/)
 
-        val usageTime= UsageTime()
-        val database =
-            Room.databaseBuilder(context, DailyStatsDatabase::class.java, "stats_table")
-                .build()
-        val dailyStatsDao: DailyStatsDao = database.dailyStatsDao()
+        val usageTime = UsageTime()
+
         usageTime.refreshTime(context)
+        val database = Room.databaseBuilder(
+            context,
+            DailyStatsDatabase::class.java,
+            "stats_table"
+        ).build()
+        val statsDao = database.dailyStatsDao()
+        val cash: Cash = Cash(context)
 
         myScope.launch {
-            dailyStatsDao.insertStats(
-                DailyStatsEntry(formatDate(Calendar.getInstance()), usageTime.getScores())
+            statsDao.insertStats(
+                DailyStatsEntry(Calendar.getInstance().timeInMillis, usageTime.getScores())
             )
+            if (cash.getFromBoolean("HardcoreMode")) {
+                cash.inputIntoBoolean("isLostHardcore", usageTime.getScores() < 0)
+                cash.inputIntoBoolean("AchievementHardcore", usageTime.getScores() >= 0)
+
+            }
+
 
         }
         wl.release()
@@ -66,10 +75,4 @@ class DailyStatsBroadcast : BroadcastReceiver() {
     }
 
 
-    private fun formatDate(calendar: Calendar): String {
-        val date: Date = calendar.time
-        val dateFormat= SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        return dateFormat.format(date)
-
-    }
 }

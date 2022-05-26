@@ -4,10 +4,11 @@
     <string name="harmful">harmful</string>
     <string name="useful">useful</string>
     <string name="others">others</string>
-    <string name="settings">settings</string>
+    <string name="settings">menu</string>
+    <string name="Settings">Menu</string>
     <string name="_0">0</string>
     <string name="manageApps">Manage apps</string>
-    <string name="check_stats">Check stats</string>
+    <string name="check_stats">Achievements</string>
     <string name="change_mode">Change mode</string>
     <string name="permission_message">For the application to work correctly, you need to give permission to receive application usage data</string>
     <string name="rationality">To collect statistics in our application, we need this permission</string>
@@ -17,4 +18,12 @@
     <string name="canceled">Вам недоступна статистика :(</string>
     <string name="wait">Wait a little</string>
     <string name="back">back</string>
+    <string name="load_screen_message">On this screen, you can transfer applications from one list to another using a long click</string>
+    <string name="achievements">Achievements</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mode">Mode</string>
+    <string name="normal">Normal</string>
+    <string name="hardcore">Hardcore</string>
+
 </resources>

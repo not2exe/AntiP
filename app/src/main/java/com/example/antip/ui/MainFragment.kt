@@ -3,11 +3,10 @@ package com.example.antip.ui
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.example.antip.adapters.AppAdapter
 import com.example.antip.databinding.FragmentMainBinding
-import com.example.antip.model.App
+import com.example.antip.model.dataclasses.App
 import com.example.antip.viewmodels.MainFragmentViewModel
 import com.example.antip.viewmodels.State
 
@@ -33,13 +32,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private val viewModel by viewModels<MainFragmentViewModel>() // View model initialization with delegate property
 
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindingOrNull = FragmentMainBinding.bind(view)
+        if (viewModel.getIsLostHardcore())
+            binding.imageLife.setImageResource(R.drawable.heart_broken)
 
         if (!checkUsagePerm())
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToDialogUsageSettings2())
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToFirstTimeFragment())
 
         initRv()
 
@@ -85,6 +85,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         }
         viewModel.scoresAll.observe(viewLifecycleOwner) {
+            if (it < 0) {
+                scores.setTextColor(Color.RED)
+            } else {
+                scores.setTextColor(Color.GREEN)
+            }
             scores.text = it.toString()
 
         }
