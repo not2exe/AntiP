@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.antip.ui.MainFragment"
+        android:name="com.antip.ui.MainFragment"
         tools:layout="@layout/fragment_main"
         android:label="GTIME">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.antip.ui.MenuFragment"
+        android:name="com.antip.ui.MenuFragment"
         tools:layout="@layout/fragment_menu"
         android:label="Menu">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/statsFragment"
-        android:name="com.example.antip.ui.AchievementsFragment"
+        android:name="com.antip.ui.AchievementsFragment"
         android:label="Stats"
         tools:layout="@layout/fragment_achievements" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/appManagerFragment"
-        android:name="com.example.antip.ui.AppManagerFragment"
+        android:name="com.antip.ui.AppManagerFragment"
         android:label="fragment_app_manager"
         tools:layout="@layout/fragment_app_manager" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/firstTimeFragment"
-        android:name="com.example.antip.ui.FirstTimeFragment"
+        android:name="com.antip.ui.FirstTimeFragment"
         android:label="fragment_first_time"
         tools:layout="@layout/fragment_first_time" >
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/changeMode"
-        android:name="com.example.antip.ui.ChangeMode"
+        android:name="com.antip.ui.ChangeMode"
         android:label="fragment_change_mode"
         tools:layout="@layout/fragment_change_mode" >
         <action

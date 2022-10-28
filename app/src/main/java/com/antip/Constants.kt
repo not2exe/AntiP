@@ -1,6 +1,7 @@
 package com.antip
 
 object Constants {
+    const val SCORE_TABLE = "score_table"
     const val CACHE_HARMFUL = "NameOfHarmful"
     const val CACHE_USEFUL = "NameOfUseful"
     const val CACHE_BOOLEANS = "CacheBooleans"
