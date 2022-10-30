@@ -7,71 +7,65 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.antip.ui.MainFragment"
+        android:name="com.gtime.ui.MainFragment"
         tools:layout="@layout/fragment_main"
         android:label="GTIME">
         <action
-            android:id="@+id/action_mainFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_firstTimeFragment"
             app:destination="@id/firstTimeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.antip.ui.MenuFragment"
-        tools:layout="@layout/fragment_menu"
-        android:label="Menu">
         <action
-            android:id="@+id/action_menuFragment_to_statsFragment"
-            app:destination="@id/statsFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_appManagerFragment"
-            app:destination="@id/appManagerFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_changeMode"
-            app:destination="@id/changeMode" />
-    </fragment>
-    <fragment
-        android:id="@+id/statsFragment"
-        android:name="com.antip.ui.AchievementsFragment"
-        android:label="Stats"
-        tools:layout="@layout/fragment_achievements" >
-        <action
-            android:id="@+id/action_statsFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/appManagerFragment"
-        android:name="com.antip.ui.AppManagerFragment"
-        android:label="fragment_app_manager"
-        tools:layout="@layout/fragment_app_manager" >
-        <action
-            android:id="@+id/action_appManagerFragment_to_menuFragment"
+            android:id="@+id/action_mainFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstTimeFragment"
-        android:name="com.antip.ui.FirstTimeFragment"
+        android:name="com.gtime.ui.FirstTimeFragment"
         android:label="fragment_first_time"
         tools:layout="@layout/fragment_first_time" >
         <action
             android:id="@+id/action_firstTimeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.gtime.ui.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_firstTimeFragment_to_menuFragment"
+            android:id="@+id/action_menuFragment_to_changeModeFragment"
+            app:destination="@id/changeModeFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_appManagerFragment"
+            app:destination="@id/appManagerFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_achievementsFragment"
+            app:destination="@id/achievementsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appManagerFragment"
+        android:name="com.gtime.ui.AppManagerFragment"
+        android:label="AppManagerFragment" >
+        <action
+            android:id="@+id/action_appManagerFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
     <fragment
-        android:id="@+id/changeMode"
-        android:name="com.antip.ui.ChangeMode"
-        android:label="fragment_change_mode"
-        tools:layout="@layout/fragment_change_mode" >
+        android:id="@+id/changeModeFragment"
+        android:name="com.gtime.ui.ChangeModeFragment"
+        android:label="ChangeModeFragment" >
         <action
-            android:id="@+id/action_changeMode_to_menuFragment"
+            android:id="@+id/action_changeModeFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/achievementsFragment"
+        android:name="com.gtime.ui.AchievementsFragment"
+        android:label="AchievementsFragment" >
+        <action
+            android:id="@+id/action_achievementsFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
 </navigation>
