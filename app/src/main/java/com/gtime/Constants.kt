@@ -1,6 +1,8 @@
 package com.gtime
 
 object Constants {
+    const val KEY_LIFE = "KEY_LIFE"
+    const val CACHE_INT = "CacheInt"
     const val EMPTY = "EMPTY"
     const val SCORE_TABLE = "score_table"
     const val CACHE_HARMFUL = "NameOfHarmful"
@@ -14,4 +16,6 @@ object Constants {
     const val ADAPTER_HARMFUL = "AdapterHarmful"
     const val ADAPTER_USEFUL = "AdapterUseful"
     const val ADAPTER_OTHERS = "AdapterOthers"
+    const val DAILY_STATS_WORKER="DAILY_STATS_WORKER"
+    const val INC_LIFE_WORKER="INC_LIFE_WORKER"
 }

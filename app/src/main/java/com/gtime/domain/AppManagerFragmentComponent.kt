@@ -1,12 +1,11 @@
-package com.gtime
+package com.gtime.domain
 
-import androidx.fragment.app.Fragment
 import com.gtime.ui.AppManagerFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
 @FragmentScope
-@Subcomponent(modules = [AdaptersModule::class])
+@Subcomponent(modules = [AdaptersModule::class, DragListenerModule::class])
 interface AppManagerFragmentComponent {
     @dagger.Subcomponent.Factory
     interface Factory {

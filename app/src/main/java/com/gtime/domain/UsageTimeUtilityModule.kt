@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import android.app.usage.UsageStatsManager
 import android.content.Context

@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
@@ -14,7 +14,7 @@ interface MainFragmentViewComponent {
         fun create(
             @BindsInstance view: View,
             @BindsInstance viewLifecycleOwner: LifecycleOwner
-        ):MainFragmentViewComponent
+        ): MainFragmentViewComponent
     }
     fun inject(mainFragment: MainFragment)
 }

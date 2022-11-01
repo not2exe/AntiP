@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import com.gtime.ui.MainFragment
 import dagger.BindsInstance
@@ -11,5 +11,5 @@ interface MainFragmentComponent {
     interface Factory {
         fun create(@BindsInstance fragment: MainFragment): MainFragmentComponent
     }
-    fun mainFragmentViewComponent():MainFragmentViewComponent.Factory
+    fun mainFragmentViewComponent(): MainFragmentViewComponent.Factory
 }

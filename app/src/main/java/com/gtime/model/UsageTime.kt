@@ -6,7 +6,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
-import com.gtime.AppScope
+import com.gtime.domain.AppScope
 import com.gtime.model.dataclasses.AppEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,6 +26,9 @@ class UsageTime @Inject constructor(
 
 
     fun refreshTime() {
+        arrayOfHarmful.clear()
+        arrayOfUseful.clear()
+        scoresAll = 0
         val start: Calendar = (Calendar.getInstance())
         start.add(Calendar.DAY_OF_MONTH, 0)
         start.set(Calendar.HOUR_OF_DAY, 0)

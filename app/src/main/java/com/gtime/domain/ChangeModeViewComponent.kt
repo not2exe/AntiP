@@ -1,8 +1,6 @@
-package com.gtime
+package com.gtime.domain
 
-import androidx.fragment.app.Fragment
 import com.gtime.ui.ChangeModeFragment
-import com.gtime.ui.ChangeModeViewController
 import dagger.BindsInstance
 import dagger.Subcomponent
 @FragmentViewScope
@@ -10,7 +8,7 @@ import dagger.Subcomponent
 interface ChangeModeViewComponent{
     @dagger.Subcomponent.Factory
     interface Factory{
-        fun create(@BindsInstance changeModeFragment: ChangeModeFragment):ChangeModeViewComponent
+        fun create(@BindsInstance changeModeFragment: ChangeModeFragment): ChangeModeViewComponent
     }
     fun inject(changeModeFragment: ChangeModeFragment)
 }

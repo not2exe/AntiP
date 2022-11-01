@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.antip.R
-import com.gtime.App
-import com.gtime.MainFragmentComponent
-import com.gtime.MainFragmentViewComponent
-import com.gtime.MainViewController
+import com.gtime.app.App
+import com.gtime.domain.MainFragmentComponent
+import com.gtime.domain.MainFragmentViewComponent
 import javax.inject.Inject
 
 class MainFragment : Fragment(R.layout.fragment_main) {

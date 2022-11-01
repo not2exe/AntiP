@@ -11,7 +11,7 @@
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
-        android:name="com.gtime.App"
+        android:name="com.gtime.app.App"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"

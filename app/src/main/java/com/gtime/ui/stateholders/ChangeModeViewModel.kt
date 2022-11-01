@@ -1,10 +1,8 @@
-package com.gtime.viewmodels
+package com.gtime.ui.stateholders
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.gtime.Constants
-import com.gtime.FragmentScope
-import com.gtime.FragmentViewScope
 import com.gtime.model.Cache
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

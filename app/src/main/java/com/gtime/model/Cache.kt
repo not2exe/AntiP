@@ -2,8 +2,8 @@ package com.gtime.model
 
 import android.content.Context
 import androidx.core.content.edit
-import com.gtime.AppScope
 import com.gtime.Constants
+import com.gtime.domain.AppScope
 import javax.inject.Inject
 
 @AppScope
@@ -26,6 +26,8 @@ class Cache @Inject constructor(applicationContext: Context) {
         applicationContext.getSharedPreferences(Constants.CACHE_HARMFUL, Context.MODE_PRIVATE)
     private val booleanShared =
         applicationContext.getSharedPreferences(Constants.CACHE_BOOLEANS, Context.MODE_PRIVATE)
+    private val intShared =
+        applicationContext.getSharedPreferences(Constants.CACHE_INT, Context.MODE_PRIVATE)
 
     init {
         if (isFirstLaunch()) {
@@ -54,44 +56,47 @@ class Cache @Inject constructor(applicationContext: Context) {
             putBoolean(Constants.KEY_FIRST_LAUNCH, false)
             putBoolean(Constants.KEY_NORMAL_MODE, true)
             putBoolean(Constants.KEY_HARDCORE_MODE, false)
-            putBoolean(Constants.KEY_ACHIEVEMENT_HARDCORE, false)
             apply()
         }
     }
 
-    fun getAllUseful(): MutableCollection<out Any?> {
-        return namesOfUseful.all.values
+    fun getAllUseful(): MutableCollection<out Any?> = namesOfUseful.all.values
 
-    }
+    fun getAllHarmful(): MutableCollection<out Any?> = namesOfHarmful.all.values
 
-    fun getAllHarmful(): MutableCollection<out Any?> {
-        return namesOfHarmful.all.values
-    }
+    fun inputIntoHarmful(value: String) = namesOfHarmful.edit().putString(value, value).apply()
 
-    fun inputIntoHarmful(value: String) {
-        namesOfHarmful.edit().putString(value, value).apply()
+    fun inputIntoUseful(value: String) = namesOfUseful.edit().putString(value, value).apply()
 
-    }
+    fun removeFromUseful(key: String) = namesOfUseful.edit().remove(key).apply()
 
-    fun inputIntoUseful(value: String) {
-        namesOfUseful.edit().putString(value, value).apply()
-    }
-
-    fun removeFromUseful(key: String) {
-        namesOfUseful.edit().remove(key).apply()
-    }
-
-    fun removeFromHarmful(key: String) {
-        namesOfHarmful.edit().remove(key).apply()
-
-    }
-
-    private fun isFirstLaunch(): Boolean =
-        booleanShared.getBoolean(Constants.KEY_FIRST_LAUNCH, true)
+    fun removeFromHarmful(key: String) = namesOfHarmful.edit().remove(key).apply()
 
     fun getFromBoolean(key: String): Boolean = booleanShared.getBoolean(key, false)
+
     fun inputIntoBoolean(key: String, value: Boolean) =
         booleanShared.edit().putBoolean(key, value).apply()
 
+    fun incLife() {
+        val life = getLife()
+        if (life <= 3) {
+            intShared.edit().putInt(Constants.KEY_LIFE, life + 1)
+                .apply()
+        }
+    }
 
+
+    fun decLife() {
+        val life = getLife()
+        if (life > 0) {
+            intShared.edit().putInt(Constants.KEY_LIFE, life - 1)
+                .apply()
+        }
+    }
+
+
+    fun getLife(): Int = intShared.getInt(Constants.KEY_LIFE, 0)
+
+    private fun isFirstLaunch(): Boolean =
+        booleanShared.getBoolean(Constants.KEY_FIRST_LAUNCH, true)
 }

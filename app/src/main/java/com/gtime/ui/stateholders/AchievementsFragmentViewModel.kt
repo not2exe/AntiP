@@ -1,4 +1,4 @@
-package com.gtime.viewmodels
+package com.gtime.ui.stateholders
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle

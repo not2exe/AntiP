@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -8,15 +8,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.antip.databinding.FragmentAppManagerBinding
 import com.example.antip.databinding.FragmentChangeModeBinding
 import com.example.antip.databinding.FragmentMainBinding
+import com.gtime.Constants
+import com.gtime.ui.MainViewController
 import com.gtime.adapters.AppAdapter
 import com.gtime.adapters.ManagerAdapter
-import com.gtime.ui.AppManagerFragment
-import com.gtime.ui.ChangeModeFragment
-import com.gtime.ui.ChangeModeViewController
-import com.gtime.ui.MainFragment
-import com.gtime.viewmodels.AppManagerFragmentViewModel
-import com.gtime.viewmodels.ChangeModeViewModel
-import com.gtime.viewmodels.MainFragmentViewModel
+import com.gtime.ui.*
+import com.gtime.ui.stateholders.AppManagerFragmentViewModel
+import com.gtime.ui.stateholders.ChangeModeViewModel
+import com.gtime.ui.stateholders.MainFragmentViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

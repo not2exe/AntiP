@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.example.antip.databinding.FragmentAchievementsBinding
-import com.gtime.App
-import com.gtime.LambdaFactory
+import com.gtime.app.App
+import com.gtime.domain.LambdaFactory
 import com.gtime.adapters.AchievementsAdapter
-import com.gtime.viewmodels.AchievementsFragmentViewModel
+import com.gtime.ui.stateholders.AchievementsFragmentViewModel
 import javax.inject.Inject
 
 

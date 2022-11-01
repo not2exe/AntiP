@@ -1,10 +1,9 @@
-package com.gtime.viewmodels
+package com.gtime.ui.stateholders
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.gtime.Constants
-import com.gtime.FragmentViewScope
 import com.gtime.State
 import com.gtime.model.Cache
 import com.gtime.model.UsageTime

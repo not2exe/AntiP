@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
@@ -11,7 +11,7 @@ import dagger.Subcomponent
 interface AppManagerFragmentViewComponent {
     @dagger.Subcomponent.Factory
     interface Factory {
-        fun create(@BindsInstance view: View, @BindsInstance viewLifecycleOwner: LifecycleOwner):AppManagerFragmentViewComponent
+        fun create(@BindsInstance view: View, @BindsInstance viewLifecycleOwner: LifecycleOwner): AppManagerFragmentViewComponent
     }
 
     fun inject(appManagerFragment: AppManagerFragment)

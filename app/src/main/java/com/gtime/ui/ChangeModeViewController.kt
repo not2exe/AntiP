@@ -3,7 +3,7 @@ package com.gtime.ui
 import android.view.View
 import androidx.navigation.NavController
 import com.example.antip.databinding.FragmentChangeModeBinding
-import com.gtime.viewmodels.ChangeModeViewModel
+import com.gtime.ui.stateholders.ChangeModeViewModel
 
 class ChangeModeViewController(
     private val binding: FragmentChangeModeBinding,

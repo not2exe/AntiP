@@ -1,7 +1,8 @@
-package com.gtime
+package com.gtime.domain
 
 import android.content.Context
 import androidx.room.Room
+import com.gtime.Constants
 import com.gtime.model.db.DailyStatsDatabase
 import dagger.Module
 import dagger.Provides

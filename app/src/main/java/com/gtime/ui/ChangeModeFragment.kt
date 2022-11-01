@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.antip.R
-import com.gtime.App
-import com.gtime.ChangeModeViewComponent
+import com.gtime.app.App
+import com.gtime.domain.ChangeModeViewComponent
 import javax.inject.Inject
 
 class ChangeModeFragment : Fragment(R.layout.fragment_change_mode) {

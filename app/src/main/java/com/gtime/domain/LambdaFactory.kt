@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle

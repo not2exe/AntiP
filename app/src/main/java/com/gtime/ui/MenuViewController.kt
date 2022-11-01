@@ -8,8 +8,7 @@ import kotlinx.coroutines.launch
 
 class MenuViewController(
     private val binding: FragmentMenuBinding,
-    private val navController: NavController,
-    private val lifecycleScope: LifecycleCoroutineScope
+    private val navController: NavController
 ) {
     fun setupViews(){
         setupButtons()

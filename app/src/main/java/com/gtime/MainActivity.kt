@@ -1,6 +1,7 @@
 package com.gtime
 
 
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.antip.R
@@ -11,8 +12,3 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 }
-
-
-
-
-

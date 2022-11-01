@@ -44,7 +44,7 @@ dependencies {
     def navigation = "2.5.3"
     def room = "2.4.3"
     def coroutines = "1.6.4"
-    def dagger = "2.42"
+    def dagger = "2.43.2"
     def worker = "2.7.1"
 
     //Diagrams

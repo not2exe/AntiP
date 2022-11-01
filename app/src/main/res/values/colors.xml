@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="md_theme_dark_primary">#1A1831</color>
+    <color name="md_theme_dark_primary">@color/black_50</color>
     <color name="md_theme_dark_onPrimary">#000000</color>
-    <color name="md_theme_dark_primaryContainer">#060A36</color>
+    <color name="black">#000000</color>
+    <color name="black_50">#50000000</color>
+    <color name="md_theme_dark_primaryContainer">@color/black_50</color>
     <color name="cardView_back">#80B9D3ED</color>
-    <color name="transporent">#80000000</color>
+    <color name="background_color">#66D9D9D9</color>
 </resources>

@@ -1,6 +1,7 @@
-package com.gtime
+package com.gtime.domain
 
 import android.content.Context
+import com.gtime.Constants
 import com.gtime.adapters.AppAdapter
 import com.gtime.adapters.ManagerAdapter
 import com.gtime.listeners.DragListener

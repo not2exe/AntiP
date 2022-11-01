@@ -1,5 +1,4 @@
-package com.gtime
-
+package com.gtime.ui
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.databinding.FragmentAppManagerBinding
 import com.gtime.adapters.ManagerAdapter
 import com.gtime.ui.AppManagerFragmentDirections
-import com.gtime.viewmodels.AppManagerFragmentViewModel
+import com.gtime.ui.stateholders.AppManagerFragmentViewModel
 
 class AppManagerViewController(
     private val usefulAdapter: ManagerAdapter,

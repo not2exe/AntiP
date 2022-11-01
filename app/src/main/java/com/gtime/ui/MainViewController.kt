@@ -1,18 +1,21 @@
-package com.gtime
+package com.gtime.ui
 
 import android.app.AppOpsManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.view.View
-import android.widget.Toast
+import android.provider.Settings
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.antip.R
 import com.example.antip.databinding.FragmentMainBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
+import com.gtime.State
 import com.gtime.adapters.AppAdapter
-import com.gtime.ui.MainFragmentDirections
-import com.gtime.viewmodels.MainFragmentViewModel
+import com.gtime.ui.stateholders.MainFragmentViewModel
 
 class MainViewController(
     private val viewModel: MainFragmentViewModel,
@@ -21,16 +24,11 @@ class MainViewController(
     private val binding: FragmentMainBinding,
     private val navController: NavController,
     private val adapter: AppAdapter,
-    private var refreshButtonTimeClick: Long = 0
 ) {
 
     fun setUpViews() {
-        if (viewModel.getIsLostHardcore()) {
-            binding.imageLife.setImageResource(R.drawable.heart_broken)
-        }
         if (!checkUsagePerm()) {
-            navController
-                .navigate(MainFragmentDirections.actionMainFragmentToFirstTimeFragment())
+            showBottomSheet()
         }
         initRv()
         viewModel.refresh()
@@ -38,41 +36,41 @@ class MainViewController(
         setupButtons()
     }
 
+    private fun showBottomSheet() {
+        val bottomSheetDialogFragment = BottomSheetDialog(context).apply {
+            setContentView(R.layout.fragment_first_time)
+            findViewById<MaterialButton>(R.id.open_settings_button)
+                ?.setOnClickListener { context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)) }
+            setCancelable(false)
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            show()
+        }
+
+    }
+
 
     private fun setupButtons() {
-        binding.buttonChangeAdapter.setOnClickListener {
-            onClickChangeButton()
+        binding.buttonChangeAdapter.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.setState(State.HARMFUL)
+            } else {
+                viewModel.setState(State.USEFUL)
+            }
         }
         binding.buttonSettings.setOnClickListener {
             onClickSettingsButton()
         }
-        binding.refreshButton.setOnClickListener {
-            onClickRefreshButton(it)
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.refresh()
         }
     }
 
-
-    private fun onClickChangeButton() = with(binding) {
-        if (buttonChangeAdapter.isChecked) {
-            viewModel.setState(State.USEFUL)
-        } else {
-            viewModel.setState(State.HARMFUL)
-        }
-    }
 
     private fun initRv() = with(binding) {
         mainTable.layoutManager = LinearLayoutManager(context)
         mainTable.adapter = adapter
     }
 
-    private fun onClickRefreshButton(view: View) {
-        if (System.currentTimeMillis() > refreshButtonTimeClick + 10000) {
-            viewModel.refresh()
-            refreshButtonTimeClick = System.currentTimeMillis()
-        } else {
-            Toast.makeText(context, R.string.wait, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     private fun onClickSettingsButton() {
         navController
@@ -96,11 +94,13 @@ class MainViewController(
 
     private fun initObservers() = with(binding) {
         viewModel.usefulApps.observe(viewLifecycleOwner) {
+            refreshLayout.isRefreshing = false
             if (viewModel.stateOfKindOfApps.value == State.USEFUL) {
                 adapter.updateList(it)
             }
         }
         viewModel.harmfulApps.observe(viewLifecycleOwner) {
+            refreshLayout.isRefreshing = false
             if (viewModel.stateOfKindOfApps.value == State.HARMFUL) {
                 adapter.updateList(it)
             }

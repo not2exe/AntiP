@@ -1,5 +1,6 @@
-package com.gtime
+package com.gtime.domain
 
+import com.gtime.MainActivity
 import com.gtime.ui.AchievementsFragment
 import dagger.Subcomponent
 

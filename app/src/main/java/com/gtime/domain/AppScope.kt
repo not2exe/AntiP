@@ -1,4 +1,4 @@
-package com.gtime
+package com.gtime.domain
 
 import javax.inject.Scope
 
