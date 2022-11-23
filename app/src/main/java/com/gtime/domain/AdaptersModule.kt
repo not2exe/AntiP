@@ -2,8 +2,8 @@ package com.gtime.domain
 
 import android.content.Context
 import com.gtime.Constants
-import com.gtime.adapters.AppAdapter
-import com.gtime.adapters.ManagerAdapter
+import com.gtime.ui.adapters.AppAdapter
+import com.gtime.ui.adapters.ManagerAdapter
 import com.gtime.listeners.DragListener
 import dagger.Module
 import dagger.Provides

@@ -4,23 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.gtime.ui.MainFragment">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSettings"
-        style="@style/Button"
+        style="@style/ShapeAppearanceOverlay.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="12dp"
-        android:background="@android:color/transparent"
         android:text="@string/settings"
-        android:textAppearance="@style/settings"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textAppearance="@style/settings" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
@@ -28,21 +23,21 @@
         android:layout_gravity="center">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageLife1"
+            android:id="@+id/heartFirst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:src="@drawable/heart" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageLife2"
+            android:id="@+id/heartSecond"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:src="@drawable/heart" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageLife3"
+            android:id="@+id/heartThird"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -56,18 +51,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:textSize="64sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="40dp" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/buttonChangeAdapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/useful" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

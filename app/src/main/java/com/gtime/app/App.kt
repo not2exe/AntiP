@@ -1,11 +1,16 @@
 package com.gtime.app
 
 import android.app.Application
+import android.content.res.Configuration
+import android.util.Log
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.gtime.Constants
 import com.gtime.domain.DaggerAppComponent
+import com.gtime.model.UsageTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -19,7 +24,6 @@ class App : Application() {
     @Inject
     @Named(Constants.INC_LIFE_WORKER)
     lateinit var incRequest: PeriodicWorkRequest
-
 
     @Inject
     lateinit var workManager: WorkManager
@@ -38,4 +42,6 @@ class App : Application() {
             incRequest
         )
     }
+
+
 }

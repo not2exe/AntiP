@@ -1,4 +1,4 @@
-package com.gtime.adapters
+package com.gtime.ui.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

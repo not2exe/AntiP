@@ -12,7 +12,7 @@ class IncLifeWorker @Inject constructor(
     private val cache: Cache
 ) : CoroutineWorker(applicationContext, params) {
     override suspend fun doWork(): Result {
-        cache.incLife()
+        cache.incLives()
         return Result.success()
     }
 }

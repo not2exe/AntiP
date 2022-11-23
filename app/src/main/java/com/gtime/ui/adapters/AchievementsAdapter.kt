@@ -1,4 +1,4 @@
-package com.gtime.adapters
+package com.gtime.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

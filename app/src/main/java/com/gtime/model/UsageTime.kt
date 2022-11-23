@@ -5,62 +5,141 @@ import android.app.usage.UsageStatsManager
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.os.Build
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import com.gtime.Constants
+import com.gtime.KindOfApps
 import com.gtime.domain.AppScope
 import com.gtime.model.dataclasses.AppEntity
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 
 @AppScope
 class UsageTime @Inject constructor(
     private val cache: Cache,
+    @Named(Constants.CACHE_USEFUL) private val namesOfUseful: List<String>,
+    @Named(Constants.CACHE_HARMFUL) private val nameOfsHarmful: List<String>,
     private val usageStatsManager: UsageStatsManager,
-    private val packageManager: PackageManager
+    private val packageManager: PackageManager,
+    private val scope: CoroutineScope
 ) {
-    val arrayOfHarmful: ArrayList<AppEntity> = ArrayList<AppEntity>()
-    val arrayOfUseful: ArrayList<AppEntity> = ArrayList<AppEntity>()
-    var scoresAll: Int = 0
+    val usefulApps = MutableLiveData<List<AppEntity>>()
+    val harmfulApps = MutableLiveData<List<AppEntity>>()
+    val neutralApps = MutableLiveData<List<AppEntity>>()
 
 
-    fun refreshTime() {
-        arrayOfHarmful.clear()
-        arrayOfUseful.clear()
-        scoresAll = 0
+    val generalScores: MutableLiveData<Int> = MutableLiveData()
+
+    init {
+        scope.launch {
+            refreshAll()
+            refreshScores()
+        }
+    }
+
+    fun putIntoHarmful(appEntity: AppEntity) {
+        cache.inputIntoHarmful(appEntity.name ?: "")
+        val list = (harmfulApps.value ?: emptyList()).toMutableList()
+        list.add(appEntity)
+        harmfulApps.value = list
+    }
+
+    fun putIntoUseful(appEntity: AppEntity) {
+        cache.inputIntoUseful(appEntity.name ?: "")
+        val list = (usefulApps.value ?: emptyList()).toMutableList()
+        list.add(appEntity)
+        usefulApps.value = list
+    }
+
+    fun putIntoOthers(appEntity: AppEntity) {
+        val list = (neutralApps.value ?: emptyList()).toMutableList()
+        list.add(appEntity)
+        neutralApps.value = list
+    }
+
+    fun removeFromHarmful(appEntity: AppEntity) {
+        cache.removeFromHarmful(appEntity.name ?: "")
+        val list = harmfulApps.value?.filter { it != appEntity } ?: emptyList()
+        harmfulApps.value = list
+    }
+
+    fun removeFromUseful(appEntity: AppEntity) {
+        cache.removeFromUseful(appEntity.name ?: "")
+        val list = usefulApps.value?.filter { it != appEntity } ?: emptyList()
+        usefulApps.value = list
+    }
+
+    fun removeFromOthers(appEntity: AppEntity) {
+        val list = neutralApps.value?.filter { it != appEntity } ?: emptyList()
+        neutralApps.value = list
+    }
+
+    suspend fun refreshScores() = withContext(Dispatchers.IO) {
+        val useful = getMutableList(usefulApps)
+        val harmful = getMutableList(harmfulApps)
+        var scoresAll = 0
         val start: Calendar = (Calendar.getInstance())
         start.add(Calendar.DAY_OF_MONTH, 0)
         start.set(Calendar.HOUR_OF_DAY, 0)
         start.set(Calendar.MINUTE, 0)
         start.set(Calendar.MILLISECOND, 0)
         val end: Calendar = Calendar.getInstance()
-
         val mapOfTime: Map<String, Long> =
             getAppsInfo(start.timeInMillis, end.timeInMillis)
-        val mapOfUseful = cache.getAllUseful()
-        val mapOfHarmful = cache.getAllHarmful()
-        arrayOfHarmful.clear()
-        arrayOfUseful.clear()
-        var appEntity: AppEntity
-        mapOfTime.keys.forEach {
-            appEntity = AppEntity(
-                getIconApp(it),
-                getName(it),
-                toScore(mapOfTime.getOrDefault(it, 0))
-            )
-            when (appEntity.name) {
-                in mapOfHarmful -> {
-                    arrayOfHarmful.add(appEntity)
-                    scoresAll -= appEntity.scores
-                }
-                in mapOfUseful -> {
-                    arrayOfUseful.add(appEntity)
-                    scoresAll += appEntity.scores
+
+        mapOfTime.keys.forEach { packageName ->
+            val name = getName(packageName) ?: ""
+            val scores = toScore(mapOfTime[packageName] ?: 0)
+            val icon = getIconApp(packageName)
+            if (useful.removeIf { it.name == name }) {
+                useful.add(AppEntity(icon, name, KindOfApps.USEFUL, scores))
+                scoresAll += scores
+            }
+            if (harmful.removeIf { it.name == name }) {
+                useful.add(AppEntity(icon, name, KindOfApps.HARMFUL, scores))
+                scoresAll -= scores
+            }
+        }
+        Log.d("GegD","Ended scores")
+        generalScores.postValue(scoresAll)
+        harmfulApps.postValue(harmful)
+        usefulApps.postValue(useful)
+    }
+
+    suspend fun refreshAll() = withContext(Dispatchers.IO) {
+        val listOfAll = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        val neutral = mutableListOf<AppEntity>()
+        val useful = mutableListOf<AppEntity>()
+        val harmful = mutableListOf<AppEntity>()
+        for (i in listOfAll.indices) {
+            if (packageManager.getLaunchIntentForPackage(listOfAll[i].packageName) != null
+                && (listOfAll[i].flags and ApplicationInfo.FLAG_SYSTEM) == 0
+                && (listOfAll[i].flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0
+            ) {
+                val icon = getIconApp(listOfAll[i].packageName)
+                val name = getName(listOfAll[i].packageName)
+                when (name) {
+                    in nameOfsHarmful -> {
+                        harmful.add(AppEntity(icon, name, KindOfApps.HARMFUL))
+                    }
+                    in namesOfUseful -> {
+                        useful.add(AppEntity(icon, name, KindOfApps.USEFUL))
+                    }
+                    else -> {
+                        neutral.add(AppEntity(icon, name, KindOfApps.OTHERS))
+                    }
                 }
             }
         }
-
+        neutralApps.postValue(neutral)
+        usefulApps.postValue(useful)
+        harmfulApps.postValue(harmful)
     }
 
     private fun getAppsInfo(
@@ -79,7 +158,7 @@ class UsageTime @Inject constructor(
                 && event0.packageName == event1.packageName
             ) {
                 map[event0.packageName] =
-                    map.getOrDefault(event0.packageName, 0L) + (event1.timeStamp - event0.timeStamp)
+                    (map[event0.packageName] ?: 0L) + (event1.timeStamp - event0.timeStamp)
             }
         }
         return map
@@ -109,49 +188,20 @@ class UsageTime @Inject constructor(
     }
 
     private fun getName(packageName: String): String? = try {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getApplicationLabel(
-                packageManager.getApplicationInfo(
-                    packageName,
-                    PackageManager.ApplicationInfoFlags.of(0L)
-                )
-            ).toString()
-        } else {
-            packageManager.getApplicationLabel(
-                packageManager.getApplicationInfo(
-                    packageName,
-                    PackageManager.GET_META_DATA
-                )
-            ).toString()
-        }
+        packageManager.getApplicationLabel(
+            packageManager.getApplicationInfo(
+                packageName,
+                PackageManager.GET_META_DATA
+            )
+        ).toString()
     } catch (e: PackageManager.NameNotFoundException) {
         null
     }
 
-    suspend fun getAllApps(): List<AppEntity> = withContext(Dispatchers.IO) {
-        val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getInstalledApplications(PackageManager.ApplicationInfoFlags.of(0))
-        } else {
-            packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+    private suspend fun getMutableList(liveData: MutableLiveData<List<AppEntity>>): MutableList<AppEntity> =
+        withContext(Dispatchers.Main) {
+            (liveData.value ?: emptyList()).toMutableList()
         }
-        val rezList = ArrayList<AppEntity>()
-        for (i in list.indices) {
-            if (packageManager.getLaunchIntentForPackage(list[i].packageName) != null
-                && (list[i].flags and ApplicationInfo.FLAG_SYSTEM) == 0
-                && (list[i].flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0
-            ) {
-                rezList.add(
-                    AppEntity(
-                        getIconApp(list[i].packageName),
-                        getName(list[i].packageName),
-                        0
-                    )
-                )
-            }
-        }
-        rezList
-    }
-
 
     private fun toScore(scores: Long): Int = (scores / 10000).toInt()
 }

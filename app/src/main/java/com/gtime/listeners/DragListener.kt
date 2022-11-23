@@ -2,34 +2,42 @@ package com.gtime.listeners
 
 import android.view.DragEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.gtime.adapters.ManagerAdapter
+import com.example.antip.R
+import com.example.antip.databinding.ManagerItemBinding
+import com.gtime.model.dataclasses.AppEntity
 import com.gtime.ui.stateholders.AppManagerFragmentViewModel
 
 class DragListener(private val viewModel: AppManagerFragmentViewModel) :
     View.OnDragListener {
     private var isDropped = false
-    
+
     override fun onDrag(v: View, event: DragEvent): Boolean {
+        val viewSource = event.localState as View? ?: return false
+        val binding = ManagerItemBinding.bind(viewSource)
         when (event.action) {
+            DragEvent.ACTION_DRAG_STARTED->{
+                binding.cardManagerLayout.background = ContextCompat.getDrawable(
+                    binding.root.context,
+                    R.drawable.card_selected_background
+                )
+            }
+            DragEvent.ACTION_DRAG_ENDED->{
+                binding.cardManagerLayout.background = ContextCompat.getDrawable(
+                    binding.root.context,
+                    R.drawable.card_unselected_background
+                )
+            }
             DragEvent.ACTION_DROP -> {
-                if (v.tag == null) return false
-
                 isDropped = true
-                val viewSource = event.localState as View?
-                val target: RecyclerView = v.parent as RecyclerView
-                val positionTarget = v.tag as Int
-                if (viewSource == null) return false
-
+                val target = if(v.tag!=null) v.parent as RecyclerView else v as RecyclerView
                 val source = viewSource.parent as RecyclerView
-                val positionSource = viewSource.tag as Int
-
+                val elem = viewSource.tag as AppEntity
                 viewModel.handleChanges(
                     sourceId = source.id,
                     targetId = target.id,
-                    positionSource = positionSource,
-                    positionTarget = positionTarget,
-                    sourceElem = (source.adapter as ManagerAdapter).list[positionSource]
+                    sourceElem = elem
                 )
             }
         }

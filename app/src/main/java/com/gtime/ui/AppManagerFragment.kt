@@ -1,7 +1,9 @@
 package com.gtime.ui
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.antip.R
 import com.gtime.app.App
@@ -9,7 +11,7 @@ import com.gtime.domain.AppManagerFragmentViewComponent
 import javax.inject.Inject
 
 
-class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
+class AppManagerFragment : Fragment() {
     private val appManagerFragmentComponent by lazy {
         (requireContext().applicationContext as App).appComponent.activity()
             .appManagerFragmentComponent().create(this)
@@ -24,14 +26,19 @@ class AppManagerFragment : Fragment(R.layout.fragment_app_manager) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_app_manager,container,false)
         appManagerFragmentViewComponent =
             appManagerFragmentComponent.appManagerFragmentViewComponent()
                 .create(view, viewLifecycleOwner).apply {
                     inject(this@AppManagerFragment)
                     appManagerViewController.setupViews()
                 }
-        super.onViewCreated(view, savedInstanceState)
+        return view
     }
 
     override fun onDestroyView() {

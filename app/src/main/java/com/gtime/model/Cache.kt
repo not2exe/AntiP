@@ -33,7 +33,14 @@ class Cache @Inject constructor(applicationContext: Context) {
         if (isFirstLaunch()) {
             initBoolean()
             initCashWithNames()
+            initLives()
         }
+    }
+
+    private fun initLives() {
+        incLives()
+        incLives()
+        incLives()
     }
 
     private fun initCashWithNames() {
@@ -77,8 +84,8 @@ class Cache @Inject constructor(applicationContext: Context) {
     fun inputIntoBoolean(key: String, value: Boolean) =
         booleanShared.edit().putBoolean(key, value).apply()
 
-    fun incLife() {
-        val life = getLife()
+    fun incLives() {
+        val life = getLives()
         if (life <= 3) {
             intShared.edit().putInt(Constants.KEY_LIFE, life + 1)
                 .apply()
@@ -86,8 +93,8 @@ class Cache @Inject constructor(applicationContext: Context) {
     }
 
 
-    fun decLife() {
-        val life = getLife()
+    fun decLives() {
+        val life = getLives()
         if (life > 0) {
             intShared.edit().putInt(Constants.KEY_LIFE, life - 1)
                 .apply()
@@ -95,7 +102,7 @@ class Cache @Inject constructor(applicationContext: Context) {
     }
 
 
-    fun getLife(): Int = intShared.getInt(Constants.KEY_LIFE, 0)
+    fun getLives(): Int = intShared.getInt(Constants.KEY_LIFE, 0)
 
     private fun isFirstLaunch(): Boolean =
         booleanShared.getBoolean(Constants.KEY_FIRST_LAUNCH, true)

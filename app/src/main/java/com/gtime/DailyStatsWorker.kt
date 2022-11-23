@@ -20,15 +20,20 @@ class DailyStatsWorker @Inject constructor(
     private val cache: Cache
 ) : CoroutineWorker(applicationContext, params) {
     override suspend fun doWork(): Result {
-        usageTime.refreshTime()
-        dao.insertStats(DailyStatsEntry(Calendar.getInstance().timeInMillis, usageTime.scoresAll))
-        if (usageTime.scoresAll < 0) {
+        usageTime.refreshScores()
+        dao.insertStats(
+            DailyStatsEntry(
+                Calendar.getInstance().timeInMillis,
+                usageTime.generalScores.value ?: 0
+            )
+        )
+        if ((usageTime.generalScores.value ?: 0) < 0) {
             if (cache.getFromBoolean(Constants.KEY_HARDCORE_MODE)) {
-                cache.decLife()
-                cache.decLife()
-                cache.decLife()
+                cache.decLives()
+                cache.decLives()
+                cache.decLives()
             } else {
-                cache.decLife()
+                cache.decLives()
             }
         }
         return Result.success()

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="heart_expand" format="float" type="dimen">1.5</item>
+    <item name="heart_pre_expand" format="float" type="dimen">1.4</item>
+    <item name="heart_calm" format="float" type="dimen">1.0</item>
+    <integer name="heart_beat_duration">100</integer>
+    <integer name="heart_calm_duration">1000</integer>
+</resources>

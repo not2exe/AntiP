@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.antip"
-        minSdk 29
+        minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -40,12 +40,13 @@ android {
 dependencies {
     def diagrams = "3.10.1"
     def viewPager = "1.0.0"
+    def room = "2.4.3"
     def preferences = "1.2.0"
     def navigation = "2.5.3"
-    def room = "2.4.3"
     def coroutines = "1.6.4"
     def dagger = "2.43.2"
     def worker = "2.7.1"
+    def flexbox = "3.0.0"
 
     //Diagrams
     implementation "com.diogobernardino:williamchart:$diagrams"
@@ -68,6 +69,8 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger"
     //WorkManager
     implementation("androidx.work:work-runtime-ktx:$worker")
+    //FlexBox Layout
+    implementation "com.google.android.flexbox:flexbox:$flexbox"
 
 
     implementation "androidx.fragment:fragment-ktx:1.5.4"

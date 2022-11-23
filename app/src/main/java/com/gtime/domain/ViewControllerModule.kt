@@ -10,8 +10,8 @@ import com.example.antip.databinding.FragmentChangeModeBinding
 import com.example.antip.databinding.FragmentMainBinding
 import com.gtime.Constants
 import com.gtime.ui.MainViewController
-import com.gtime.adapters.AppAdapter
-import com.gtime.adapters.ManagerAdapter
+import com.gtime.ui.adapters.AppAdapter
+import com.gtime.ui.adapters.ManagerAdapter
 import com.gtime.ui.*
 import com.gtime.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.ui.stateholders.ChangeModeViewModel

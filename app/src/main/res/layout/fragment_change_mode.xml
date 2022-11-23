@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ChangeMode"
-    android:background="@drawable/back">
+    >
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_back"

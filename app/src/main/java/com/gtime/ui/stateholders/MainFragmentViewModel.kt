@@ -1,16 +1,15 @@
 package com.gtime.ui.stateholders
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import com.gtime.Constants
-import com.gtime.State
+import android.util.Log
+import androidx.lifecycle.*
+import com.gtime.KindOfApps
 import com.gtime.model.Cache
 import com.gtime.model.UsageTime
 import com.gtime.model.dataclasses.AppEntity
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.launch
 
 class MainFragmentViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
@@ -23,32 +22,37 @@ class MainFragmentViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): MainFragmentViewModel
     }
 
-    val usefulApps = MutableLiveData<ArrayList<AppEntity>>(arrayListOf())
-    val harmfulApps = MutableLiveData<ArrayList<AppEntity>>(arrayListOf())
-    val scoresAll = MutableLiveData(0)
-    val stateOfKindOfApps = MutableLiveData<State>(State.USEFUL)
+    val usefulApps: LiveData<List<AppEntity>> =
+        Transformations.switchMap(usageTime.usefulApps) { list ->
+            MutableLiveData(list.sortedByDescending { it.scores })
+        }
+    val harmfulApps: LiveData<List<AppEntity>> =
+        Transformations.switchMap(usageTime.harmfulApps) { list ->
+            MutableLiveData(list.sortedByDescending { it.scores })
+        }
+    val scoresAll: LiveData<Int> =
+        Transformations.switchMap(usageTime.generalScores) { MutableLiveData(it) }
+    val stateOfKindOfApps = MutableLiveData<KindOfApps>(KindOfApps.USEFUL)
+    val lives = MutableLiveData<Int>()
 
 
-    fun refresh() {
-        usageTime.refreshTime()
-        initApps()
+    init {
+        refresh()
+        refreshLife()
     }
 
-    fun getIsLostHardcore(): Boolean {
-        return cache.getFromBoolean(Constants.KEY_IS_LOST_HARDCORE)
+    fun refresh() =
+        viewModelScope.launch {
+            usageTime.refreshScores()
+        }
+
+
+    private fun refreshLife() {
+        lives.value = cache.getLives()
     }
 
-    fun setState(state: State) {
+    fun setState(state: KindOfApps) {
         stateOfKindOfApps.value = state
-    }
-
-
-    private fun initApps() {
-        usefulApps.value = usageTime.arrayOfUseful
-        harmfulApps.value = usageTime.arrayOfHarmful
-        scoresAll.value = usageTime.scoresAll
-        usefulApps.value?.sortByDescending { it.scores }
-        harmfulApps.value?.sortByDescending { it.scores }
     }
 
 }

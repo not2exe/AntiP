@@ -1,11 +1,12 @@
 package com.gtime.ui
+
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.databinding.FragmentAppManagerBinding
-import com.gtime.adapters.ManagerAdapter
-import com.gtime.ui.AppManagerFragmentDirections
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.gtime.ui.adapters.ManagerAdapter
 import com.gtime.ui.stateholders.AppManagerFragmentViewModel
 
 class AppManagerViewController(
@@ -20,7 +21,6 @@ class AppManagerViewController(
     fun setupViews() {
         initRvs()
         initButtons()
-        viewModel.refreshApps()
         initObservers()
     }
 
@@ -32,7 +32,7 @@ class AppManagerViewController(
         viewModel.harmfulApps.observe(viewLifecycleOwner) {
             harmfulAdapter.updateList(it)
         }
-        viewModel.otherApps.observe(viewLifecycleOwner) {
+        viewModel.neutralApps.observe(viewLifecycleOwner) {
             othersAdapter.updateList(it)
         }
     }
@@ -50,7 +50,7 @@ class AppManagerViewController(
     }
 
     private fun RecyclerView.init(adapter: ManagerAdapter) {
-        this.layoutManager = LinearLayoutManager(context)
+        this.layoutManager = FlexboxLayoutManager(context, FlexDirection.ROW)
         this.adapter = adapter
         this.setOnDragListener(adapter.dragListener)
     }
