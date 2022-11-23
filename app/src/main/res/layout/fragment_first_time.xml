@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogCardViewStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.FirstTimeFragment"
-    android:background="@drawable/back">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/linear_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_settings"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="150dp"
-                android:layout_height="300dp"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:src="@drawable/usage_1"
@@ -32,44 +26,36 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="150dp"
-                android:layout_height="300dp"
+                android:layout_width="wrap_content"
+                android:layout_height="400dp"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:src="@drawable/usage_2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:text="@string/permission_message"
             android:textColor="@color/md_theme_dark_onPrimary"
-            android:text="@string/permission_message" />
+            android:textSize="28sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_settings_button"
-            android:layout_margin="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/open_settings"
-            android:background="@android:color/transparent"
-            style="@style/Button"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
-            android:layout_margin="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/cancel"
-            android:background="@android:color/transparent"
             style="@style/Button"
-           />
-
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="4dp"
+            android:background="@android:color/transparent"
+            android:text="@string/open_settings"
+            android:textSize="28sp" />
     </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
