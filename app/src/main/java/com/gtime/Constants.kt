@@ -1,6 +1,7 @@
 package com.gtime
 
 object Constants {
+    const val TIME_OF_ALL = "ALL_TIME"
     const val KEY_LIFE = "KEY_LIFE"
     const val CACHE_INT = "CacheInt"
     const val EMPTY = "EMPTY"

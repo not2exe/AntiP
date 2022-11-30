@@ -1,6 +1,5 @@
 package com.gtime.ui.stateholders
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.gtime.KindOfApps
 import com.gtime.model.Cache
@@ -24,14 +23,14 @@ class MainFragmentViewModel @AssistedInject constructor(
 
     val usefulApps: LiveData<List<AppEntity>> =
         Transformations.switchMap(usageTime.usefulApps) { list ->
-            MutableLiveData(list.sortedByDescending { it.scores })
+            MutableLiveData(list.filter { it.scores != 0 }.sortedByDescending { it.scores })
         }
     val harmfulApps: LiveData<List<AppEntity>> =
         Transformations.switchMap(usageTime.harmfulApps) { list ->
-            MutableLiveData(list.sortedByDescending { it.scores })
+            MutableLiveData(list.filter { it.scores != 0 }.sortedByDescending { it.scores })
         }
     val scoresAll: LiveData<Int> =
-        Transformations.switchMap(usageTime.generalScores) { MutableLiveData(it) }
+        Transformations.switchMap(usageTime.uiGeneralScores) { MutableLiveData(it) }
     val stateOfKindOfApps = MutableLiveData<KindOfApps>(KindOfApps.USEFUL)
     val lives = MutableLiveData<Int>()
 

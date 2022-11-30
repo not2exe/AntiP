@@ -5,7 +5,6 @@ import android.app.usage.UsageStatsManager
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gtime.Constants
 import com.gtime.KindOfApps
@@ -18,6 +17,7 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.math.roundToInt
 
 
 @AppScope
@@ -34,7 +34,7 @@ class UsageTime @Inject constructor(
     val neutralApps = MutableLiveData<List<AppEntity>>()
 
 
-    val generalScores: MutableLiveData<Int> = MutableLiveData()
+    val uiGeneralScores: MutableLiveData<Int> = MutableLiveData()
 
     init {
         scope.launch {
@@ -83,7 +83,7 @@ class UsageTime @Inject constructor(
     suspend fun refreshScores() = withContext(Dispatchers.IO) {
         val useful = getMutableList(usefulApps)
         val harmful = getMutableList(harmfulApps)
-        var scoresAll = 0
+        var uiScores = 0
         val start: Calendar = (Calendar.getInstance())
         start.add(Calendar.DAY_OF_MONTH, 0)
         start.set(Calendar.HOUR_OF_DAY, 0)
@@ -92,22 +92,40 @@ class UsageTime @Inject constructor(
         val end: Calendar = Calendar.getInstance()
         val mapOfTime: Map<String, Long> =
             getAppsInfo(start.timeInMillis, end.timeInMillis)
+        val scoresOfAll = toScore(mapOfTime[Constants.TIME_OF_ALL] ?: return@withContext).toDouble()
 
         mapOfTime.keys.forEach { packageName ->
             val name = getName(packageName) ?: ""
             val scores = toScore(mapOfTime[packageName] ?: 0)
             val icon = getIconApp(packageName)
+            val percents: Int = (scores.toDouble() / scoresOfAll).roundToInt() * 100
             if (useful.removeIf { it.name == name }) {
-                useful.add(AppEntity(icon, name, KindOfApps.USEFUL, scores))
-                scoresAll += scores
+                useful.add(
+                    AppEntity(
+                        image = icon,
+                        name = name,
+                        kindOfApps = KindOfApps.USEFUL,
+                        percentsOsGeneral = percents,
+                        _scores = scores
+                    )
+                )
+                uiScores += scores
             }
             if (harmful.removeIf { it.name == name }) {
-                useful.add(AppEntity(icon, name, KindOfApps.HARMFUL, scores))
-                scoresAll -= scores
+                harmful.add(
+                    AppEntity(
+                        image = icon,
+                        name = name,
+                        kindOfApps = KindOfApps.HARMFUL,
+                        percentsOsGeneral = percents,
+                        _scores = scores
+                    )
+                )
+                uiScores -= scores
             }
         }
-        Log.d("GegD","Ended scores")
-        generalScores.postValue(scoresAll)
+
+        uiGeneralScores.postValue(uiScores)
         harmfulApps.postValue(harmful)
         usefulApps.postValue(useful)
     }
@@ -123,8 +141,7 @@ class UsageTime @Inject constructor(
                 && (listOfAll[i].flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0
             ) {
                 val icon = getIconApp(listOfAll[i].packageName)
-                val name = getName(listOfAll[i].packageName)
-                when (name) {
+                when (val name = getName(listOfAll[i].packageName)) {
                     in nameOfsHarmful -> {
                         harmful.add(AppEntity(icon, name, KindOfApps.HARMFUL))
                     }
@@ -157,8 +174,10 @@ class UsageTime @Inject constructor(
                 (event1.eventType == UsageEvents.Event.ACTIVITY_PAUSED || event1.eventType == UsageEvents.Event.ACTIVITY_STOPPED)
                 && event0.packageName == event1.packageName
             ) {
+                val timeBetweenActions = (event1.timeStamp - event0.timeStamp)
                 map[event0.packageName] =
-                    (map[event0.packageName] ?: 0L) + (event1.timeStamp - event0.timeStamp)
+                    (map[event0.packageName] ?: 0L) + timeBetweenActions
+                map[Constants.TIME_OF_ALL] = (map[Constants.TIME_OF_ALL] ?: 0L) + timeBetweenActions
             }
         }
         return map

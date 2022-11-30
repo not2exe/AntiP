@@ -24,10 +24,10 @@ class DailyStatsWorker @Inject constructor(
         dao.insertStats(
             DailyStatsEntry(
                 Calendar.getInstance().timeInMillis,
-                usageTime.generalScores.value ?: 0
+                usageTime.uiGeneralScores.value ?: 0
             )
         )
-        if ((usageTime.generalScores.value ?: 0) < 0) {
+        if ((usageTime.uiGeneralScores.value ?: 0) < 0) {
             if (cache.getFromBoolean(Constants.KEY_HARDCORE_MODE)) {
                 cache.decLives()
                 cache.decLives()

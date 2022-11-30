@@ -9,8 +9,9 @@ data class AppEntity(
     val image: Drawable?,
     override val name: String?,
     val kindOfApps: KindOfApps,
-    private val _scores: Int=0,
-    val multiplier: Double = 1.0
+    val percentsOsGeneral: Int = 0,
+    private val _scores: Int = 0,
+    val multiplier: Double = 1.0,
 ) : Entity(name) {
     val scores = _scores
         get() = (field * multiplier).toInt()
