@@ -15,9 +15,7 @@ class ChangeModeViewController(
     }
 
     private fun setupButtons() = with(binding) {
-        buttonBack.setOnClickListener {
-            navController.navigate(ChangeModeFragmentDirections.actionChangeModeFragmentToMenuFragment())
-        }
+
         initRadioButtons()
 
         normalModeButton.setOnClickListener {

@@ -45,9 +45,7 @@ class AppManagerViewController(
     }
 
     private fun initButtons() = with(binding) {
-        buttonBack.setOnClickListener {
-            navController.navigate(AppManagerFragmentDirections.actionAppManagerFragmentToMenuFragment())
-        }
+
     }
 
     private fun RecyclerView.init(adapter: ManagerAdapter) {

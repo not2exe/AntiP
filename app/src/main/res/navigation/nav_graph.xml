@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_mainFragment_to_firstTimeFragment"
             app:destination="@id/firstTimeFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstTimeFragment"
@@ -24,46 +21,23 @@
         tools:layout="@layout/fragment_first_time" >
 
     </fragment>
-    <fragment
-        android:id="@+id/menuFragment"
-        android:name="com.gtime.ui.MenuFragment"
-        android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
-        <action
-            android:id="@+id/action_menuFragment_to_changeModeFragment"
-            app:destination="@id/changeModeFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_appManagerFragment"
-            app:destination="@id/appManagerFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
-            android:id="@+id/action_menuFragment_to_achievementsFragment"
-            app:destination="@id/achievementsFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/appManagerFragment"
         android:name="com.gtime.ui.AppManagerFragment"
         android:label="AppManagerFragment" >
-        <action
-            android:id="@+id/action_appManagerFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/changeModeFragment"
         android:name="com.gtime.ui.ChangeModeFragment"
         android:label="ChangeModeFragment" >
-        <action
-            android:id="@+id/action_changeModeFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/achievementsFragment"
         android:name="com.gtime.ui.AchievementsFragment"
         android:label="AchievementsFragment" >
-        <action
-            android:id="@+id/action_achievementsFragment_to_menuFragment"
-            app:destination="@id/menuFragment" />
+
     </fragment>
 </navigation>

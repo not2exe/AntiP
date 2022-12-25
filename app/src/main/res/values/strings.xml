@@ -25,5 +25,6 @@
     <string name="mode">Mode</string>
     <string name="normal">Normal</string>
     <string name="hardcore">Hardcore</string>
+    <string name="home">Home</string>
 
 </resources>

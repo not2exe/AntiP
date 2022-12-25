@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mainFragment"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/appManagerFragment"
+            android:title="@string/manageApps" />
+        <item
+            android:id="@+id/changeModeFragment"
+            android:title="@string/change_mode" />
+        <item
+            android:id="@+id/achievementsFragment"
+            android:title="@string/achievements" />
+    </group>
+</menu>

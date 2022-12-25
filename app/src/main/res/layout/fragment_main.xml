@@ -13,17 +13,6 @@
         android:orientation="vertical"
         android:weightSum="2"
         tools:context="com.gtime.ui.MainFragment">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSettings"
-            style="@style/ShapeAppearanceOverlay.Material3.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="12dp"
-            android:text="@string/settings"
-            android:textAppearance="@style/settings" />
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

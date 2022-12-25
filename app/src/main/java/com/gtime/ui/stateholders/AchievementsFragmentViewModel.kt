@@ -29,8 +29,6 @@ class AchievementsFragmentViewModel @AssistedInject constructor(
             R.drawable.done
         else
             R.drawable.lock
-        achievements.value?.add(Achievement(R.drawable.icon, "Download App", R.drawable.done))
-        achievements.value?.add(Achievement(R.drawable.heart, "Survive one day", imageHardcore))
     }
 
 

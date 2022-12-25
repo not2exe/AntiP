@@ -31,16 +31,12 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
 
     private val adapterAchievement by lazy { AchievementsAdapter() }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireContext().applicationContext as App).appComponent.activity().inject(this)
         FragmentAchievementsBinding.bind(view).apply {
-            buttonBack.setOnClickListener {
-                findNavController().navigate(AchievementsFragmentDirections.actionAchievementsFragmentToMenuFragment())
-            }
             achievementsTable.init()
-
         }
-
         viewModel.initAchievements()
         initObservers()
         super.onViewCreated(view, savedInstanceState)

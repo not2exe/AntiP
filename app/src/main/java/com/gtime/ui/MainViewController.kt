@@ -4,8 +4,10 @@ import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.provider.Settings
 import android.util.TypedValue
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -120,9 +122,6 @@ class MainViewController(
                 viewModel.setState(KindOfApps.USEFUL)
             }
         }
-        binding.buttonSettings.setOnClickListener {
-            onClickSettingsButton()
-        }
         binding.refreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -135,20 +134,25 @@ class MainViewController(
     }
 
 
-    private fun onClickSettingsButton() {
-        navController
-            .navigate(MainFragmentDirections.actionMainFragmentToMenuFragment())
-    }
+
 
     private fun checkUsagePerm(): Boolean {
         return try {
             val appOpsManager =
                 context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-            val mode = appOpsManager.unsafeCheckOpNoThrow(
-                AppOpsManager.OPSTR_GET_USAGE_STATS,
-                android.os.Process.myUid(),
-                context.packageName
-            )
+            val mode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                appOpsManager.unsafeCheckOpNoThrow(
+                    AppOpsManager.OPSTR_GET_USAGE_STATS,
+                    android.os.Process.myUid(),
+                    context.packageName
+                )
+            } else {
+                appOpsManager.checkOpNoThrow(
+                    AppOpsManager.OPSTR_GET_USAGE_STATS,
+                    android.os.Process.myUid(),
+                    context.packageName
+                )
+            }
             mode == AppOpsManager.MODE_ALLOWED
         } catch (e: Exception) {
             false
