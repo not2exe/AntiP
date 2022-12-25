@@ -2,17 +2,17 @@ package com.gtime.ui.stateholders
 
 import androidx.lifecycle.*
 import com.example.antip.R
-import com.gtime.Constants
 import com.gtime.model.Cache
-import com.gtime.model.UsageTime
+import com.gtime.model.UsageTimeRepository
 import com.gtime.model.dataclasses.AppEntity
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.launch
 
 class AppManagerFragmentViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
-    private val usageTime: UsageTime,
+    private val usageTimeRepository: UsageTimeRepository,
     private val cache: Cache
 ) : ViewModel() {
     @AssistedFactory
@@ -21,9 +21,11 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
     }
 
     val usefulApps =
-        Transformations.switchMap(usageTime.usefulApps) { getLiveDataList(it) }
-    val harmfulApps = Transformations.switchMap(usageTime.harmfulApps) { getLiveDataList(it) }
-    val neutralApps = Transformations.switchMap(usageTime.neutralApps) { getLiveDataList(it) }
+        Transformations.switchMap(usageTimeRepository.usefulApps) { getLiveDataList(it) }
+    val harmfulApps =
+        Transformations.switchMap(usageTimeRepository.harmfulApps) { getLiveDataList(it) }
+    val neutralApps =
+        Transformations.switchMap(usageTimeRepository.neutralApps) { getLiveDataList(it) }
 
 
     private fun getLiveDataList(list: List<AppEntity>): LiveData<List<AppEntity>> =
@@ -33,26 +35,26 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
         sourceId: Int,
         targetId: Int,
         sourceElem: AppEntity
-    ) {
-        if (targetId == sourceId) return
+    ) = viewModelScope.launch {
+        if (targetId == sourceId) return@launch
 
         when (sourceId) {
             R.id.rvUseful -> {
-                usageTime.removeFromUseful(sourceElem)
+                usageTimeRepository.removeFromUseful(sourceElem)
                 handleAdd(
                     targetId,
                     sourceElem,
                 )
             }
             R.id.rvHarmful -> {
-                usageTime.removeFromHarmful(sourceElem)
+                usageTimeRepository.removeFromHarmful(sourceElem)
                 handleAdd(
                     targetId,
                     sourceElem,
                 )
             }
             R.id.rvOthers -> {
-                usageTime.removeFromOthers(sourceElem)
+                usageTimeRepository.removeFromOthers(sourceElem)
                 handleAdd(
                     targetId,
                     sourceElem,
@@ -62,19 +64,19 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
     }
 
 
-    private fun handleAdd(
+    private suspend fun handleAdd(
         targetId: Int,
         sourceElem: AppEntity,
     ) {
         when (targetId) {
             R.id.rvOthers -> {
-                usageTime.putIntoOthers(sourceElem)
+                usageTimeRepository.putIntoOthers(sourceElem)
             }
             R.id.rvUseful -> {
-                usageTime.putIntoUseful(sourceElem)
+                usageTimeRepository.putIntoUseful(sourceElem)
             }
             R.id.rvHarmful -> {
-                usageTime.putIntoHarmful(sourceElem)
+                usageTimeRepository.putIntoHarmful(sourceElem)
             }
         }
     }

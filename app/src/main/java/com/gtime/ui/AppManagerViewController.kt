@@ -2,6 +2,7 @@ package com.gtime.ui
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.databinding.FragmentAppManagerBinding
 import com.google.android.flexbox.FlexDirection
@@ -50,7 +51,7 @@ class AppManagerViewController(
     }
 
     private fun RecyclerView.init(adapter: ManagerAdapter) {
-        this.layoutManager = FlexboxLayoutManager(context, FlexDirection.ROW)
+        this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
         this.adapter = adapter
         this.setOnDragListener(adapter.dragListener)
     }

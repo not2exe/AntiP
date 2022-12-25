@@ -8,7 +8,7 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.gtime.Constants
 import com.gtime.domain.DaggerAppComponent
-import com.gtime.model.UsageTime
+import com.gtime.model.UsageTimeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

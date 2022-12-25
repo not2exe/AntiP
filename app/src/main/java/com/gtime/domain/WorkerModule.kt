@@ -50,8 +50,8 @@ interface WorkerModule {
         @AppScope
         fun provideWorker(context: Context): WorkManager = WorkManager.getInstance(context)
 
-        private const val repeatDailyInterval = 15L
-        private const val flexTimeDailyInterval = 30L
+        private const val repeatDailyInterval = 24L
+        private const val flexTimeDailyInterval = 15L
 
         private const val repeatIncInterval = 3L
         private const val flexTimeIncInterval = 1L

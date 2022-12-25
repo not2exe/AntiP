@@ -14,5 +14,5 @@ class DiffUtilCallbackImpl(
         oldList[oldItemPosition] == newList[newItemPosition]
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].name == newList[newItemPosition].name
+        oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
 }

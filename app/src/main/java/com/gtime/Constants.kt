@@ -19,4 +19,5 @@ object Constants {
     const val ADAPTER_OTHERS = "AdapterOthers"
     const val DAILY_STATS_WORKER="DAILY_STATS_WORKER"
     const val INC_LIFE_WORKER="INC_LIFE_WORKER"
+    const val APP_TABLE = "app_table"
 }

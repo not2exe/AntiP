@@ -1,11 +1,13 @@
 package com.gtime.domain
 
 import android.content.Context
-import androidx.navigation.Navigator
 import androidx.room.Room
 import com.gtime.Constants
 import com.gtime.model.Cache
-import com.gtime.model.db.DailyStatsDatabase
+import com.gtime.model.db.AppDataBaseEntity
+import com.gtime.model.db.AppTableDao
+import com.gtime.model.db.DailyStatsDao
+import com.gtime.model.db.DbClass
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -15,24 +17,21 @@ interface LocalStoragesModule {
     companion object {
         @AppScope
         @Provides
-        fun provideDailyStatsDatabase(context: Context): DailyStatsDatabase =
+        fun provideDailyStatsDatabase(context: Context): DbClass =
             Room.databaseBuilder(
                 context,
-                DailyStatsDatabase::class.java,
+                DbClass::class.java,
                 Constants.SCORE_TABLE
             ).build()
 
         @AppScope
         @Provides
-        fun provideDailyStatsDao(dailyStatsDatabase: DailyStatsDatabase) =
-            dailyStatsDatabase.dailyStatsDao()
+        fun provideDailyStatsDao(dbClass: DbClass):DailyStatsDao =
+            dbClass.dailyStatsDao()
 
+        @AppScope
         @Provides
-        @Named(Constants.CACHE_HARMFUL)
-        fun provideNamesOfHarmful(cache: Cache): List<String> = cache.getAllHarmful().map { it.toString() }.toList()
-
-        @Provides
-        @Named(Constants.CACHE_USEFUL)
-        fun provideNamesOfUseful(cache: Cache): List<String> = cache.getAllUseful().map { it.toString() }.toList()
+        fun provideAppTable(dbClass: DbClass):AppTableDao =
+            dbClass.appTableDao()
     }
 }

@@ -22,9 +22,7 @@
         android:name="com.gtime.ui.FirstTimeFragment"
         android:label="fragment_first_time"
         tools:layout="@layout/fragment_first_time" >
-        <action
-            android:id="@+id/action_firstTimeFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/menuFragment"

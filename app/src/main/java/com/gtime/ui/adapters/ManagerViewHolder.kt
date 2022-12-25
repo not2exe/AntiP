@@ -17,7 +17,8 @@ class ManagerViewHolder(item: View) :
         appEntity: AppEntity,
         dragInstance: DragListener
     ) = with(binding) {
-        imageViewSettings.setImageDrawable(appEntity.image)
+        appIcon.setImageDrawable(appEntity.image)
+        appName.text = appEntity.name
         cardManagerLayout.setOnLongClickListener {
             val data = ClipData.newPlainText("", "")
             val shadowBuilder = View.DragShadowBuilder(it)

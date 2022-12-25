@@ -20,10 +20,7 @@ class Cache @Inject constructor(applicationContext: Context) {
         "YouTube", "Twitter", "Pinterest", "Snapchat", "WhatsApp",
         "Reddit", "Twitch", "VK", "Telegram", "Hearthstone", "Discord"
     )
-    private val namesOfUseful =
-        applicationContext.getSharedPreferences(Constants.CACHE_USEFUL, Context.MODE_PRIVATE)
-    private val namesOfHarmful =
-        applicationContext.getSharedPreferences(Constants.CACHE_HARMFUL, Context.MODE_PRIVATE)
+
     private val booleanShared =
         applicationContext.getSharedPreferences(Constants.CACHE_BOOLEANS, Context.MODE_PRIVATE)
     private val intShared =
@@ -32,7 +29,6 @@ class Cache @Inject constructor(applicationContext: Context) {
     init {
         if (isFirstLaunch()) {
             initBoolean()
-            initCashWithNames()
             initLives()
         }
     }
@@ -43,20 +39,7 @@ class Cache @Inject constructor(applicationContext: Context) {
         incLives()
     }
 
-    private fun initCashWithNames() {
-        namesOfUseful.edit {
-            for (i in startNamesOfUsefulApps.indices) {
-                putString(startNamesOfUsefulApps[i], startNamesOfUsefulApps[i])
-            }
-            apply()
-        }
-        namesOfHarmful.edit {
-            for (i in startNamesOfHarmfulApps.indices) {
-                putString(startNamesOfHarmfulApps[i], startNamesOfHarmfulApps[i])
-            }
-            apply()
-        }
-    }
+
 
     private fun initBoolean() {
         booleanShared.edit {
@@ -67,17 +50,6 @@ class Cache @Inject constructor(applicationContext: Context) {
         }
     }
 
-    fun getAllUseful(): MutableCollection<out Any?> = namesOfUseful.all.values
-
-    fun getAllHarmful(): MutableCollection<out Any?> = namesOfHarmful.all.values
-
-    fun inputIntoHarmful(value: String) = namesOfHarmful.edit().putString(value, value).apply()
-
-    fun inputIntoUseful(value: String) = namesOfUseful.edit().putString(value, value).apply()
-
-    fun removeFromUseful(key: String) = namesOfUseful.edit().remove(key).apply()
-
-    fun removeFromHarmful(key: String) = namesOfHarmful.edit().remove(key).apply()
 
     fun getFromBoolean(key: String): Boolean = booleanShared.getBoolean(key, false)
 
