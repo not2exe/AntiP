@@ -9,12 +9,5 @@ import dagger.Subcomponent
 @FragmentViewScope
 @Subcomponent(modules = [ViewControllerModule::class])
 interface MainFragmentViewComponent {
-    @dagger.Subcomponent.Factory
-    interface Factory {
-        fun create(
-            @BindsInstance view: View,
-            @BindsInstance viewLifecycleOwner: LifecycleOwner
-        ): MainFragmentViewComponent
-    }
     fun inject(mainFragment: MainFragment)
 }

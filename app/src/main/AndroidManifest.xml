@@ -10,6 +10,9 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:name="com.gtime.app.App"
         android:allowBackup="true"
@@ -26,5 +29,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

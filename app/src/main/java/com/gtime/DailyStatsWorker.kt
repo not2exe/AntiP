@@ -20,7 +20,7 @@ class DailyStatsWorker @Inject constructor(
     private val cache: Cache
 ) : CoroutineWorker(applicationContext, params) {
     override suspend fun doWork(): Result {
-        usageTimeRepository.refreshScores()
+        usageTimeRepository.refreshUsageApps()
         dao.insertStats(
             DailyStatsEntry(
                 Calendar.getInstance().timeInMillis,

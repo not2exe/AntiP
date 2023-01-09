@@ -8,23 +8,12 @@ import javax.inject.Inject
 
 @AppScope
 class Cache @Inject constructor(applicationContext: Context) {
-    private val startNamesOfUsefulApps = arrayOf(
-        "CoolReader", "InShot", "KineMaster", "PicsArt", "Strava",
-        "Sleep Cycle", "Daylio", "Calm", "Seven", "Brainly",
-        "English", "TED", "GitHub", "Canva", "WolframAlpha",
-        "Кинопоиск", "Webinar", "Kaspersky", "Lumosicty", "AccuBattery",
-        "GetCourse", "MyBook", "Zoom", "Figma"
-    )
-    private val startNamesOfHarmfulApps = arrayOf(
-        "TikTok", "Instagram", "Facebook", "Netflix",
-        "YouTube", "Twitter", "Pinterest", "Snapchat", "WhatsApp",
-        "Reddit", "Twitch", "VK", "Telegram", "Hearthstone", "Discord"
-    )
-
     private val booleanShared =
         applicationContext.getSharedPreferences(Constants.CACHE_BOOLEANS, Context.MODE_PRIVATE)
     private val intShared =
         applicationContext.getSharedPreferences(Constants.CACHE_INT, Context.MODE_PRIVATE)
+    private val accShared =
+        applicationContext.getSharedPreferences(Constants.CACHE_ACC, Context.MODE_PRIVATE)
 
     init {
         if (isFirstLaunch()) {
@@ -33,22 +22,17 @@ class Cache @Inject constructor(applicationContext: Context) {
         }
     }
 
-    private fun initLives() {
-        incLives()
-        incLives()
-        incLives()
+    fun saveAcc(accountInfo: AccountInfo) = accShared.edit {
+        putString(Constants.KEY_NAME, accountInfo.name)
+        putString(Constants.KEY_EMAIL, accountInfo.email)
+        putString(Constants.KEY_URL, accountInfo.urlAvatar)
     }
 
-
-
-    private fun initBoolean() {
-        booleanShared.edit {
-            putBoolean(Constants.KEY_FIRST_LAUNCH, false)
-            putBoolean(Constants.KEY_NORMAL_MODE, true)
-            putBoolean(Constants.KEY_HARDCORE_MODE, false)
-            apply()
-        }
-    }
+    fun getAcc(): AccountInfo = AccountInfo(
+        accShared.getString(Constants.KEY_NAME, "") ?: "",
+        accShared.getString(Constants.KEY_EMAIL, "") ?: "",
+        accShared.getString(Constants.KEY_URL, "") ?: ""
+    )
 
 
     fun getFromBoolean(key: String): Boolean = booleanShared.getBoolean(key, false)
@@ -78,4 +62,19 @@ class Cache @Inject constructor(applicationContext: Context) {
 
     private fun isFirstLaunch(): Boolean =
         booleanShared.getBoolean(Constants.KEY_FIRST_LAUNCH, true)
+
+    private fun initLives() {
+        incLives()
+        incLives()
+        incLives()
+    }
+
+    private fun initBoolean() {
+        booleanShared.edit {
+            putBoolean(Constants.KEY_FIRST_LAUNCH, false)
+            putBoolean(Constants.KEY_NORMAL_MODE, true)
+            putBoolean(Constants.KEY_HARDCORE_MODE, false)
+            apply()
+        }
+    }
 }

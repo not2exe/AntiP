@@ -12,5 +12,5 @@ interface AppManagerFragmentComponent {
         fun create(@BindsInstance appManagerFragment: AppManagerFragment): AppManagerFragmentComponent
     }
 
-    fun appManagerFragmentViewComponent(): AppManagerFragmentViewComponent.Factory
+    fun appManagerFragmentViewComponent(): AppManagerFragmentViewComponent
 }

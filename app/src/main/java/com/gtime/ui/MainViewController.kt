@@ -19,6 +19,7 @@ import com.example.antip.databinding.FragmentMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.navigation.NavigationView
 import com.gtime.AnimateState
 import com.gtime.KindOfApps
 import com.gtime.ui.adapters.AppAdapter
@@ -31,7 +32,6 @@ class MainViewController(
     private val viewLifecycleOwner: LifecycleOwner,
     private val context: Context,
     private val binding: FragmentMainBinding,
-    private val navController: NavController,
     private val adapter: AppAdapter,
     private val bottomSheetDialogFragment: BottomSheetDialog = BottomSheetDialog(context),
     private var firstHeartState: AnimateState = AnimateState.PULSATE_FIRST,
@@ -63,7 +63,6 @@ class MainViewController(
             setCancelable(false)
             show()
         }
-
     }
 
 

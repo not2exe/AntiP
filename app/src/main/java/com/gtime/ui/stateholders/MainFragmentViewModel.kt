@@ -1,12 +1,12 @@
 package com.gtime.ui.stateholders
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.gtime.KindOfApps
 import com.gtime.model.Cache
+import com.gtime.model.IDRepository
 import com.gtime.model.UsageTimeRepository
 import com.gtime.model.dataclasses.AppEntity
-import com.gtime.model.db.DailyStatsDao
+import com.yandex.authsdk.YandexAuthToken
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +16,6 @@ class MainFragmentViewModel @AssistedInject constructor(
     @Assisted private val savedStateHandle: SavedStateHandle,
     private val usageTimeRepository: UsageTimeRepository,
     private val cache: Cache,
-    private val dao:DailyStatsDao,
 ) : ViewModel() {
 
     @AssistedFactory
@@ -37,7 +36,6 @@ class MainFragmentViewModel @AssistedInject constructor(
     val stateOfKindOfApps = MutableLiveData<KindOfApps>(KindOfApps.USEFUL)
     val lives = MutableLiveData<Int>()
 
-
     init {
         refresh()
         refreshLife()
@@ -45,9 +43,8 @@ class MainFragmentViewModel @AssistedInject constructor(
 
     fun refresh() =
         viewModelScope.launch {
-            usageTimeRepository.refreshScores()
+            usageTimeRepository.refreshUsageApps()
         }
-
 
     private fun refreshLife() {
         lives.value = cache.getLives()
@@ -56,6 +53,5 @@ class MainFragmentViewModel @AssistedInject constructor(
     fun setState(state: KindOfApps) {
         stateOfKindOfApps.value = state
     }
-
 }
 

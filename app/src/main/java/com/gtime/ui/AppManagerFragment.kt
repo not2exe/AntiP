@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class AppManagerFragment : Fragment() {
     private val appManagerFragmentComponent by lazy {
-        (requireContext().applicationContext as App).appComponent.activity()
+        (requireContext().applicationContext as App).appComponent.activity().create(requireActivity())
             .appManagerFragmentComponent().create(this)
     }
     private var appManagerFragmentViewComponent: AppManagerFragmentViewComponent? = null
@@ -30,15 +30,18 @@ class AppManagerFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_app_manager,container,false)
+    ): View {
+        return inflater.inflate(R.layout.fragment_app_manager, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         appManagerFragmentViewComponent =
             appManagerFragmentComponent.appManagerFragmentViewComponent()
-                .create(view, viewLifecycleOwner).apply {
+                .apply {
                     inject(this@AppManagerFragment)
                     appManagerViewController.setupViews()
                 }
-        return view
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {

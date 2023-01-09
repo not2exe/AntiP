@@ -1,7 +1,7 @@
 package com.gtime.ui
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +14,14 @@ import javax.inject.Inject
 
 class MainFragment : Fragment() {
     private val fragmentComponent: MainFragmentComponent by lazy {
-        (requireContext().applicationContext as App).appComponent.activity()
+        (requireContext().applicationContext as App).appComponent.activity().create(requireActivity())
             .mainFragmentComponent().create(this)
     }
     private var fragmentViewComponent: MainFragmentViewComponent? = null
 
     @Inject
     lateinit var fragmentViewController: MainViewController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         fragmentComponent.mainFragmentViewComponent()
@@ -32,17 +33,18 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_main,container,false)
+        return inflater.inflate(R.layout.fragment_main, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragmentViewComponent =
-            fragmentComponent.mainFragmentViewComponent().create(view, viewLifecycleOwner).apply {
+            fragmentComponent.mainFragmentViewComponent().apply {
                 inject(this@MainFragment)
                 fragmentViewController.setUpViews()
             }
-        return view
+        super.onViewCreated(view, savedInstanceState)
     }
 
-
-    
     override fun onDestroyView() {
         fragmentViewComponent = null
         super.onDestroyView()

@@ -1,21 +1,28 @@
 package com.gtime.domain
 
-import android.view.View
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.fragment.findNavController
 import com.example.antip.databinding.FragmentAppManagerBinding
 import com.example.antip.databinding.FragmentChangeModeBinding
 import com.example.antip.databinding.FragmentMainBinding
+import com.example.antip.databinding.NavHeaderMainBinding
+import com.google.android.material.navigation.NavigationView
 import com.gtime.Constants
-import com.gtime.ui.MainViewController
+import com.gtime.MainActivity
+import com.gtime.ui.*
 import com.gtime.ui.adapters.AppAdapter
 import com.gtime.ui.adapters.ManagerAdapter
-import com.gtime.ui.*
 import com.gtime.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.ui.stateholders.ChangeModeViewModel
 import com.gtime.ui.stateholders.MainFragmentViewModel
+import com.yandex.authsdk.YandexAuthException
+import com.yandex.authsdk.YandexAuthSdk
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -27,8 +34,6 @@ interface ViewControllerModule {
         @Provides
         fun provideMainViewController(
             fragment: MainFragment,
-            view: View,
-            lifecycleOwner: LifecycleOwner,
             mainFragmentViewModelFactory: MainFragmentViewModel.Factory,
             adapter: AppAdapter
         ): MainViewController {
@@ -41,9 +46,8 @@ interface ViewControllerModule {
             }
             return MainViewController(
                 viewModel = viewModel,
-                viewLifecycleOwner = lifecycleOwner,
-                binding = FragmentMainBinding.bind(view),
-                navController = fragment.findNavController(),
+                viewLifecycleOwner = fragment.viewLifecycleOwner,
+                binding = FragmentMainBinding.bind(fragment.requireView()),
                 context = fragment.requireContext(),
                 adapter = adapter
             )
@@ -78,8 +82,6 @@ interface ViewControllerModule {
             @Named(Constants.ADAPTER_OTHERS) othersAdapter: ManagerAdapter,
             fragment: AppManagerFragment,
             appManagerFragmentViewModelFactory: AppManagerFragmentViewModel.Factory,
-            view: View,
-            viewLifecycleOwner: LifecycleOwner
         ): AppManagerViewController {
             val viewModel by fragment.viewModels<AppManagerFragmentViewModel> {
                 LambdaFactory(fragment) { handle: SavedStateHandle ->
@@ -92,10 +94,10 @@ interface ViewControllerModule {
                 othersAdapter = othersAdapter,
                 navController = fragment.findNavController(),
                 viewModel = viewModel,
-                binding = FragmentAppManagerBinding.bind(view),
-                viewLifecycleOwner = viewLifecycleOwner
+                binding = FragmentAppManagerBinding.bind(fragment.requireView()),
+                viewLifecycleOwner = fragment.viewLifecycleOwner
             )
-
         }
+
     }
 }

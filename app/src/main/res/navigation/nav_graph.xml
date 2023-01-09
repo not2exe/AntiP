@@ -9,7 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="com.gtime.ui.MainFragment"
         tools:layout="@layout/fragment_main"
-        android:label="GTIME">
+        android:label="">
         <action
             android:id="@+id/action_mainFragment_to_firstTimeFragment"
             app:destination="@id/firstTimeFragment" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/firstTimeFragment"
         android:name="com.gtime.ui.FirstTimeFragment"
-        android:label="fragment_first_time"
+        android:label=""
         tools:layout="@layout/fragment_first_time" >
 
     </fragment>
@@ -25,19 +25,19 @@
     <fragment
         android:id="@+id/appManagerFragment"
         android:name="com.gtime.ui.AppManagerFragment"
-        android:label="AppManagerFragment" >
+        android:label="">
 
     </fragment>
     <fragment
         android:id="@+id/changeModeFragment"
         android:name="com.gtime.ui.ChangeModeFragment"
-        android:label="ChangeModeFragment" >
+        android:label="" >
 
     </fragment>
     <fragment
         android:id="@+id/achievementsFragment"
         android:name="com.gtime.ui.AchievementsFragment"
-        android:label="AchievementsFragment" >
+        android:label="" >
 
     </fragment>
 </navigation>

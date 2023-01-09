@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:weightSum="2"
         tools:context="com.gtime.ui.MainFragment">
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

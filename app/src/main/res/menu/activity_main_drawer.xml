@@ -6,15 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/mainFragment"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/home" />
         <item
             android:id="@+id/appManagerFragment"
+            android:icon="@drawable/ic_baseline_apps_24"
             android:title="@string/manageApps" />
         <item
             android:id="@+id/changeModeFragment"
+            android:icon="@drawable/ic_baseline_change_circle_24"
             android:title="@string/change_mode" />
         <item
             android:id="@+id/achievementsFragment"
+            android:icon="@drawable/ic_baseline_star_24"
             android:title="@string/achievements" />
     </group>
 </menu>

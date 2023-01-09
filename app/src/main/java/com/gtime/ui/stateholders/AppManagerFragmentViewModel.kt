@@ -2,6 +2,7 @@ package com.gtime.ui.stateholders
 
 import androidx.lifecycle.*
 import com.example.antip.R
+import com.gtime.KindOfApps
 import com.gtime.model.Cache
 import com.gtime.model.UsageTimeRepository
 import com.gtime.model.dataclasses.AppEntity
@@ -68,17 +69,13 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
         targetId: Int,
         sourceElem: AppEntity,
     ) {
-        when (targetId) {
-            R.id.rvOthers -> {
-                usageTimeRepository.putIntoOthers(sourceElem)
-            }
-            R.id.rvUseful -> {
-                usageTimeRepository.putIntoUseful(sourceElem)
-            }
-            R.id.rvHarmful -> {
-                usageTimeRepository.putIntoHarmful(sourceElem)
-            }
+        val kindOfApps = when (targetId) {
+            R.id.rvOthers -> KindOfApps.OTHERS
+            R.id.rvUseful -> KindOfApps.USEFUL
+            R.id.rvHarmful -> KindOfApps.HARMFUL
+            else -> null
         }
+        usageTimeRepository.put(sourceElem, kindOfApps ?: return)
     }
 }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
@@ -33,7 +32,7 @@ class AchievementsFragment : Fragment(R.layout.fragment_achievements) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (requireContext().applicationContext as App).appComponent.activity().inject(this)
+        (requireContext().applicationContext as App).appComponent.activity().create(requireActivity()).inject(this)
         FragmentAchievementsBinding.bind(view).apply {
             achievementsTable.init()
         }

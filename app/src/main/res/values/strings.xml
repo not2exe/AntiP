@@ -26,5 +26,7 @@
     <string name="normal">Normal</string>
     <string name="hardcore">Hardcore</string>
     <string name="home">Home</string>
+    <string name="join_with_yandex_id">Join with Yandex ID</string>
+    <string name="log_out">Log out</string>
 
 </resources>

@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 
@@ -32,77 +33,41 @@ class UsageTimeRepository @Inject constructor(
     val usefulApps = MutableLiveData<List<AppEntity>>()
     val harmfulApps = MutableLiveData<List<AppEntity>>()
     val neutralApps = MutableLiveData<List<AppEntity>>()
-
-
-    val uiGeneralScores: MutableLiveData<Int> = MutableLiveData()
+    val uiGeneralScores = MutableLiveData<Int>()
 
     init {
         scope.launch {
             refreshAll()
             fromDataBaseToRep()
-            refreshScores()
+            refreshUsageApps()
         }
     }
 
 
-    suspend fun putIntoHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        appDao.insert(
-            AppDataBaseEntity(
-                appEntity.packageName ?: "",
-                KindOfApps.HARMFUL,
-                appEntity.multiplier
-            )
-        )
-        val list = getMutableList(harmfulApps)
-        list.add(appEntity)
-        harmfulApps.postValue(list)
+    suspend fun put(appEntity: AppEntity, kindOfApps: KindOfApps) {
+        val packageName = appEntity.packageName ?: ""
+        val multiplier: Double
+        when (kindOfApps) {
+            KindOfApps.USEFUL -> {
+                multiplier = abs(appEntity.multiplier)
+                putIntoUseful(appEntity)
+            }
+            KindOfApps.HARMFUL -> {
+                multiplier = abs(appEntity.multiplier) * -1
+                putIntoHarmful(appEntity)
+            }
+            KindOfApps.OTHERS -> {
+                multiplier = 0.0
+                putIntoOthers(appEntity)
+            }
+        }
+        appDao.insert(AppDataBaseEntity(packageName, kindOfApps, multiplier))
     }
 
-    suspend fun putIntoUseful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        appDao.insert(
-            AppDataBaseEntity(
-                appEntity.packageName ?: "",
-                KindOfApps.USEFUL,
-                appEntity.multiplier
-            )
-        )
-        val list = getMutableList(usefulApps)
-        list.add(appEntity)
-        usefulApps.postValue(list)
-    }
 
-    suspend fun putIntoOthers(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        appDao.insert(
-            AppDataBaseEntity(
-                appEntity.packageName ?: "",
-                KindOfApps.OTHERS,
-                appEntity.multiplier
-            )
-        )
-        val list = getMutableList(neutralApps)
-        list.add(appEntity)
-        neutralApps.postValue(list)
-    }
-
-    suspend fun removeFromHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        val list = getMutableList(harmfulApps).filter { it != appEntity }
-        harmfulApps.postValue(list)
-    }
-
-    suspend fun removeFromUseful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        val list = getMutableList(usefulApps).filter { it != appEntity }
-        usefulApps.postValue(list)
-    }
-
-    suspend fun removeFromOthers(appEntity: AppEntity) = withContext(Dispatchers.IO) {
-        val list = getMutableList(neutralApps).filter { it != appEntity }
-        neutralApps.postValue(list)
-    }
-
-    suspend fun refreshScores() = withContext(Dispatchers.IO) {
+    suspend fun refreshUsageApps() = withContext(Dispatchers.IO) {
         val useful = getMutableList(usefulApps)
         val harmful = getMutableList(harmfulApps)
-        var uiScores = 0
         val start: Calendar = (Calendar.getInstance())
         start.set(Calendar.HOUR_OF_DAY, 0)
         start.set(Calendar.MINUTE, 0)
@@ -125,10 +90,10 @@ class UsageTimeRepository @Inject constructor(
                         name = name,
                         kindOfApps = KindOfApps.USEFUL,
                         percentsOsGeneral = percents,
-                        _scores = scores
+                        _scores = scores,
+                        multiplier = 1.0,
                     )
                 )
-                uiScores += scores
             }
             if (harmful.removeIf { it.packageName == packageName }) {
                 harmful.add(
@@ -138,17 +103,21 @@ class UsageTimeRepository @Inject constructor(
                         name = name,
                         kindOfApps = KindOfApps.HARMFUL,
                         percentsOsGeneral = percents,
-                        _scores = scores
+                        multiplier = -1.0,
                     )
                 )
-                uiScores -= scores
             }
         }
-
-        uiGeneralScores.postValue(uiScores)
         harmfulApps.postValue(harmful)
         usefulApps.postValue(useful)
     }
+
+//    private fun refreshScores() {
+//        var  scores = 0
+//        appDao.getAll().forEach {
+//            scores +=it.
+//        }
+//    }
 
     private suspend fun refreshAll() = withContext(Dispatchers.IO) {
         val listOfAllOnDevice =
@@ -258,6 +227,39 @@ class UsageTimeRepository @Inject constructor(
         }
 
     private fun toScore(scores: Long): Int = (scores / 10000).toInt()
+
+    private suspend fun putIntoHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(harmfulApps)
+        list.add(appEntity)
+        harmfulApps.postValue(list)
+    }
+
+    private suspend fun putIntoUseful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(usefulApps)
+        list.add(appEntity)
+        usefulApps.postValue(list)
+    }
+
+    private suspend fun putIntoOthers(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(neutralApps)
+        list.add(appEntity)
+        neutralApps.postValue(list)
+    }
+
+    suspend fun removeFromHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(harmfulApps).filter { it != appEntity }
+        harmfulApps.postValue(list)
+    }
+
+    suspend fun removeFromUseful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(usefulApps).filter { it != appEntity }
+        usefulApps.postValue(list)
+    }
+
+    suspend fun removeFromOthers(appEntity: AppEntity) = withContext(Dispatchers.IO) {
+        val list = getMutableList(neutralApps).filter { it != appEntity }
+        neutralApps.postValue(list)
+    }
 }
 
 

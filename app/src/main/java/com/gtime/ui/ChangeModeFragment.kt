@@ -16,7 +16,7 @@ class ChangeModeFragment : Fragment(R.layout.fragment_change_mode) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewComponent = (requireContext().applicationContext as App).appComponent.activity()
+        viewComponent = (requireContext().applicationContext as App).appComponent.activity().create(requireActivity())
             .changeMenuViewComponent().create(this).apply {
                 inject(this@ChangeModeFragment)
                 changeModeViewController.setupViews()
