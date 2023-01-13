@@ -6,6 +6,7 @@ import com.gtime.KindOfApps
 import com.gtime.model.Cache
 import com.gtime.model.UsageTimeRepository
 import com.gtime.model.dataclasses.AppEntity
+import com.gtime.model.db.AppDataBaseEntity
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -31,6 +32,12 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
 
     private fun getLiveDataList(list: List<AppEntity>): LiveData<List<AppEntity>> =
         MutableLiveData(list.sortedByDescending { it.scores })
+
+    fun setMultiplier(appDataBaseEntity: AppDataBaseEntity) {
+        viewModelScope.launch {
+            usageTimeRepository.setMultiplier(appDataBaseEntity)
+        }
+    }
 
     fun handleChanges(
         sourceId: Int,

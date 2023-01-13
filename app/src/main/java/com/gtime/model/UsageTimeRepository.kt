@@ -24,7 +24,6 @@ import kotlin.math.roundToInt
 
 @AppScope
 class UsageTimeRepository @Inject constructor(
-    private val cache: Cache,
     private val appDao: AppTableDao,
     private val usageStatsManager: UsageStatsManager,
     private val packageManager: PackageManager,
@@ -43,6 +42,48 @@ class UsageTimeRepository @Inject constructor(
         }
     }
 
+
+    suspend fun setMultiplier(appDataBaseEntity: AppDataBaseEntity) =
+        withContext(Dispatchers.IO) {
+            appDao.insert(appDataBaseEntity)
+            when (appDataBaseEntity.kindOfApp) {
+                KindOfApps.HARMFUL -> {
+                    var list = getMutableList(harmfulApps)
+                    list = findAndReplace(list, appDataBaseEntity)
+                    harmfulApps.postValue(list)
+                }
+                KindOfApps.USEFUL -> {
+                    var list = getMutableList(usefulApps)
+                    list = findAndReplace(list, appDataBaseEntity)
+                    usefulApps.postValue(list)
+                }
+                KindOfApps.OTHERS -> {
+                    var list = getMutableList(neutralApps)
+                    list = findAndReplace(list, appDataBaseEntity)
+                    neutralApps.postValue(list)
+                }
+            }
+        }
+
+    private fun findAndReplace(
+        list: MutableList<AppEntity>,
+        appDataBaseEntity: AppDataBaseEntity
+    ): MutableList<AppEntity> {
+        val appEnt = list.find { it.packageName == appDataBaseEntity.packageName }
+            ?: return list
+        list.remove(appEnt)
+        list.add(
+            AppEntity(
+                image = appEnt.image,
+                packageName = appEnt.packageName,
+                name = appEnt.name,
+                kindOfApps = appEnt.kindOfApps,
+                multiplier = appDataBaseEntity.multiplier,
+                _scores = appEnt.scores
+            )
+        )
+        return list
+    }
 
     suspend fun put(appEntity: AppEntity, kindOfApps: KindOfApps) {
         val packageName = appEntity.packageName ?: ""
@@ -68,6 +109,7 @@ class UsageTimeRepository @Inject constructor(
     suspend fun refreshUsageApps() = withContext(Dispatchers.IO) {
         val useful = getMutableList(usefulApps)
         val harmful = getMutableList(harmfulApps)
+        var uiScores = 0
         val start: Calendar = (Calendar.getInstance())
         start.set(Calendar.HOUR_OF_DAY, 0)
         start.set(Calendar.MINUTE, 0)
@@ -75,13 +117,14 @@ class UsageTimeRepository @Inject constructor(
         val end: Calendar = Calendar.getInstance()
         val mapOfTime: Map<String, Long> =
             getAppsInfo(start.timeInMillis, end.timeInMillis)
-        val scoresOfAll = toScore(mapOfTime[Constants.TIME_OF_ALL] ?: return@withContext).toDouble()
+        val scoresOfAll = mapOfTime[Constants.TIME_OF_ALL] ?: 0
 
         mapOfTime.keys.forEach { packageName ->
             val name = getName(packageName)
-            val scores = toScore(mapOfTime[packageName] ?: 0)
+            val time = mapOfTime[packageName] ?: 0
+            val scores = toScore(time)
             val icon = getIconApp(packageName)
-            val percents: Int = (scores.toDouble() / scoresOfAll).roundToInt() * 100
+            val percents: Int = ((time.toDouble() / scoresOfAll.toDouble()) * 100).roundToInt()
             if (useful.removeIf { it.packageName == packageName }) {
                 useful.add(
                     AppEntity(
@@ -94,6 +137,7 @@ class UsageTimeRepository @Inject constructor(
                         multiplier = 1.0,
                     )
                 )
+                uiScores += scores
             }
             if (harmful.removeIf { it.packageName == packageName }) {
                 harmful.add(
@@ -103,37 +147,33 @@ class UsageTimeRepository @Inject constructor(
                         name = name,
                         kindOfApps = KindOfApps.HARMFUL,
                         percentsOsGeneral = percents,
+                        _scores = scores,
                         multiplier = -1.0,
                     )
                 )
+                uiScores -= scores
             }
         }
+        uiGeneralScores.postValue(uiScores)
         harmfulApps.postValue(harmful)
         usefulApps.postValue(useful)
     }
 
-//    private fun refreshScores() {
-//        var  scores = 0
-//        appDao.getAll().forEach {
-//            scores +=it.
-//        }
-//    }
 
     private suspend fun refreshAll() = withContext(Dispatchers.IO) {
         val listOfAllOnDevice =
             packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         for (i in listOfAllOnDevice.indices) {
-            if (packageManager.getLaunchIntentForPackage(listOfAllOnDevice[i].packageName) != null
+            if (appDao.getByName(listOfAllOnDevice[i].packageName) == null &&
+                packageManager.getLaunchIntentForPackage(listOfAllOnDevice[i].packageName) != null
                 && (listOfAllOnDevice[i].flags and ApplicationInfo.FLAG_SYSTEM) == 0
                 && (listOfAllOnDevice[i].flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0
             ) {
-                if (appDao.getByName(listOfAllOnDevice[i].packageName) == null) {
-                    appDao.insert(
-                        AppDataBaseEntity(
-                            listOfAllOnDevice[i].packageName
-                        )
+                appDao.insert(
+                    AppDataBaseEntity(
+                        listOfAllOnDevice[i].packageName
                     )
-                }
+                )
             }
         }
     }
@@ -148,13 +188,37 @@ class UsageTimeRepository @Inject constructor(
             val name = getName(list[i].packageName)
             when (list[i].kindOfApp) {
                 KindOfApps.HARMFUL -> {
-                    harmful.add(AppEntity(icon, list[i].packageName, name, list[i].kindOfApp))
+                    harmful.add(
+                        AppEntity(
+                            icon,
+                            list[i].packageName,
+                            name,
+                            list[i].kindOfApp,
+                            multiplier = list[i].multiplier
+                        )
+                    )
                 }
                 KindOfApps.USEFUL -> {
-                    useful.add(AppEntity(icon, list[i].packageName, name, list[i].kindOfApp))
+                    useful.add(
+                        AppEntity(
+                            icon,
+                            list[i].packageName,
+                            name,
+                            list[i].kindOfApp,
+                            multiplier = list[i].multiplier
+                        )
+                    )
                 }
                 KindOfApps.OTHERS -> {
-                    neutral.add(AppEntity(icon, list[i].packageName, name, list[i].kindOfApp))
+                    neutral.add(
+                        AppEntity(
+                            icon,
+                            list[i].packageName,
+                            name,
+                            list[i].kindOfApp,
+                            multiplier = list[i].multiplier
+                        )
+                    )
                 }
             }
         }

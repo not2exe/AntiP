@@ -160,18 +160,17 @@ class MainViewController(
 
     private fun initObservers() = with(binding) {
         viewModel.usefulApps.observe(viewLifecycleOwner) {
-            refreshLayout.isRefreshing = false
             if (viewModel.stateOfKindOfApps.value == KindOfApps.USEFUL) {
                 adapter.updateList(it)
             }
         }
         viewModel.harmfulApps.observe(viewLifecycleOwner) {
-            refreshLayout.isRefreshing = false
             if (viewModel.stateOfKindOfApps.value == KindOfApps.HARMFUL) {
                 adapter.updateList(it)
             }
         }
         viewModel.scoresAll.observe(viewLifecycleOwner) { scoresAll ->
+            refreshLayout.isRefreshing = false
             setupScores(scoresAll)
         }
         viewModel.stateOfKindOfApps.observe(viewLifecycleOwner) { state ->

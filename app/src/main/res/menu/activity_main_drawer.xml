@@ -15,7 +15,7 @@
         <item
             android:id="@+id/changeModeFragment"
             android:icon="@drawable/ic_baseline_change_circle_24"
-            android:title="@string/change_mode" />
+            android:title="@string/changeMode" />
         <item
             android:id="@+id/achievementsFragment"
             android:icon="@drawable/ic_baseline_star_24"
