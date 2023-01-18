@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.gtime.ui.MainFragment"
+        android:name="com.gtime.offline_mode.ui.MainFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_main">
         <action
@@ -20,14 +20,14 @@
         tools:layout="@layout/fragment_first_time" />
     <fragment
         android:id="@+id/appManagerFragment"
-        android:name="com.gtime.ui.AppManagerFragment"
+        android:name="com.gtime.offline_mode.ui.AppManagerFragment"
         android:label="@string/manageApps" />
     <fragment
         android:id="@+id/changeModeFragment"
-        android:name="com.gtime.ui.ChangeModeFragment"
+        android:name="com.gtime.offline_mode.ui.ChangeModeFragment"
         android:label="@string/changeMode" />
     <fragment
         android:id="@+id/achievementsFragment"
-        android:name="com.gtime.ui.AchievementsFragment"
+        android:name="com.gtime.offline_mode.ui.AchievementsFragment"
         android:label="@string/achievements" />
 </navigation>

@@ -18,5 +18,9 @@
     <string name="join_with_yandex_id">Войти с Яндекс ID</string>
     <string name="log_out">Выйти</string>
     <string name="open_settings">Открыть настройки</string>
+    <string name="error_authorization">Ошибка авторизации</string>
+    <string name="find_app">Найди приложение</string>
+    <string name="multiplier">Множитель</string>
+    <string name="scores">Очки</string>
 
 </resources>

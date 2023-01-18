@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="12dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.AppManagerFragment">
+
     <LinearLayout
+        android:id="@+id/usefulLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textUseful"
@@ -19,23 +21,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/useful"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:focusableInTouchMode="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/rvUseful"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/toxicLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textHarmful"
@@ -43,36 +45,39 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/harmful"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:focusableInTouchMode="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHarmful"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textOthers"
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/autoCompleteTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/others"
-            android:textSize="28sp" />
+            android:hint="@string/find_app"
+            android:focusableInTouchMode="true">
+
+        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOthers"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
 
     </LinearLayout>
 
