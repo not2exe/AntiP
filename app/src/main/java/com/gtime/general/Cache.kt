@@ -2,6 +2,9 @@ package com.gtime.general
 
 import android.content.Context
 import androidx.core.content.edit
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.gtime.general.scopes.AppScope
 import com.gtime.online_mode.AccountInfo
 import javax.inject.Inject
@@ -14,6 +17,8 @@ class Cache @Inject constructor(applicationContext: Context) {
         applicationContext.getSharedPreferences(Constants.CACHE_INT, Context.MODE_PRIVATE)
     private val accShared =
         applicationContext.getSharedPreferences(Constants.CACHE_ACC, Context.MODE_PRIVATE)
+
+    val onlineLiveData = MutableLiveData<Boolean>(isOnline())
 
     init {
         if (isFirstLaunch()) {
@@ -31,7 +36,8 @@ class Cache @Inject constructor(applicationContext: Context) {
     fun getAcc(): AccountInfo = AccountInfo(
         accShared.getString(Constants.KEY_NAME, "") ?: "",
         accShared.getString(Constants.KEY_EMAIL, "") ?: "",
-        accShared.getString(Constants.KEY_URL, "") ?: ""
+        accShared.getString(Constants.KEY_URL, "") ?: "",
+        Firebase.auth.currentUser != null
     )
 
 
@@ -60,6 +66,13 @@ class Cache @Inject constructor(applicationContext: Context) {
 
     fun getLives(): Int = intShared.getInt(Constants.KEY_LIFE, 0)
 
+
+    fun setOnline(isOnline: Boolean) {
+        booleanShared.edit { putBoolean(Constants.IS_ONLINE, isOnline) }
+        onlineLiveData.value = isOnline
+    }
+
+    fun isOnline(): Boolean = booleanShared.getBoolean(Constants.IS_ONLINE, false)
     private fun isFirstLaunch(): Boolean =
         booleanShared.getBoolean(Constants.KEY_FIRST_LAUNCH, true)
 

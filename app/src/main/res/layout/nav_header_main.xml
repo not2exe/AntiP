@@ -4,32 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/colorHeaderBackground"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iconIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/iv_circle_outline"
-        android:clipToOutline="true"
-        android:visibility="gone"
-        tools:targetApi="s" />
+    <FrameLayout
+        android:id="@+id/layoutIconLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/iv_circle_outline"
+            android:clipToOutline="true"
+            tools:targetApi="s" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/loginOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_baseline_logout_24" />
+    </FrameLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/nameTv"
         style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/emailTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:visibility="gone" />
+        android:layout_marginBottom="8dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/authWithIDButton"
@@ -65,38 +80,11 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/loginOutButton"
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchOnlineMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        android:visibility="gone"
-        app:cardBackgroundColor="@color/md_theme_light_onBackground">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="16dp"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/ic_back_circle"
-                android:src="@drawable/ic_ya_60" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:gravity="center"
-                android:text="@string/log_out"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:textColor="@color/md_theme_light_background" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.cardview.widget.CardView>
+        android:layout_marginTop="8dp"
+        android:text="@string/online_mode"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -41,11 +43,11 @@ android {
 dependencies {
     def diagrams = "3.10.1"
     def viewPager = "1.0.0"
-    def room = "2.4.3"
+    def room = "2.5.0"
     def preferences = "1.2.0"
     def navigation = "2.5.3"
     def coroutines = "1.6.4"
-    def dagger = "2.43.2"
+    def dagger = "2.44.2"
     def worker = "2.7.1"
     def flexbox = "3.0.0"
     def yandexID = "2.3.0"
@@ -85,6 +87,20 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
 
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.google.firebase:firebase-database-ktx'
 
     implementation "androidx.fragment:fragment-ktx:1.5.5"
     implementation 'com.google.android.material:material:1.7.0'
@@ -98,6 +114,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 }
+
 kapt {
     correctErrorTypes = true
 }

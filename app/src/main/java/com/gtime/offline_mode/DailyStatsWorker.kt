@@ -1,6 +1,7 @@
 package com.gtime.offline_mode
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.gtime.general.scopes.AppScope
@@ -22,6 +23,7 @@ class DailyStatsWorker @Inject constructor(
 ) : CoroutineWorker(applicationContext, params) {
     override suspend fun doWork(): Result {
         usageTimeRepository.refreshUsageApps()
+        Log.d("WeAreTheChampions","MyFriiend")
         dao.insertStats(
             DailyStatsEntry(
                 Calendar.getInstance().timeInMillis,

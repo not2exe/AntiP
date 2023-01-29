@@ -5,7 +5,6 @@ import android.app.usage.UsageStatsManager
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gtime.general.Constants
 import com.gtime.general.KindOfApps
@@ -64,6 +63,7 @@ class UsageTimeRepository @Inject constructor(
                 }
             }
             appDao.insert(appDataBaseEntity)
+            refreshOnlyScores()
         }
 
     private fun findAndReplace(
@@ -105,6 +105,7 @@ class UsageTimeRepository @Inject constructor(
             }
         }
         appDao.insert(AppDataBaseEntity(packageName, kindOfApps, multiplier))
+        refreshOnlyScores()
     }
 
 
@@ -361,6 +362,16 @@ class UsageTimeRepository @Inject constructor(
             )
             neutralApps.postValue(list)
         }
+
+    private fun refreshOnlyScores() {
+        var scores = 0
+        toxicApps.value?.forEach {
+            scores += it.scores
+        }
+        usefulApps.value?.forEach {
+            scores += it.scores
+        }
+    }
 
     suspend fun removeFromHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {
         val list = getMutableList(toxicApps).filter { it != appEntity }

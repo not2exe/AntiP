@@ -22,5 +22,17 @@
     <string name="find_app">Найди приложение</string>
     <string name="multiplier">Множитель</string>
     <string name="scores">Очки</string>
+    <string name="online_mode">Онлайн режим</string>
+    <string name="shop">Магазин</string>
+    <string name="tasks">Задания</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top">Топ</string>
+    <string name="email">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="create_or_sign_in">Создайте аккаунт или войдите в существующий аккаунт</string>
+    <string name="password_requires">Пароль должен иметь хотя бы 8 симоловов</string>
+    <string name="account_created">Аккаунт успешно создан</string>
+    <string name="sign_in_account">Вход в аккаунт произведен успешно</string>
 
 </resources>

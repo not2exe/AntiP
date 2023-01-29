@@ -1,20 +1,13 @@
 package com.gtime.offline_mode.domain
 
-import android.content.Context
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
-import com.example.antip.R
 import com.gtime.general.Constants
 import com.gtime.general.LambdaFactory
-import com.gtime.general.model.db.AppDataBaseEntity
 import com.gtime.general.scopes.FragmentScope
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.AppManagerFragment
-import com.gtime.offline_mode.ui.adapters.AppAdapter
+import com.gtime.general.ui.AppAdapter
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import dagger.Module

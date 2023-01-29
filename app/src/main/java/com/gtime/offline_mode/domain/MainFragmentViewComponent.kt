@@ -1,7 +1,7 @@
 package com.gtime.offline_mode.domain
 
 import com.gtime.general.scopes.FragmentViewScope
-import com.gtime.offline_mode.ui.MainFragment
+import com.gtime.general.ui.MainFragment
 import dagger.Subcomponent
 
 @FragmentViewScope

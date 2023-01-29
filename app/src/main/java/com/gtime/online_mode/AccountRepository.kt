@@ -1,6 +1,8 @@
 package com.gtime.online_mode
 
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.scopes.AppScope
@@ -12,17 +14,21 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AppScope
-class IDRepository @Inject constructor(
+class AccountRepository @Inject constructor(
     private val yandexAuthSdk: YandexAuthSdk,
     private val cache: Cache
 ) {
     val accountInfo = MutableLiveData<AccountInfo>()
 
     init {
-        val accountInfoInCache = cache.getAcc()
-        if (accountInfoInCache.name != "") {
-            accountInfo.value = accountInfoInCache
-        }
+        val user = Firebase.auth.currentUser
+        accountInfo.value =
+            AccountInfo(
+                user?.displayName ?: "",
+                user?.email ?: "",
+                user?.photoUrl.toString(),
+                Firebase.auth.currentUser != null
+            )
     }
 
     suspend fun getDecodedJWT(yandexAuthToken: YandexAuthToken?) = withContext(Dispatchers.IO) {
@@ -32,12 +38,11 @@ class IDRepository @Inject constructor(
                 name = it.claimValue(Constants.DISPLAY_NAME).orNull() ?: "",
                 email = it.claimValue(Constants.EMAIL).orNull() ?: "",
                 urlAvatar = Constants.AVATAR_URL_START + it.claimValue(Constants.AVATAR_ID)
-                    .orNull() + Constants.AVATAR_URL_END
+                    .orNull()
             )
             accountInfo.postValue(
                 acc
             )
-            cache.saveAcc(acc)
         }
     }
 
@@ -45,7 +50,11 @@ class IDRepository @Inject constructor(
     fun clearAccountInfo() {
         val emptyAcc = AccountInfo("", "", "")
         accountInfo.value = emptyAcc
-        cache.saveAcc(emptyAcc)
+    }
+
+    fun successAuthFirebase() {
+        val acc = accountInfo.value ?: return
+        accountInfo.value = AccountInfo(acc.name, acc.email, acc.urlAvatar, true)
     }
 
 }

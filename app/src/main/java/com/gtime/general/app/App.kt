@@ -4,6 +4,10 @@ import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import com.gtime.general.Constants
 import javax.inject.Inject
 import javax.inject.Named
@@ -35,7 +39,6 @@ class App : Application() {
             ExistingPeriodicWorkPolicy.KEEP,
             incRequest
         )
+        FirebaseApp.initializeApp(this)
     }
-
-
 }

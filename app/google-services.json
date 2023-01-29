@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "53951651236",
+    "project_id": "gtime-f0895",
+    "storage_bucket": "gtime-f0895.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53951651236:android:2154d6167ffd8b706cb531",
+        "android_client_info": {
+          "package_name": "com.example.antip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53951651236-foq1p7tcftet96m3pa85pqemq8d0js9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzNeYT0cVlH9e3GMAgpCIUadt3fNJqHD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53951651236-foq1p7tcftet96m3pa85pqemq8d0js9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

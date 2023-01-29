@@ -1,4 +1,4 @@
-package com.gtime.general
+package com.gtime.general.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

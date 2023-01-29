@@ -12,9 +12,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="2"
-        tools:context="com.gtime.offline_mode.ui.MainFragment">
+        tools:context="com.gtime.general.ui.MainFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/heartLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
@@ -50,7 +51,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/buttonChangeAdapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

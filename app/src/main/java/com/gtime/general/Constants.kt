@@ -22,9 +22,11 @@ object Constants {
     const val DISPLAY_NAME = "display_name"
     const val AVATAR_ID = "avatar_id"
     const val AVATAR_URL_START = "https://avatars.yandex.net/get-yapic/"
-    const val AVATAR_URL_END = "/islands-68"
+    const val AVATAR_URL_68_END = "/islands-68"
+    const val AVATAR_URL_200_END="/islands-200"
     const val KEY_NAME="KEY_NAME"
     const val KEY_EMAIL="KEY_EMAIL"
     const val KEY_URL="KEY_URL"
     const val IS_ONLINE = "IS_ONLINE"
+    const val BUNDLE = "bundle"
 }

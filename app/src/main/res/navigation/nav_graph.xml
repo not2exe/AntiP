@@ -6,12 +6,15 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.gtime.offline_mode.ui.MainFragment"
+        android:name="com.gtime.general.ui.MainFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_firstTimeFragment"
             app:destination="@id/firstTimeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstTimeFragment"
@@ -30,4 +33,23 @@
         android:id="@+id/achievementsFragment"
         android:name="com.gtime.offline_mode.ui.AchievementsFragment"
         android:label="@string/achievements" />
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.gtime.online_mode.ShopFragment"
+        android:label="@string/shop"
+        tools:layout="@layout/fragment_shop" />
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.gtime.online_mode.TasksFragment"
+        android:label="@string/tasks"
+        tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/topFragment"
+        android:name="com.gtime.online_mode.TopFragment"
+        android:label="Топ"
+        tools:layout="@layout/fragment_top" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.gtime.online_mode.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

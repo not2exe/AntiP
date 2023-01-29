@@ -1,4 +1,4 @@
-package com.gtime.offline_mode.ui.adapters
+package com.gtime.general.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -8,9 +8,7 @@ import com.gtime.general.model.dataclasses.AppEntity
 class AppHolder(item: View) : RecyclerView.ViewHolder(item) {
     private val binding = AppItemBinding.bind(item)
     fun bind(appEntity: AppEntity) = with(binding) {
-        if (appEntity.image == null) {
-            //TODO Заглушку
-        } else {
+        if (appEntity.image != null) {
             imageView.setImageDrawable(appEntity.image)
         }
         name.text = appEntity.name

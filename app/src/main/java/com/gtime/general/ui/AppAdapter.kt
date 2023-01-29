@@ -1,4 +1,4 @@
-package com.gtime.offline_mode.ui.adapters
+package com.gtime.general.ui
 
 
 import android.view.LayoutInflater

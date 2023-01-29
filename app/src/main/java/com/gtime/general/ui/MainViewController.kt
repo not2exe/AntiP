@@ -1,4 +1,4 @@
-package com.gtime.offline_mode.ui
+package com.gtime.general.ui
 
 import android.app.AppOpsManager
 import android.content.Context
@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
 import android.util.TypedValue
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +20,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.gtime.offline_mode.AnimateState
 import com.gtime.general.KindOfApps
-import com.gtime.offline_mode.ui.adapters.AppAdapter
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
 import kotlinx.coroutines.launch
 
@@ -177,6 +177,14 @@ class MainViewController(
             setupPulsateAnim(heartFirst, firstHeartState, countOfLives < 1)
             setupPulsateAnim(heartSecond, secondHearState, countOfLives < 2)
             setupPulsateAnim(heartThird, thirdHeartState, countOfLives < 3)
+        }
+        viewModel.isOnline.observe(viewLifecycleOwner){
+            if(it){
+                heartLayout.visibility = View.GONE
+            }
+            else{
+                heartLayout.visibility = View.VISIBLE
+            }
         }
     }
 

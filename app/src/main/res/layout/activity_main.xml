@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gtime.general.MainActivity"
+    tools:context="com.gtime.general.ui.MainActivity"
     tools:openDrawer="start">
     <include
         android:id="@+id/appBarMain"
@@ -19,5 +19,5 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/menu_offline" />
 </androidx.drawerlayout.widget.DrawerLayout>
