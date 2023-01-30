@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/topFragment"
         android:name="com.gtime.online_mode.TopFragment"
-        android:label="@string/top"
+        android:label="@string/daily_top"
         tools:layout="@layout/fragment_top" />
     <fragment
         android:id="@+id/loginFragment"

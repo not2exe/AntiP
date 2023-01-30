@@ -14,7 +14,9 @@ class TopScoresSource @Inject constructor(private val query: Query) :
     PagingSource<QuerySnapshot, TopScoresModel>() {
 
     override fun getRefreshKey(state: PagingState<QuerySnapshot, TopScoresModel>): QuerySnapshot? =
-        null
+        state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey
+        }
 
 
     override suspend fun load(params: LoadParams<QuerySnapshot>): LoadResult<QuerySnapshot, TopScoresModel> {
@@ -22,9 +24,8 @@ class TopScoresSource @Inject constructor(private val query: Query) :
             val currentPage = params.key ?: query.get().await()
             val lastVisibleModel = currentPage.documents[currentPage.size() - 1]
             val nextPage = query.startAfter(lastVisibleModel).get().await()
-            val data = currentPage.toObjects(TopScoresModel::class.java)
             LoadResult.Page(
-                data = data,
+                data = currentPage.toObjects(TopScoresModel::class.java),
                 prevKey = null,
                 nextKey = nextPage
             )

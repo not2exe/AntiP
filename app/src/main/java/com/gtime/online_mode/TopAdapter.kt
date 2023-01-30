@@ -8,7 +8,7 @@ import com.example.antip.R
 
 class TopAdapter : PagingDataAdapter<TopScoresModel, TopViewHolder>(Companion) {
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {
-        holder.bind(getItem(position) ?: return)
+        holder.bind(getItem(position) ?: return,position+1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder =

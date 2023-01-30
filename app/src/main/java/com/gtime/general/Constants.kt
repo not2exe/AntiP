@@ -31,5 +31,8 @@ object Constants {
     const val KEY_URL = "KEY_URL"
     const val IS_ONLINE = "IS_ONLINE"
     const val BUNDLE = "bundle"
-    const val TOP_SCORES = "top_scores"
+    const val TOP_SCORES_COLLECTION = "top_scores"
+    const val SHOP_COLLECTION = "shop"
+    const val COINS_STORAGE_COLLECTION = "coins_storage"
+    const val PROMO_STORAGE_COLLECTION = "promo_storage"
 }

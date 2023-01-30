@@ -25,7 +25,7 @@
     <string name="online_mode">Онлайн режим</string>
     <string name="shop">Магазин</string>
     <string name="tasks">Задания</string>
-    <string name="top">Топ</string>
+    <string name="daily_top">Дневной топ</string>
     <string name="email">Почта</string>
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
