@@ -1,4 +1,4 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.antip.R
 import com.gtime.general.app.App
+import com.gtime.online_mode.domain.ioc.TopFragmentComponent
+import com.gtime.online_mode.domain.ioc.TopFragmentViewComponent
+import com.gtime.online_mode.ui.logic.TopScoresViewController
 import javax.inject.Inject
 
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gtime.online_mode.TopFragment">
+    tools:context="com.gtime.online_mode.ui.TopFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/topRv"

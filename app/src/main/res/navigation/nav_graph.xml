@@ -37,11 +37,11 @@
         tools:layout="@layout/fragment_tasks" />
     <fragment
         android:id="@+id/topFragment"
-        android:name="com.gtime.online_mode.TopFragment"
+        android:name="com.gtime.online_mode.ui.TopFragment"
         android:label="@string/daily_top"
         tools:layout="@layout/fragment_top" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.gtime.online_mode.LoginFragment"
+        android:name="com.gtime.online_mode.ui.LoginFragment"
         android:label="@string/sign_in" />
 </navigation>

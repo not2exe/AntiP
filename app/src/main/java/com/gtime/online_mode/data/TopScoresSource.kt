@@ -1,4 +1,4 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.data
 
 
 import androidx.paging.PagingSource
@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.gtime.general.scopes.AppScope
+import com.gtime.online_mode.data.model.TopScoresModel
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

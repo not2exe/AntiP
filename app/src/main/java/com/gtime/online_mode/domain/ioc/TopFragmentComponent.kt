@@ -1,7 +1,8 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.domain.ioc
 
 import com.gtime.general.AdaptersModule
 import com.gtime.general.scopes.FragmentScope
+import com.gtime.online_mode.ui.TopFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 

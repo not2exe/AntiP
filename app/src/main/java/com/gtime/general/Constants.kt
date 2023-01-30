@@ -35,4 +35,5 @@ object Constants {
     const val SHOP_COLLECTION = "shop"
     const val COINS_STORAGE_COLLECTION = "coins_storage"
     const val PROMO_STORAGE_COLLECTION = "promo_storage"
+    const val PROMOS_FIELD="promocodes"
 }

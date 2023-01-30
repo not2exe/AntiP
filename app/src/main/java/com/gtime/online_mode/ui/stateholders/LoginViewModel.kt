@@ -1,4 +1,4 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.ui.stateholders
 
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
+import com.gtime.online_mode.data.AccountRepository
+import com.gtime.online_mode.state_sealed_class.StateOfAuth
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -22,7 +24,7 @@ class LoginViewModel @AssistedInject constructor(
 ) :
     ViewModel() {
     val stateOfAuth = MutableLiveData<StateOfAuth>(StateOfAuth.WaitingForUserAction)
-    val accountInfoForDisplay = accountRepository.accountInfo.value
+    val accountInfoForDisplay = accountRepository.accountInfoModel.value
 
     @AssistedFactory
     interface Factory {

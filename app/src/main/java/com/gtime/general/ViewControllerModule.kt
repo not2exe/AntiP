@@ -20,7 +20,13 @@ import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
-import com.gtime.online_mode.*
+import com.gtime.online_mode.ui.LoginFragment
+import com.gtime.online_mode.ui.TopAdapter
+import com.gtime.online_mode.ui.TopFragment
+import com.gtime.online_mode.ui.logic.LoginViewController
+import com.gtime.online_mode.ui.logic.TopScoresViewController
+import com.gtime.online_mode.ui.stateholders.LoginViewModel
+import com.gtime.online_mode.ui.stateholders.TopScoresViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

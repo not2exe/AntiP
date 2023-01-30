@@ -17,14 +17,12 @@ import com.example.antip.R
 import com.example.antip.databinding.ActivityMainBinding
 import com.example.antip.databinding.NavHeaderMainBinding
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.app.App
-import com.gtime.online_mode.AccountInfo
-import com.gtime.online_mode.AccountRepository
-import com.gtime.online_mode.TopScoresModel
+import com.gtime.online_mode.data.model.AccountInfoModel
+import com.gtime.online_mode.data.AccountRepository
 import javax.inject.Inject
 
 
@@ -84,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         binding: NavHeaderMainBinding,
         activityMainBinding: ActivityMainBinding,
     ) = with(binding) {
-        accountRepository.accountInfo.observe(this@MainActivity) { acc ->
+        accountRepository.accountInfoModel.observe(this@MainActivity) { acc ->
             if (acc.name == "" || !acc.isFirebaseAuth) {
                 userInfoUnsaved(this)
             } else {
@@ -147,11 +145,11 @@ class MainActivity : AppCompatActivity() {
         authWithIDButton.visibility = View.VISIBLE
     }
 
-    private fun userInfoSaved(binding: NavHeaderMainBinding, accountInfo: AccountInfo) =
+    private fun userInfoSaved(binding: NavHeaderMainBinding, accountInfoModel: AccountInfoModel) =
         with(binding) {
-            nameTv.text = accountInfo.name
-            emailTv.text = accountInfo.email
-            Glide.with(iconIv).load(accountInfo.urlAvatar + Constants.AVATAR_URL_68_END)
+            nameTv.text = accountInfoModel.name
+            emailTv.text = accountInfoModel.email
+            Glide.with(iconIv).load(accountInfoModel.urlAvatar + Constants.AVATAR_URL_68_END)
                 .centerCrop().into(iconIv)
             nameTv.visibility = View.VISIBLE
             emailTv.visibility = View.VISIBLE

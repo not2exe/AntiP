@@ -1,11 +1,11 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.example.antip.R
 import com.example.antip.databinding.TopScoresItemBinding
 import com.gtime.general.Constants
+import com.gtime.online_mode.data.model.TopScoresModel
 
 class TopViewHolder(view: View) : ViewHolder(view) {
     fun bind(item: TopScoresModel, position: Int) {

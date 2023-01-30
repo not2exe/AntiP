@@ -1,4 +1,4 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.state_sealed_class
 
 sealed class StateOfAuth {
     object WaitingForUserAction : StateOfAuth()

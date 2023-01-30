@@ -43,6 +43,9 @@ interface FirebaseModule {
         fun providePromoStorageCollection(): CollectionReference =
             Firebase.firestore.collection(Constants.PROMO_STORAGE_COLLECTION)
 
+
+
+
     }
 
 }

@@ -10,7 +10,7 @@ import androidx.navigation.findNavController
 import com.example.antip.R
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.general.scopes.ActivityScope
-import com.gtime.online_mode.AccountRepository
+import com.gtime.online_mode.data.AccountRepository
 import com.yandex.authsdk.YandexAuthException
 import com.yandex.authsdk.YandexAuthSdk
 import com.yandex.authsdk.YandexAuthToken

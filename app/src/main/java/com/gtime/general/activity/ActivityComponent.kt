@@ -7,8 +7,8 @@ import com.gtime.offline_mode.domain.AppManagerFragmentComponent
 import com.gtime.offline_mode.domain.ChangeModeViewComponent
 import com.gtime.offline_mode.domain.MainFragmentComponent
 import com.gtime.offline_mode.ui.AchievementsFragment
-import com.gtime.online_mode.LoginViewComponent
-import com.gtime.online_mode.TopFragmentComponent
+import com.gtime.online_mode.domain.ioc.LoginViewComponent
+import com.gtime.online_mode.domain.ioc.TopFragmentComponent
 import dagger.BindsInstance
 import dagger.Subcomponent
 

@@ -8,7 +8,7 @@ import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
-import com.gtime.online_mode.TopAdapter
+import com.gtime.online_mode.ui.TopAdapter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

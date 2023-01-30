@@ -1,4 +1,4 @@
-package com.gtime.online_mode
+package com.gtime.online_mode.data.model
 
 import com.gtime.general.Entity
 
