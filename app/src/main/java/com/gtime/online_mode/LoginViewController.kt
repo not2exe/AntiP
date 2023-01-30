@@ -57,7 +57,7 @@ class LoginViewController(
                 }
                 is StateOfAuth.SignInSuccess -> {
                     viewModel.successSignIn()
-                    showSnackBar(R.string.sign_in_account)
+                    showSnackBar(R.string.sign_in_success)
                     navController.popBackStack()
                 }
                 else -> {}

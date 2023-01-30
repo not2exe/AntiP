@@ -1,17 +1,13 @@
-package com.gtime.offline_mode.domain
+package com.gtime.general
 
 import android.content.Context
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.antip.R
-import com.example.antip.databinding.FragmentAppManagerBinding
-import com.example.antip.databinding.FragmentChangeModeBinding
-import com.example.antip.databinding.FragmentLoginBinding
-import com.example.antip.databinding.FragmentMainBinding
-import com.gtime.general.Constants
-import com.gtime.general.LambdaFactory
+import com.example.antip.databinding.*
 import com.gtime.general.scopes.FragmentViewScope
 import com.gtime.general.ui.AppAdapter
 import com.gtime.general.ui.MainFragment
@@ -24,9 +20,7 @@ import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
-import com.gtime.online_mode.LoginFragment
-import com.gtime.online_mode.LoginViewController
-import com.gtime.online_mode.LoginViewModel
+import com.gtime.online_mode.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -125,6 +119,24 @@ interface ViewControllerModule {
                 viewModel,
                 fragment.viewLifecycleOwner,
                 fragment.findNavController()
+            )
+        }
+
+        @FragmentViewScope
+        @Provides
+        fun provideTopScoresViewController(
+            fragment: TopFragment,
+            viewModelFactory: TopScoresViewModel.Factory,
+            adapter: TopAdapter
+        ): TopScoresViewController {
+            val viewModel by fragment.viewModels<TopScoresViewModel> {
+                LambdaFactory(fragment) { handle -> viewModelFactory.create(handle) }
+            }
+            return TopScoresViewController(
+                adapter = adapter,
+                viewModel = viewModel,
+                topBinding = FragmentTopBinding.bind(fragment.requireView()),
+                lifecycleScope = fragment.lifecycleScope
             )
         }
     }

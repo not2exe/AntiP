@@ -10,17 +10,9 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_mainFragment_to_firstTimeFragment"
-            app:destination="@id/firstTimeFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/firstTimeFragment"
-        android:name="com.gtime.ui.FirstTimeFragment"
-        android:label=""
-        tools:layout="@layout/fragment_first_time" />
     <fragment
         android:id="@+id/appManagerFragment"
         android:name="com.gtime.offline_mode.ui.AppManagerFragment"
@@ -46,10 +38,10 @@
     <fragment
         android:id="@+id/topFragment"
         android:name="com.gtime.online_mode.TopFragment"
-        android:label="Топ"
+        android:label="@string/top"
         tools:layout="@layout/fragment_top" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.gtime.online_mode.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="@string/sign_in" />
 </navigation>

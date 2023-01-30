@@ -1,7 +1,6 @@
 package com.gtime.general.activity
 
 import androidx.activity.ComponentActivity
-import androidx.navigation.NavController
 import com.gtime.general.scopes.ActivityScope
 import com.gtime.general.ui.MainActivity
 import com.gtime.offline_mode.domain.AppManagerFragmentComponent
@@ -9,6 +8,7 @@ import com.gtime.offline_mode.domain.ChangeModeViewComponent
 import com.gtime.offline_mode.domain.MainFragmentComponent
 import com.gtime.offline_mode.ui.AchievementsFragment
 import com.gtime.online_mode.LoginViewComponent
+import com.gtime.online_mode.TopFragmentComponent
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -27,4 +27,5 @@ interface ActivityComponent {
     fun changeMenuViewComponent(): ChangeModeViewComponent.Factory
     fun appManagerFragmentComponent(): AppManagerFragmentComponent.Factory
     fun loginFragmentViewComponent(): LoginViewComponent.Factory
+    fun topFragmentComponent(): TopFragmentComponent.Factory
 }

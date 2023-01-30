@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val auth: FirebaseAuth
 ) :
     ViewModel() {
     val stateOfAuth = MutableLiveData<StateOfAuth>(StateOfAuth.WaitingForUserAction)
@@ -31,7 +33,7 @@ class LoginViewModel @AssistedInject constructor(
         password.length >= 8
 
     fun createAccount(email: String, password: String) = viewModelScope.launch {
-        Firebase.auth.createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     stateOfAuth.value = StateOfAuth.CreateSuccess
@@ -50,7 +52,7 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun signInAccount(email: String, password: String) = viewModelScope.launch {
-        Firebase.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             stateOfAuth.value =
                 if (it.isSuccessful) StateOfAuth.SignInSuccess else StateOfAuth.SignInError
         }
@@ -62,7 +64,7 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun successSignIn() {
-        val acc = Firebase.auth.currentUser ?: return
+        val acc = auth.currentUser ?: return
         accountRepository.successAuthFirebase()
         if (accountInfoForDisplay?.name != acc.displayName || accountInfoForDisplay?.urlAvatar != acc.photoUrl.toString()) {
             updateProfile()

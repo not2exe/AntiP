@@ -17,12 +17,14 @@ import com.example.antip.R
 import com.example.antip.databinding.ActivityMainBinding
 import com.example.antip.databinding.NavHeaderMainBinding
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.app.App
 import com.gtime.online_mode.AccountInfo
 import com.gtime.online_mode.AccountRepository
+import com.gtime.online_mode.TopScoresModel
 import javax.inject.Inject
 
 
@@ -68,7 +70,6 @@ class MainActivity : AppCompatActivity() {
         setObservers(headerBinding, binding)
         setListeners(headerBinding)
         setSwitch(headerBinding)
-
     }
 
     private fun setSwitch(binding: NavHeaderMainBinding) = with(binding) {

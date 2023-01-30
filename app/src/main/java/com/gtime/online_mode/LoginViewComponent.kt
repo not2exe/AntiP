@@ -1,7 +1,7 @@
 package com.gtime.online_mode
 
 import com.gtime.general.scopes.FragmentViewScope
-import com.gtime.offline_mode.domain.ViewControllerModule
+import com.gtime.general.ViewControllerModule
 import dagger.BindsInstance
 import dagger.Subcomponent
 

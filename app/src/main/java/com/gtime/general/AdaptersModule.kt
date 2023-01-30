@@ -1,15 +1,14 @@
-package com.gtime.offline_mode.domain
+package com.gtime.general
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
-import com.gtime.general.Constants
-import com.gtime.general.LambdaFactory
 import com.gtime.general.scopes.FragmentScope
+import com.gtime.general.ui.AppAdapter
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.AppManagerFragment
-import com.gtime.general.ui.AppAdapter
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.gtime.online_mode.TopAdapter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -52,6 +51,9 @@ interface AdaptersModule {
             createAdapter(dragListener, fragment, viewModelFactory)
 
 
+        @FragmentScope
+        @Provides
+        fun provideTopAdapter(): TopAdapter = TopAdapter()
 
         private fun createAdapter(
             dragListener: DragListener,
