@@ -21,8 +21,9 @@ import com.google.firebase.ktx.Firebase
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.app.App
-import com.gtime.online_mode.data.model.AccountInfoModel
 import com.gtime.online_mode.data.AccountRepository
+import com.gtime.online_mode.data.CoinsRepository
+import com.gtime.online_mode.data.model.AccountInfoModel
 import javax.inject.Inject
 
 
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var accountRepository: AccountRepository
+
+    @Inject
+    lateinit var coinsRepository: CoinsRepository
 
     @Inject
     lateinit var idIntent: Intent
@@ -96,6 +100,9 @@ class MainActivity : AppCompatActivity() {
                 offlineMenu(activityMainBinding, this)
             }
         }
+        coinsRepository.coins.observe(this@MainActivity) {
+            coinsTv.text = it.toString()
+        }
     }
 
     private fun setListeners(binding: NavHeaderMainBinding) {
@@ -119,12 +126,14 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun onlineMenu(binding: ActivityMainBinding) = with(binding) {
-        navView.apply {
-            menu.clear()
-            inflateMenu(R.menu.menu_online)
+    private fun onlineMenu(binding: ActivityMainBinding) =
+        with(binding) {
+            navView.apply {
+                menu.clear()
+                inflateMenu(R.menu.menu_online)
+            }
+
         }
-    }
 
     private fun offlineMenu(activityBinding: ActivityMainBinding, binding: NavHeaderMainBinding) =
         with(binding) {
@@ -133,29 +142,28 @@ class MainActivity : AppCompatActivity() {
                 inflateMenu(R.menu.menu_offline)
             }
             loginOutButton.visibility = View.GONE
-            emailTv.visibility = View.GONE
             authWithIDButton.visibility = View.GONE
+            coinsLayout.visibility = View.GONE
         }
 
     private fun userInfoUnsaved(binding: NavHeaderMainBinding) = with(binding) {
         nameTv.visibility = View.GONE
-        emailTv.visibility = View.GONE
         iconIv.visibility = View.GONE
         loginOutButton.visibility = View.GONE
         authWithIDButton.visibility = View.VISIBLE
+        coinsLayout.visibility = View.GONE
     }
 
     private fun userInfoSaved(binding: NavHeaderMainBinding, accountInfoModel: AccountInfoModel) =
         with(binding) {
             nameTv.text = accountInfoModel.name
-            emailTv.text = accountInfoModel.email
             Glide.with(iconIv).load(accountInfoModel.urlAvatar + Constants.AVATAR_URL_68_END)
                 .centerCrop().into(iconIv)
-            nameTv.visibility = View.VISIBLE
-            emailTv.visibility = View.VISIBLE
-            iconIv.visibility = View.VISIBLE
             authWithIDButton.visibility = View.GONE
             loginOutButton.visibility = View.VISIBLE
+            nameTv.visibility = View.VISIBLE
+            iconIv.visibility = View.VISIBLE
+            coinsLayout.visibility = View.VISIBLE
         }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,5 +1,6 @@
 package com.gtime.general.app
 
+import androidx.navigation.Navigator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
@@ -43,9 +44,11 @@ interface FirebaseModule {
         fun providePromoStorageCollection(): CollectionReference =
             Firebase.firestore.collection(Constants.PROMO_STORAGE_COLLECTION)
 
-
-
-
+        @Provides
+        @AppScope
+        @Named(Constants.USERS_PROMO_STORAGE_COLLECTION)
+        fun provideUsersPromoStorageCollection(): CollectionReference =
+            Firebase.firestore.collection(Constants.USERS_PROMO_STORAGE_COLLECTION)
     }
 
 }

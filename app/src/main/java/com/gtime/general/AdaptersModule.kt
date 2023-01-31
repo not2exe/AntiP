@@ -8,8 +8,10 @@ import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.gtime.online_mode.ui.ShopFragment
 import com.gtime.online_mode.ui.TopAdapter
 import com.gtime.online_mode.ui.logic.ShopAdapter
+import com.gtime.online_mode.ui.stateholders.ShopViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -58,7 +60,17 @@ interface AdaptersModule {
 
         @FragmentScope
         @Provides
-        fun provideShopAdapter(): ShopAdapter = ShopAdapter()
+        fun provideShopAdapter(
+            viewModelFactory: ShopViewModel.Factory,
+            fragment: ShopFragment
+        ): ShopAdapter {
+            val viewModel by fragment.viewModels<ShopViewModel> {
+                LambdaFactory(fragment) { handle: SavedStateHandle ->
+                    viewModelFactory.create(handle)
+                }
+            }
+            return ShopAdapter(viewModel = viewModel)
+        }
 
         private fun createAdapter(
             dragListener: DragListener,

@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.online_mode.domain.OfferUiModel
+import com.gtime.online_mode.ui.stateholders.ShopViewModel
 
-class ShopAdapter : RecyclerView.Adapter<ShopViewHolder>() {
+class ShopAdapter(private val viewModel: ShopViewModel) : RecyclerView.Adapter<ShopViewHolder>() {
     var list = emptyList<OfferUiModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder =
         ShopViewHolder(
@@ -18,7 +19,7 @@ class ShopAdapter : RecyclerView.Adapter<ShopViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], viewModel)
     }
 
     override fun getItemCount(): Int = list.size

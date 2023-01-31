@@ -36,4 +36,7 @@
     <string name="sign_in">Вход</string>
     <string name="hello_blank_fragment">HELLO</string>
     <string name="Buy">Купить</string>
+    <string name="sucess_order">Покупка выполнена успешна</string>
+    <string name="error_order">Ошибка при покупке</string>
+    <string name="lack_of_coins">Недостаточно монет :(</string>
 </resources>

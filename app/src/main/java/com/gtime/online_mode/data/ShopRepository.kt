@@ -18,7 +18,18 @@ class ShopRepository @Inject constructor(
     val offers = MutableLiveData<List<OfferModel>>()
 
     suspend fun get() = withContext(Dispatchers.IO) {
-        offers.postValue(refShop.get().await().toObjects(OfferModel::class.java))
+        val mutableList = mutableListOf<OfferModel>()
+        refShop.get().await().documents.forEach {
+            val obj = it.toObject(OfferModel::class.java) ?: OfferModel()
+            val offerWithID =
+                OfferModel(obj.cost, obj.description, obj.fullDescription, it.id, obj.urlOfferImage)
+            mutableList.add(offerWithID)
+        }
+        offers.postValue(mutableList)
+    }
+
+    fun refresh() {
+        offers.value = offers.value
     }
 
 

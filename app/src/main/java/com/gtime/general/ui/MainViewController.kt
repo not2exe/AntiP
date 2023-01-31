@@ -18,8 +18,8 @@ import com.example.antip.databinding.FragmentMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
-import com.gtime.offline_mode.AnimateState
 import com.gtime.general.KindOfApps
+import com.gtime.offline_mode.AnimateState
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
 import kotlinx.coroutines.launch
 
@@ -92,7 +92,7 @@ class MainViewController(
             }
             AnimateState.END_ANIM -> {
                 if (isBroken) {
-                    view.setImageResource(R.drawable.heart_broken)
+                    view.setImageResource(R.drawable.ic_heart_broken_48)
                     return
                 }
                 animateState = AnimateState.PULSATE_SECOND
@@ -128,8 +128,6 @@ class MainViewController(
         mainTable.layoutManager = LinearLayoutManager(context)
         mainTable.adapter = adapter
     }
-
-
 
 
     private fun checkUsagePerm(): Boolean {
@@ -178,11 +176,10 @@ class MainViewController(
             setupPulsateAnim(heartSecond, secondHearState, countOfLives < 2)
             setupPulsateAnim(heartThird, thirdHeartState, countOfLives < 3)
         }
-        viewModel.isOnline.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isOnline.observe(viewLifecycleOwner) {
+            if (it) {
                 heartLayout.visibility = View.GONE
-            }
-            else{
+            } else {
                 heartLayout.visibility = View.VISIBLE
             }
         }

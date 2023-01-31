@@ -1,6 +1,7 @@
 package com.gtime.general
 
 object Constants {
+    const val COINS = "coins"
     const val PAGE_SIZE = 20
     const val SCORES = "scores"
     const val CACHE_ACC = "CACHE_ACC"
@@ -35,5 +36,8 @@ object Constants {
     const val SHOP_COLLECTION = "shop"
     const val COINS_STORAGE_COLLECTION = "coins_storage"
     const val PROMO_STORAGE_COLLECTION = "promo_storage"
-    const val PROMOS_FIELD="promocodes"
+    const val PROMOS_FIELD = "promocodes"
+    const val USERS_PROMO_STORAGE_COLLECTION = "users_promo_storage"
+    const val OFFER_ID = "offerID"
+    const val PROMO_WITH_DESC_COLLECTION="promo_with_desc"
 }
