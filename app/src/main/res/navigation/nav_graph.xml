@@ -27,7 +27,7 @@
         android:label="@string/achievements" />
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.gtime.online_mode.ShopFragment"
+        android:name="com.gtime.online_mode.ui.ShopFragment"
         android:label="@string/shop"
         tools:layout="@layout/fragment_shop" />
     <fragment

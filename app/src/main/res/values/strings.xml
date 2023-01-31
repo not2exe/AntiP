@@ -35,4 +35,5 @@
     <string name="sign_in_success">Вход в аккаунт произведен успешно</string>
     <string name="sign_in">Вход</string>
     <string name="hello_blank_fragment">HELLO</string>
+    <string name="Buy">Купить</string>
 </resources>

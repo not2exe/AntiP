@@ -9,6 +9,7 @@ import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.online_mode.ui.TopAdapter
+import com.gtime.online_mode.ui.logic.ShopAdapter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -54,6 +55,10 @@ interface AdaptersModule {
         @FragmentScope
         @Provides
         fun provideTopAdapter(): TopAdapter = TopAdapter()
+
+        @FragmentScope
+        @Provides
+        fun provideShopAdapter(): ShopAdapter = ShopAdapter()
 
         private fun createAdapter(
             dragListener: DragListener,

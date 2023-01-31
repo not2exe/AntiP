@@ -21,11 +21,15 @@ import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
 import com.gtime.online_mode.ui.LoginFragment
+import com.gtime.online_mode.ui.ShopFragment
 import com.gtime.online_mode.ui.TopAdapter
 import com.gtime.online_mode.ui.TopFragment
 import com.gtime.online_mode.ui.logic.LoginViewController
+import com.gtime.online_mode.ui.logic.ShopAdapter
+import com.gtime.online_mode.ui.logic.ShopViewController
 import com.gtime.online_mode.ui.logic.TopScoresViewController
 import com.gtime.online_mode.ui.stateholders.LoginViewModel
+import com.gtime.online_mode.ui.stateholders.ShopViewModel
 import com.gtime.online_mode.ui.stateholders.TopScoresViewModel
 import dagger.Module
 import dagger.Provides
@@ -144,6 +148,25 @@ interface ViewControllerModule {
                 topBinding = FragmentTopBinding.bind(fragment.requireView()),
                 lifecycleScope = fragment.lifecycleScope
             )
+        }
+
+        @FragmentViewScope
+        @Provides
+        fun provideShopViewController(
+            fragment: ShopFragment,
+            viewModelFactory: ShopViewModel.Factory,
+            adapter: ShopAdapter
+        ): ShopViewController {
+            val viewModel by fragment.viewModels<ShopViewModel> {
+                LambdaFactory(fragment) { handle -> viewModelFactory.create(handle) }
+            }
+            return ShopViewController(
+                FragmentShopBinding.bind(fragment.requireView()),
+                viewModel,
+                fragment.viewLifecycleOwner,
+                adapter
+            )
+
         }
     }
 }

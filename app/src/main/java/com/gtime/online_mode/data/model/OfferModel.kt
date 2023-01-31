@@ -1,7 +1,9 @@
 package com.gtime.online_mode.data.model
 
+import com.google.firebase.firestore.PropertyName
+
 data class OfferModel(
-    val documentId: String,
+    var offerId: String,
     val cost: Int,
     val description: String,
     val fullDescription: String,

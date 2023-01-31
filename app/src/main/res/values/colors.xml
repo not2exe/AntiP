@@ -123,4 +123,6 @@
     <color name="md_theme_dark_surfaceTint_second">#FFB0D0</color>
     <color name="md_theme_dark_outlineVariant_second">#504348</color>
     <color name="md_theme_dark_scrim_second">#000000</color>
+    <color name="gold">#FFD700</color>
+    <color name="light_gray">#C1C1C1</color>
 </resources>

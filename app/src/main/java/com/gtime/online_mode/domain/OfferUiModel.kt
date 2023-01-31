@@ -1,5 +1,7 @@
 package com.gtime.online_mode.domain
 
+import com.gtime.general.Entity
+
 data class OfferUiModel(
     val documentId: String,
     val cost: Int,
@@ -7,4 +9,4 @@ data class OfferUiModel(
     val fullDescription: String,
     val urlOfferImage: String,
     val isAvailable: Boolean
-)
+) : Entity(documentId)
