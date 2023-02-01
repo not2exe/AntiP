@@ -54,6 +54,12 @@ interface FirebaseModule {
         @Named(Constants.TASK_STORAGE_COLLECTION)
         fun provideTaskStorageCollection(): CollectionReference =
             Firebase.firestore.collection(Constants.TASK_STORAGE_COLLECTION)
+
+        @Provides
+        @AppScope
+        @Named(Constants.TASK_GENERAL_COLLECTION)
+        fun provideTaskGeneralCollection(): CollectionReference =
+            Firebase.firestore.collection(Constants.TASK_GENERAL_COLLECTION)
     }
 
 

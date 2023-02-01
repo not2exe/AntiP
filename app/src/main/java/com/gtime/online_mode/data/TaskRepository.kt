@@ -1,5 +1,6 @@
 package com.gtime.online_mode.data
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -16,6 +17,7 @@ import javax.inject.Named
 @AppScope
 class TaskRepository @Inject constructor(
     @Named(Constants.TASK_STORAGE_COLLECTION) private val taskReference: CollectionReference,
+    @Named(Constants.TASK_GENERAL_COLLECTION) private val taskGeneralReference: CollectionReference,
     private val auth: FirebaseAuth
 ) {
     val tasks = MutableLiveData<List<TaskModel>>()
@@ -56,6 +58,27 @@ class TaskRepository @Inject constructor(
             hashMapOf(Constants.STATE_FIELD to state), SetOptions.merge()
         )
         getTasks()
+    }
+
+    suspend fun provideTaskToNewUser() = withContext(Dispatchers.IO) {
+        val email = auth.currentUser?.email ?: return@withContext
+        taskGeneralReference.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                task.result.forEach { document ->
+                    val obj = document.toObject(TaskModel::class.java)
+                    taskReference.document(email).collection(Constants.TASK_USER_COLLECTION)
+                        .document(document.id)
+                        .set(
+                            hashMapOf(
+                                Constants.STATE_FIELD to obj.state,
+                                Constants.DESCRIPTION_FIELD to obj.description,
+                                Constants.AWARD_FIELD to obj.award
+                            ),
+                            SetOptions.merge()
+                        )
+                }
+            }
+        }
     }
 
 }

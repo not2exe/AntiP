@@ -46,4 +46,7 @@ object Constants {
     const val TASK_STATE_CLAIMED = "Claimed"
     const val STATE_FIELD = "state"
     const val TASK_USER_COLLECTION = "task_user"
+    const val TASK_GENERAL_COLLECTION = "task_general"
+    const val AWARD_FIELD = "award"
+    const val DESCRIPTION_FIELD = "description"
 }

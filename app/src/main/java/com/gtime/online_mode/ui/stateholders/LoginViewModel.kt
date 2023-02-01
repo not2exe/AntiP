@@ -11,6 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.gtime.online_mode.data.AccountRepository
+import com.gtime.online_mode.data.TaskRepository
 import com.gtime.online_mode.state_classes.StateOfAuth
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
     private val accountRepository: AccountRepository,
+    private val taskRepository: TaskRepository,
     private val auth: FirebaseAuth
 ) :
     ViewModel() {
@@ -61,6 +63,7 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun successCreateNewAccount() = viewModelScope.launch {
+        taskRepository.provideTaskToNewUser()
         accountRepository.successAuthFirebase()
         updateProfile()
     }
@@ -73,12 +76,10 @@ class LoginViewModel @AssistedInject constructor(
         }
     }
 
-
     private fun updateProfile() = viewModelScope.launch {
         Firebase.auth.currentUser?.updateProfile(userProfileChangeRequest {
             displayName = accountInfoForDisplay?.name
             photoUri = accountInfoForDisplay?.urlAvatar?.toUri()
         })
     }
-
 }
