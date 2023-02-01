@@ -41,4 +41,5 @@
     <string name="lack_of_coins">Недостаточно монет :(</string>
     <string name="claim">Забрать</string>
     <string name="auth_error">Вы не авторизованы</string>
+    <string name="promo">Промокоды</string>
 </resources>

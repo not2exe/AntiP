@@ -5,7 +5,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.gtime.general.Constants
 import com.gtime.general.scopes.AppScope
 import com.gtime.online_mode.data.model.OfferModel
-import com.gtime.online_mode.state_classes.StateOfRequests
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -28,6 +27,10 @@ class ShopRepository @Inject constructor(
         }
         offers.postValue(mutableList)
     }
+
+    suspend fun getById(offerID: String): OfferModel =
+        refShop.document(offerID).get().await().toObject(OfferModel::class.java) ?: OfferModel()
+
 
     fun refresh() {
         offers.value = offers.value

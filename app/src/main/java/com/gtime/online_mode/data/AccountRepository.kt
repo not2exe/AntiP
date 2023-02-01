@@ -19,6 +19,7 @@ class AccountRepository @Inject constructor(
     private val yandexAuthSdk: YandexAuthSdk,
     private val coinsRepository: CoinsRepository,
     private val taskRepository: TaskRepository,
+    private val usersPromoRepository: UsersPromoRepository
 ) {
     val accountInfoModel = MutableLiveData<AccountInfoModel>()
 
@@ -60,6 +61,7 @@ class AccountRepository @Inject constructor(
         accountInfoModel.value = AccountInfoModel(acc.name, acc.email, acc.urlAvatar, true)
         coinsRepository.refreshListener()
         taskRepository.getTasks()
+        usersPromoRepository.refreshUsersPromo()
     }
 
 }

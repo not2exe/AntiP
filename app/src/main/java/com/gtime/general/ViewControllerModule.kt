@@ -22,10 +22,7 @@ import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
 import com.gtime.online_mode.ui.*
 import com.gtime.online_mode.ui.logic.*
-import com.gtime.online_mode.ui.stateholders.LoginViewModel
-import com.gtime.online_mode.ui.stateholders.ShopViewModel
-import com.gtime.online_mode.ui.stateholders.TaskViewModel
-import com.gtime.online_mode.ui.stateholders.TopScoresViewModel
+import com.gtime.online_mode.ui.stateholders.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -180,6 +177,25 @@ interface ViewControllerModule {
                 viewLifecycleOwner = fragment.viewLifecycleOwner,
                 adapter = adapter
             )
+        }
+
+        @FragmentViewScope
+        @Provides
+        fun providePromoCodeViewController(
+            fragment: PromoCodeFragment,
+            viewModelFactory: PromoCodeViewModel.Factory,
+            adapter: PromoCardAdapter
+        ): PromoCodeViewController {
+            val viewModel by fragment.viewModels<PromoCodeViewModel> {
+                LambdaFactory(fragment) { handle -> viewModelFactory.create(handle) }
+            }
+            return PromoCodeViewController(
+                binding = FragmentPromoCodeBinding.bind(fragment.requireView()),
+                viewModel = viewModel,
+                viewLifecycleOwner = fragment.viewLifecycleOwner,
+                adapter = adapter
+            )
+
         }
     }
 }

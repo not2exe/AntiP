@@ -7,10 +7,7 @@ import com.gtime.offline_mode.domain.AppManagerFragmentComponent
 import com.gtime.offline_mode.domain.ChangeModeViewComponent
 import com.gtime.offline_mode.domain.MainFragmentComponent
 import com.gtime.offline_mode.ui.AchievementsFragment
-import com.gtime.online_mode.domain.ioc.LoginViewComponent
-import com.gtime.online_mode.domain.ioc.ShopFragmentComponent
-import com.gtime.online_mode.domain.ioc.TaskFragmentComponent
-import com.gtime.online_mode.domain.ioc.TopFragmentComponent
+import com.gtime.online_mode.domain.ioc.*
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -31,5 +28,6 @@ interface ActivityComponent {
     fun loginFragmentViewComponent(): LoginViewComponent.Factory
     fun topFragmentComponent(): TopFragmentComponent.Factory
     fun shopFragmentComponent(): ShopFragmentComponent.Factory
-    fun taskFragmentComponent():TaskFragmentComponent.Factory
+    fun taskFragmentComponent(): TaskFragmentComponent.Factory
+    fun promoCodeFragmentComponent(): PromoCodeFragmentComponent.Factory
 }

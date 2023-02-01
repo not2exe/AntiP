@@ -44,4 +44,9 @@
         android:id="@+id/loginFragment"
         android:name="com.gtime.online_mode.ui.LoginFragment"
         android:label="@string/sign_in" />
+    <fragment
+        android:id="@+id/promoCodeFragment"
+        android:name="com.gtime.online_mode.ui.PromoCodeFragment"
+        android:label="Промокоды"
+        tools:layout="@layout/fragment_promo_code" />
 </navigation>

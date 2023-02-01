@@ -12,6 +12,7 @@ import com.gtime.online_mode.ui.ShopFragment
 import com.gtime.online_mode.ui.TasksAdapter
 import com.gtime.online_mode.ui.TasksFragment
 import com.gtime.online_mode.ui.TopAdapter
+import com.gtime.online_mode.ui.logic.PromoCardAdapter
 import com.gtime.online_mode.ui.logic.ShopAdapter
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
@@ -88,6 +89,11 @@ interface AdaptersModule {
             }
             return TasksAdapter(viewModel)
         }
+
+        @FragmentScope
+        @Provides
+        fun providePromoCardAdapter(): PromoCardAdapter = PromoCardAdapter()
+
 
         private fun createAdapter(
             dragListener: DragListener,
