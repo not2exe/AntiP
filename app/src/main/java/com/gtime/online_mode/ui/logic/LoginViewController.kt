@@ -8,7 +8,7 @@ import com.example.antip.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.general.Constants
 import com.gtime.online_mode.ui.stateholders.LoginViewModel
-import com.gtime.online_mode.state_sealed_class.StateOfAuth
+import com.gtime.online_mode.state_classes.StateOfAuth
 
 class LoginViewController(
     private val binding: FragmentLoginBinding,

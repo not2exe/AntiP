@@ -1,4 +1,4 @@
-package com.gtime.online_mode.ui.logic
+package com.gtime.online_mode.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,25 +6,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
-import com.gtime.online_mode.ui.OfferUiModel
-import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.gtime.online_mode.ui.stateholders.TaskViewModel
 
-class ShopAdapter(private val viewModel: ShopViewModel) : RecyclerView.Adapter<ShopViewHolder>() {
-    var list = emptyList<OfferUiModel>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopViewHolder =
-        ShopViewHolder(
+class TasksAdapter(private val viewModel: TaskViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
+    var list = emptyList<TaskUiModel>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder =
+        TaskViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.shop_item, parent, false
+                R.layout.task_item, parent, false
             )
         )
 
-    override fun onBindViewHolder(holder: ShopViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) =
         holder.bind(list[position], viewModel)
-    }
 
     override fun getItemCount(): Int = list.size
 
-    fun updateList(list: List<OfferUiModel>) {
+    fun updateList(list: List<TaskUiModel>) {
         val diffUtil = DiffUtilCallbackImpl(this.list, list)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.list = list

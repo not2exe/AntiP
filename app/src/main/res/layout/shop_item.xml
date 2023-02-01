@@ -32,9 +32,8 @@
             android:layout_width="100dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
-            android:backgroundTint="@color/button_background"
-            android:text="@string/Buy"
-            app:cornerRadius="8dp" />
+            style="@style/MyButton"
+            android:text="@string/Buy"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"

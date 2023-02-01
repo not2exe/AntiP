@@ -11,7 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import com.gtime.online_mode.data.AccountRepository
-import com.gtime.online_mode.state_sealed_class.StateOfAuth
+import com.gtime.online_mode.state_classes.StateOfAuth
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -65,13 +65,14 @@ class LoginViewModel @AssistedInject constructor(
         updateProfile()
     }
 
-    fun successSignIn() {
-        val acc = auth.currentUser ?: return
+    fun successSignIn() = viewModelScope.launch {
+        val acc = auth.currentUser ?: return@launch
         accountRepository.successAuthFirebase()
         if (accountInfoForDisplay?.name != acc.displayName || accountInfoForDisplay?.urlAvatar != acc.photoUrl.toString()) {
             updateProfile()
         }
     }
+
 
     private fun updateProfile() = viewModelScope.launch {
         Firebase.auth.currentUser?.updateProfile(userProfileChangeRequest {

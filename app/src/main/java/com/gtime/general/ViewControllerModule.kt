@@ -20,16 +20,11 @@ import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
-import com.gtime.online_mode.ui.LoginFragment
-import com.gtime.online_mode.ui.ShopFragment
-import com.gtime.online_mode.ui.TopAdapter
-import com.gtime.online_mode.ui.TopFragment
-import com.gtime.online_mode.ui.logic.LoginViewController
-import com.gtime.online_mode.ui.logic.ShopAdapter
-import com.gtime.online_mode.ui.logic.ShopViewController
-import com.gtime.online_mode.ui.logic.TopScoresViewController
+import com.gtime.online_mode.ui.*
+import com.gtime.online_mode.ui.logic.*
 import com.gtime.online_mode.ui.stateholders.LoginViewModel
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.gtime.online_mode.ui.stateholders.TaskViewModel
 import com.gtime.online_mode.ui.stateholders.TopScoresViewModel
 import dagger.Module
 import dagger.Provides
@@ -125,10 +120,10 @@ interface ViewControllerModule {
                 }
             }
             return LoginViewController(
-                FragmentLoginBinding.bind(fragment.requireView()),
-                viewModel,
-                fragment.viewLifecycleOwner,
-                fragment.findNavController()
+                binding = FragmentLoginBinding.bind(fragment.requireView()),
+                viewModel = viewModel,
+                viewLifecycleOwner = fragment.viewLifecycleOwner,
+                navController = fragment.findNavController()
             )
         }
 
@@ -161,12 +156,30 @@ interface ViewControllerModule {
                 LambdaFactory(fragment) { handle -> viewModelFactory.create(handle) }
             }
             return ShopViewController(
-                FragmentShopBinding.bind(fragment.requireView()),
-                viewModel,
-                fragment.viewLifecycleOwner,
-                adapter
+                binding = FragmentShopBinding.bind(fragment.requireView()),
+                viewModel = viewModel,
+                viewLifecycleOwner = fragment.viewLifecycleOwner,
+                adapter = adapter
             )
 
+        }
+
+        @FragmentViewScope
+        @Provides
+        fun provideTaskViewController(
+            fragment: TasksFragment,
+            viewModelFactory: TaskViewModel.Factory,
+            adapter: TasksAdapter
+        ): TaskViewController {
+            val viewModel by fragment.viewModels<TaskViewModel> {
+                LambdaFactory(fragment) { handle -> viewModelFactory.create(handle) }
+            }
+            return TaskViewController(
+                binding = FragmentTasksBinding.bind(fragment.requireView()),
+                viewModel = viewModel,
+                viewLifecycleOwner = fragment.viewLifecycleOwner,
+                adapter = adapter
+            )
         }
     }
 }

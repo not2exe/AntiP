@@ -7,7 +7,7 @@ import com.google.firebase.firestore.SetOptions
 import com.gtime.general.Constants
 import com.gtime.general.scopes.AppScope
 import com.gtime.online_mode.data.model.CoinsModel
-import com.gtime.online_mode.state_sealed_class.StateOfBuy
+import com.gtime.online_mode.state_classes.StateOfRequests
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -20,12 +20,13 @@ class CoinsRepository @Inject constructor(
     private val auth: FirebaseAuth
 ) {
     val coins = MutableLiveData<Int>()
-    val state = MutableLiveData<StateOfBuy>(StateOfBuy.WaitingForUserAction)
+    val state = MutableLiveData<StateOfRequests>(StateOfRequests.WaitingForUserAction)
 
     init {
-        initCoins()
+        refreshListener()
     }
-    private fun initCoins() {
+
+    fun refreshListener() {
         val email = auth.currentUser?.email ?: return
         coinsRef.document(email).addSnapshotListener { value, error ->
             val obj = value?.toObject(CoinsModel::class.java) ?: CoinsModel(0)
@@ -47,23 +48,23 @@ class CoinsRepository @Inject constructor(
         withContext(Dispatchers.IO) {
             val email = auth.currentUser?.email
             if (email == null) {
-                state.postValue(StateOfBuy.AuthError)
+                state.postValue(StateOfRequests.Error.AuthError)
                 return@withContext
             }
             val coinsOld =
                 coinsRef.document(email).get().await().toObject(CoinsModel::class.java)?.coins ?: 0
             if (coinsOld < cost) {
-                state.postValue(StateOfBuy.LackOfCoinsError)
+                state.postValue(StateOfRequests.Error.LackOfCoinsError)
                 return@withContext
             }
             coinsRef.document(email).set(
                 hashMapOf(Constants.COINS to coinsOld - cost), SetOptions.merge()
             ).addOnCompleteListener {
-                state.postValue(StateOfBuy.SuccessWithCoins(offerId, cost))
+                state.postValue(StateOfRequests.Success.SuccessWithCoins(offerId, cost))
             }
         }
 
     fun clearState() {
-        state.postValue(StateOfBuy.WaitingForUserAction)
+        state.postValue(StateOfRequests.WaitingForUserAction)
     }
 }

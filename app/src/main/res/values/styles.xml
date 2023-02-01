@@ -41,5 +41,10 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="MyButton" parent="Widget.Material3.Button">
+        <item name="android:backgroundTint">@color/button_background</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
 
 </resources>

@@ -39,5 +39,11 @@ object Constants {
     const val PROMOS_FIELD = "promocodes"
     const val USERS_PROMO_STORAGE_COLLECTION = "users_promo_storage"
     const val OFFER_ID = "offerID"
-    const val PROMO_WITH_DESC_COLLECTION="promo_with_desc"
+    const val PROMO_WITH_DESC_COLLECTION = "promo_with_desc"
+    const val TASK_STORAGE_COLLECTION = "task_storage"
+    const val TASK_STATE_READY_TO_CLAIM = "ReadyToClaim"
+    const val TASK_STATE_UNCOMPLETED = "Uncompleted"
+    const val TASK_STATE_CLAIMED = "Claimed"
+    const val STATE_FIELD = "state"
+    const val TASK_USER_COLLECTION = "task_user"
 }

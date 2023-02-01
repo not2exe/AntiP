@@ -1,4 +1,4 @@
-package com.gtime.online_mode.domain
+package com.gtime.online_mode.ui
 
 import com.gtime.general.Entity
 

@@ -9,9 +9,12 @@ import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.online_mode.ui.ShopFragment
+import com.gtime.online_mode.ui.TasksAdapter
+import com.gtime.online_mode.ui.TasksFragment
 import com.gtime.online_mode.ui.TopAdapter
 import com.gtime.online_mode.ui.logic.ShopAdapter
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.gtime.online_mode.ui.stateholders.TaskViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -70,6 +73,20 @@ interface AdaptersModule {
                 }
             }
             return ShopAdapter(viewModel = viewModel)
+        }
+
+        @FragmentScope
+        @Provides
+        fun provideTaskAdapter(
+            viewModelFactory: TaskViewModel.Factory,
+            fragment: TasksFragment
+        ): TasksAdapter {
+            val viewModel by fragment.viewModels<TaskViewModel> {
+                LambdaFactory(fragment) { handle: SavedStateHandle ->
+                    viewModelFactory.create(handle)
+                }
+            }
+            return TasksAdapter(viewModel)
         }
 
         private fun createAdapter(

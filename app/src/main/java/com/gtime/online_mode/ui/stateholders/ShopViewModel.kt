@@ -1,11 +1,12 @@
 package com.gtime.online_mode.ui.stateholders
 
 import androidx.lifecycle.*
+import com.gtime.online_mode.data.AccountRepository
 import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.PromoRepository
 import com.gtime.online_mode.data.ShopRepository
 import com.gtime.online_mode.data.model.OfferModel
-import com.gtime.online_mode.domain.OfferUiModel
+import com.gtime.online_mode.ui.OfferUiModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,6 +17,7 @@ class ShopViewModel @AssistedInject constructor(
     private val shopRepository: ShopRepository,
     private val promoRepository: PromoRepository,
     private val coinsRepository: CoinsRepository,
+    private val accountRepository: AccountRepository
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -40,13 +42,19 @@ class ShopViewModel @AssistedInject constructor(
 
     fun tryToBuy(offerID: String, cost: Int) {
         viewModelScope.launch {
-            coinsRepository.subtractCoins(cost, offerID)
+            coinsRepository.subtractCoins(
+                cost,
+                offerID
+            )
         }
     }
 
     fun getPromoCodes(offerID: String, cost: Int) {
         viewModelScope.launch {
-            promoRepository.getPromo(offerID, cost)
+            promoRepository.getPromo(
+                offerID, cost, accountRepository.getEmail(),
+                accountRepository.isAuthorized()
+            )
             shopRepository.refresh()
         }
     }
@@ -76,6 +84,10 @@ class ShopViewModel @AssistedInject constructor(
 
     fun clearCoinState() {
         coinsRepository.clearState()
+    }
+
+    fun refreshOffers() = viewModelScope.launch {
+        shopRepository.get()
     }
 
 }

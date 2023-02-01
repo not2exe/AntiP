@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_shop" />
     <fragment
         android:id="@+id/tasksFragment"
-        android:name="com.gtime.online_mode.TasksFragment"
+        android:name="com.gtime.online_mode.ui.TasksFragment"
         android:label="@string/tasks"
         tools:layout="@layout/fragment_tasks" />
     <fragment

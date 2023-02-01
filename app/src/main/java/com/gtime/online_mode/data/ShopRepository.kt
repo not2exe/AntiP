@@ -5,6 +5,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.gtime.general.Constants
 import com.gtime.general.scopes.AppScope
 import com.gtime.online_mode.data.model.OfferModel
+import com.gtime.online_mode.state_classes.StateOfRequests
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext

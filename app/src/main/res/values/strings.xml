@@ -39,4 +39,6 @@
     <string name="sucess_order">Покупка выполнена успешна</string>
     <string name="error_order">Ошибка при покупке</string>
     <string name="lack_of_coins">Недостаточно монет :(</string>
+    <string name="claim">Забрать</string>
+    <string name="auth_error">Вы не авторизованы</string>
 </resources>
