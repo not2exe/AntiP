@@ -186,11 +186,6 @@ class MainViewController(
     }
 
     private fun setupScores(scoresAll: Int) = with(binding) {
-        if (scoresAll < 0) {
-            scores.setTextColor(Color.RED)
-        } else {
-            scores.setTextColor(Color.GREEN)
-        }
         scores.text = scoresAll.toString()
     }
 

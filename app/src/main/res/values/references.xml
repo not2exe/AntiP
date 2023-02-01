@@ -2,4 +2,6 @@
 <resources>
     <attr name="cardViewBackground" format="reference" />
     <attr name="colorHeaderBackground" format="reference" />
+    <attr name="colorPrimaryTimer" format="reference" />
+    <attr name="colorSecondaryTimer" format="reference" />
 </resources>

@@ -59,6 +59,10 @@ class TaskViewModel @AssistedInject constructor(
         taskRepository.getTasks()
     }
 
+    fun clearState() {
+        taskRepository.clearState()
+    }
+
     @AssistedFactory
     interface Factory {
         fun create(savedStateHandle: SavedStateHandle): TaskViewModel

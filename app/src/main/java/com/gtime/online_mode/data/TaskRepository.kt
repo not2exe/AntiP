@@ -1,6 +1,5 @@
 package com.gtime.online_mode.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -79,6 +78,10 @@ class TaskRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    fun clearState() {
+        state.postValue(StateOfRequests.WaitingForUserAction)
     }
 
 }

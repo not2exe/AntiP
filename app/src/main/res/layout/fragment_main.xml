@@ -65,6 +65,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="60dp"
                 android:gravity="center"
+                android:textColor="?attr/colorSecondaryTimer"
                 app:layout_constraintStart_toStartOf="@id/timerIcon"
                 app:layout_constraintTop_toTopOf="@id/timerIcon" />
         </androidx.constraintlayout.widget.ConstraintLayout>

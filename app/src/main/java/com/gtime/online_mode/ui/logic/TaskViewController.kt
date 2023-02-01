@@ -35,6 +35,7 @@ class TaskViewController(
                 Snackbar.make(binding.root, R.string.auth_error, Snackbar.LENGTH_LONG).show()
             }
             binding.refreshLayout.isRefreshing = false
+            viewModel.clearState()
         }
     }
 }

@@ -31,6 +31,8 @@
         <item name="cardViewBackground">@color/cardview_dark_background</item>
         <item name="colorHeaderBackground">@color/md_theme_dark_surfaceVariant</item>
         <item name="android:textColor">@color/md_theme_dark_onBackground</item>
+        <item name="colorPrimaryTimer">@color/md_theme_dark_primary</item>
+        <item name="colorSecondaryTimer">@color/md_theme_dark_primary_second</item>
     </style>
 
     <style name="Theme.GTIME.Online" parent="Theme.Material3.Dark.NoActionBar">
@@ -64,5 +66,7 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary_second</item>
         <item name="cardViewBackground">@color/cardview_dark_background</item>
         <item name="colorHeaderBackground">@color/md_theme_dark_surfaceVariant_second</item>
+        <item name="colorPrimaryTimer">@color/md_theme_dark_primary_second</item>
+        <item name="colorSecondaryTimer">@color/md_theme_dark_primary</item>
     </style>
 </resources>
