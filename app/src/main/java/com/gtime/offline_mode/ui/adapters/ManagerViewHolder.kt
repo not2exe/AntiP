@@ -64,7 +64,8 @@ class ManagerViewHolder(item: View, private val viewModel: AppManagerFragmentVie
                             AppDataBaseEntity(
                                 packageName = appEntity.packageName ?: "",
                                 kindOfApp = appEntity.kindOfApps,
-                                multiplier = if (appEntity.kindOfApps == KindOfApps.TOXIC) absMultiplier * -1 else absMultiplier
+                                multiplier = if (appEntity.kindOfApps == KindOfApps.TOXIC) absMultiplier * -1 else absMultiplier,
+                                isGame = appEntity.isGame
                             )
                         )
                     }

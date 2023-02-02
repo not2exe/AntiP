@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.ChangeMode">
-    <RadioGroup
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
+        app:cardCornerRadius="8dp">
 
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background_settings">
-        <TextView
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:layout_margin="8dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@string/mode"
-            android:gravity="center"
-            android:textSize="20sp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/normal_mode_button"
-            android:layout_marginTop="120dp"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-            android:text="@string/normal"
-            android:paddingEnd="28dp"
-            android:textColor="@color/md_theme_dark_onPrimary"
-            android:textSize="24sp"/>
+            <TextView
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="@string/mode" />
 
-        <RadioButton
-            android:paddingEnd="28dp"
-            android:id="@+id/hardcore_mode_button"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hardcore"
-            android:textSize="24sp"
-            android:textColor="@color/md_theme_dark_onPrimary"/>
-    </RadioGroup>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?attr/colorTertiary" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RadioButton
+                android:id="@+id/normal_mode_button"
+                style="@style/Text.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:gravity="center"
+                android:text="@string/normal" />
+
+            <RadioButton
+                android:id="@+id/hardcore_mode_button"
+                style="@style/Text.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/hardcore" />
+        </RadioGroup>
+
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

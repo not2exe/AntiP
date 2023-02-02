@@ -1,4 +1,4 @@
-package com.gtime.online_mode.ui
+package com.gtime.online_mode.ui.logic
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
+import com.gtime.online_mode.ui.TaskUiModel
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
 
 class TasksAdapter(private val viewModel: TaskViewModel) : RecyclerView.Adapter<TaskViewHolder>() {

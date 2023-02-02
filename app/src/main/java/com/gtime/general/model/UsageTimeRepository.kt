@@ -6,12 +6,14 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
+import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.KindOfApps
 import com.gtime.general.model.dataclasses.AppEntity
 import com.gtime.general.model.db.AppDataBaseEntity
 import com.gtime.general.model.db.AppTableDao
 import com.gtime.general.scopes.AppScope
+import com.gtime.online_mode.data.OnlineModeDivisionRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +29,9 @@ class UsageTimeRepository @Inject constructor(
     private val appDao: AppTableDao,
     private val usageStatsManager: UsageStatsManager,
     private val packageManager: PackageManager,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val cache: Cache,
+    private val onlineModeDivisionRepository: OnlineModeDivisionRepository
 ) {
     val usefulApps = MutableLiveData<List<AppEntity>>()
     val toxicApps = MutableLiveData<List<AppEntity>>()
@@ -81,7 +85,8 @@ class UsageTimeRepository @Inject constructor(
                 name = appEnt.name,
                 kindOfApps = appEnt.kindOfApps,
                 multiplier = appDataBaseEntity.multiplier,
-                _scores = appEnt.scores
+                _scores = appEnt.scores,
+                isGame = appEnt.isGame
             )
         )
         return list
@@ -104,7 +109,7 @@ class UsageTimeRepository @Inject constructor(
                 putIntoOthers(appEntity, multiplier)
             }
         }
-        appDao.insert(AppDataBaseEntity(packageName, kindOfApps, multiplier))
+        appDao.insert(AppDataBaseEntity(packageName, appEntity.isGame, kindOfApps, multiplier))
         refreshOnlyScores()
     }
 
@@ -149,7 +154,7 @@ class UsageTimeRepository @Inject constructor(
     }
 
 
-    private suspend fun refreshAll() = withContext(Dispatchers.IO) {
+    suspend fun refreshAll() = withContext(Dispatchers.IO) {
         val listOfAllOnDevice =
             packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         for (i in listOfAllOnDevice.indices) {
@@ -160,60 +165,192 @@ class UsageTimeRepository @Inject constructor(
             ) {
                 appDao.insert(
                     AppDataBaseEntity(
-                        listOfAllOnDevice[i].packageName
+                        packageName = listOfAllOnDevice[i].packageName,
+                        isGame = listOfAllOnDevice[i].category == ApplicationInfo.CATEGORY_GAME
                     )
                 )
             }
         }
     }
 
-    private suspend fun fromDataBaseToRep() = withContext(Dispatchers.IO) {
-        val list = appDao.getAll()
+    fun swap() = scope.launch {
+        val neutral = getMutableList(neutralApps)
+        val harmful = getMutableList(toxicApps)
+        val useful = getMutableList(usefulApps)
+        val list = mutableListOf<AppEntity>()
+        neutral.forEach { list.add(it) }
+        useful.forEach { list.add(it) }
+        harmful.forEach { list.add(it) }
+        neutral.clear()
+        harmful.clear()
+        useful.clear()
+        if (cache.isOnline()) {
+            swapFromOfflineToOnline(
+                mergedList = list,
+                neutral = neutral,
+                harmful = harmful,
+                useful = useful
+            )
+        } else {
+            swapFromOnlineToOffline(
+                mergedList = list,
+                neutral = neutral,
+                harmful = harmful,
+                useful = useful
+            )
+        }
+        neutralApps.postValue(neutral)
+        toxicApps.postValue(harmful)
+        usefulApps.postValue(useful)
+    }
+
+    suspend fun fromDataBaseToRep() = withContext(Dispatchers.IO) {
+        val list = appDao.getAll().map { toAppEntity(it) }
         val neutral = mutableListOf<AppEntity>()
         val useful = mutableListOf<AppEntity>()
         val harmful = mutableListOf<AppEntity>()
-        for (i in list.indices) {
-            val icon = getIconApp(list[i].packageName)
-            val name = getName(list[i].packageName)
-            when (list[i].kindOfApp) {
-                KindOfApps.TOXIC -> {
-                    harmful.add(
-                        AppEntity(
-                            icon,
-                            list[i].packageName,
-                            name,
-                            list[i].kindOfApp,
-                            multiplier = list[i].multiplier
-                        )
-                    )
-                }
-                KindOfApps.USEFUL -> {
-                    useful.add(
-                        AppEntity(
-                            icon,
-                            list[i].packageName,
-                            name,
-                            list[i].kindOfApp,
-                            multiplier = list[i].multiplier
-                        )
-                    )
-                }
-                KindOfApps.NEUTRAL -> {
-                    neutral.add(
-                        AppEntity(
-                            icon,
-                            list[i].packageName,
-                            name,
-                            list[i].kindOfApp,
-                            multiplier = list[i].multiplier
-                        )
-                    )
-                }
-            }
+        if (cache.isOnline()) {
+            swapFromOfflineToOnline(
+                mergedList = list,
+                neutral = neutral,
+                harmful = harmful,
+                useful = useful
+            )
+        } else {
+            swapFromOnlineToOffline(
+                mergedList = list,
+                neutral = neutral,
+                harmful = harmful,
+                useful = useful
+            )
         }
         neutralApps.postValue(neutral)
         usefulApps.postValue(useful)
         toxicApps.postValue(harmful)
+    }
+
+    private fun toAppEntity(ent: AppDataBaseEntity): AppEntity = AppEntity(
+        image = getIconApp(ent.packageName),
+        packageName = ent.packageName,
+        name = getName(ent.packageName),
+        kindOfApps = ent.kindOfApp,
+        isGame = ent.isGame
+    )
+
+    private suspend fun swapFromOfflineToOnline(
+        mergedList: List<AppEntity>,
+        neutral: MutableList<AppEntity>,
+        harmful: MutableList<AppEntity>,
+        useful: MutableList<AppEntity>
+    ) = withContext(Dispatchers.IO) {
+        val onlineModeDivisionModel = onlineModeDivisionRepository.get()
+        val harmfulPackageNames = onlineModeDivisionModel.toxic.toSet()
+        val usefulPackageNames = onlineModeDivisionModel.useful.toSet()
+        for (i in mergedList.indices) {
+            val icon = getIconApp(mergedList[i].packageName ?: "")
+            val name = getName(mergedList[i].packageName ?: "")
+            val scores = (mergedList[i].scores / mergedList[i].multiplier).roundToInt()
+            when (mergedList[i].packageName) {
+                in harmfulPackageNames -> {
+                    harmful.add(
+                        AppEntity(
+                            image = icon,
+                            packageName = mergedList[i].packageName,
+                            name = name,
+                            kindOfApps = KindOfApps.TOXIC,
+                            isGame = mergedList[i].isGame,
+                            _scores = scores,
+                            percentsOsGeneral = mergedList[i].percentsOsGeneral,
+                            multiplier = 1.0,
+                        )
+                    )
+                }
+                in usefulPackageNames -> {
+                    useful.add(
+                        AppEntity(
+                            image = icon,
+                            packageName = mergedList[i].packageName,
+                            name = name,
+                            kindOfApps = KindOfApps.USEFUL,
+                            isGame = mergedList[i].isGame,
+                            multiplier = 1.0,
+                            percentsOsGeneral = mergedList[i].percentsOsGeneral,
+                            _scores = scores
+                        )
+                    )
+                }
+                else -> {
+                    if (mergedList[i].isGame) {
+                        harmful.add(
+                            AppEntity(
+                                image = icon,
+                                packageName = mergedList[i].packageName,
+                                name = name,
+                                kindOfApps = KindOfApps.TOXIC,
+                                isGame = mergedList[i].isGame,
+                                _scores = scores,
+                                percentsOsGeneral = mergedList[i].percentsOsGeneral,
+                                multiplier = 1.0,
+                            )
+                        )
+                    } else {
+                        neutral.add(
+                            AppEntity(
+                                image = icon,
+                                packageName = mergedList[i].packageName,
+                                name = name,
+                                kindOfApps = KindOfApps.NEUTRAL,
+                                isGame = mergedList[i].isGame,
+                                multiplier = 1.0,
+                                percentsOsGeneral = mergedList[i].percentsOsGeneral,
+                                _scores = scores
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun swapFromOnlineToOffline(
+        mergedList: List<AppEntity>,
+        neutral: MutableList<AppEntity>,
+        harmful: MutableList<AppEntity>,
+        useful: MutableList<AppEntity>
+    ) = withContext(Dispatchers.IO)
+    {
+        for (i in mergedList.indices) {
+            val packageName = mergedList[i].packageName ?: ""
+            val elemFromDb = appDao.getByName(packageName)
+            val icon = getIconApp(packageName)
+            val name = getName(packageName)
+            val appEnt = AppEntity(
+                icon,
+                mergedList[i].packageName,
+                name,
+                elemFromDb.kindOfApp,
+                isGame = mergedList[i].isGame,
+                multiplier = elemFromDb.multiplier,
+                percentsOsGeneral = mergedList[i].percentsOsGeneral,
+            )
+            when (elemFromDb.kindOfApp) {
+                KindOfApps.TOXIC -> {
+                    harmful.add(
+                        appEnt
+                    )
+                }
+                KindOfApps.USEFUL -> {
+                    useful.add(
+                        appEnt
+                    )
+                }
+                KindOfApps.NEUTRAL -> {
+                    neutral.add(
+                        appEnt
+                    )
+                }
+            }
+        }
     }
 
     private fun getAppsInfo(
@@ -288,7 +425,8 @@ class UsageTimeRepository @Inject constructor(
                 percentsOsGeneral = percents,
                 _scores = scores,
                 kindOfApps = elem.kindOfApps,
-                multiplier = elem.multiplier
+                multiplier = elem.multiplier,
+                isGame = elem.isGame,
             )
         )
     }
@@ -323,7 +461,8 @@ class UsageTimeRepository @Inject constructor(
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
                     _scores = appEntity.scores,
-                    multiplier = multiplier
+                    multiplier = multiplier,
+                    isGame = appEntity.isGame
                 )
             )
             toxicApps.postValue(list)
@@ -340,7 +479,8 @@ class UsageTimeRepository @Inject constructor(
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
                     _scores = appEntity.scores,
-                    multiplier = multiplier
+                    multiplier = multiplier,
+                    isGame = appEntity.isGame
                 )
             )
             usefulApps.postValue(list)
@@ -357,7 +497,8 @@ class UsageTimeRepository @Inject constructor(
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
                     _scores = appEntity.scores,
-                    multiplier = multiplier
+                    multiplier = multiplier,
+                    isGame = appEntity.isGame
                 )
             )
             neutralApps.postValue(list)
@@ -386,6 +527,10 @@ class UsageTimeRepository @Inject constructor(
     suspend fun removeFromOthers(appEntity: AppEntity) = withContext(Dispatchers.IO) {
         val list = getMutableList(neutralApps).filter { it != appEntity }
         neutralApps.postValue(list)
+    }
+
+    suspend fun isNotInit(): Boolean = withContext(Dispatchers.Main) {
+        (toxicApps.value == null && neutralApps.value == null && usefulApps.value == null)
     }
 }
 

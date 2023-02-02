@@ -63,17 +63,17 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     fun successCreateNewAccount() = viewModelScope.launch {
+        updateProfile()
         taskRepository.provideTaskToNewUser()
         accountRepository.successAuthFirebase()
-        updateProfile()
     }
 
     fun successSignIn() = viewModelScope.launch {
         val acc = auth.currentUser ?: return@launch
-        accountRepository.successAuthFirebase()
         if (accountInfoForDisplay?.name != acc.displayName || accountInfoForDisplay?.urlAvatar != acc.photoUrl.toString()) {
             updateProfile()
         }
+        accountRepository.successAuthFirebase()
     }
 
     private fun updateProfile() = viewModelScope.launch {

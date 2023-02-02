@@ -22,9 +22,10 @@ class UsersPromoRepository @Inject constructor(
 ) {
     val usersPromoCodes = MutableLiveData<List<UserPromoModel>>()
     val state = MutableLiveData<StateOfRequests>()
-    suspend fun refreshUsersPromo() = withContext(Dispatchers.IO) {
+    suspend fun  refreshUsersPromo() = withContext(Dispatchers.IO) {
         val email = auth.currentUser?.email
         if (email == null) {
+            usersPromoCodes.postValue(emptyList())
             state.postValue(StateOfRequests.Error.AuthError)
             return@withContext
         }

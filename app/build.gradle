@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.antip"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     def diagrams = "3.10.1"
     def viewPager = "1.0.0"
     def room = "2.5.0"
@@ -88,22 +87,19 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
-
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
-
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-auth-ktx'
-
     // Also add the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
-
+    //Firebase Analytics
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
+    //Firebase Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
-
+    //Paging 3
     implementation("androidx.paging:paging-common-ktx:$paging_version")
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 

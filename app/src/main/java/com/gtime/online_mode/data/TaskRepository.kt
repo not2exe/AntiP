@@ -25,6 +25,7 @@ class TaskRepository @Inject constructor(
     suspend fun getTasks() = withContext(Dispatchers.IO) {
         val email = auth.currentUser?.email
         if (email == null) {
+            tasks.postValue(emptyList())
             state.postValue(StateOfRequests.Error.AuthError)
             return@withContext
         }

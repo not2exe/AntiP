@@ -1,5 +1,6 @@
 package com.gtime.general
 
+import android.content.ClipboardManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import com.gtime.general.scopes.FragmentScope
@@ -9,11 +10,11 @@ import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import com.gtime.online_mode.ui.ShopFragment
-import com.gtime.online_mode.ui.TasksAdapter
 import com.gtime.online_mode.ui.TasksFragment
-import com.gtime.online_mode.ui.TopAdapter
 import com.gtime.online_mode.ui.logic.PromoCardAdapter
 import com.gtime.online_mode.ui.logic.ShopAdapter
+import com.gtime.online_mode.ui.logic.TasksAdapter
+import com.gtime.online_mode.ui.logic.TopAdapter
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
 import dagger.Module
@@ -92,7 +93,8 @@ interface AdaptersModule {
 
         @FragmentScope
         @Provides
-        fun providePromoCardAdapter(): PromoCardAdapter = PromoCardAdapter()
+        fun providePromoCardAdapter(clipboardManager: ClipboardManager): PromoCardAdapter =
+            PromoCardAdapter(clipboardManager)
 
 
         private fun createAdapter(

@@ -17,9 +17,14 @@ interface FirebaseModule {
     companion object {
         @Provides
         @AppScope
-        fun provideQueryTop(): Query =
+        @Named(Constants.TOP_SCORES_COLLECTION)
+        fun provideTopScoreCollection(): CollectionReference =
             Firebase.firestore.collection(Constants.TOP_SCORES_COLLECTION)
-                .orderBy(Constants.SCORES, Query.Direction.DESCENDING)
+
+        @Provides
+        @AppScope
+        fun provideQueryTop(@Named(Constants.TOP_SCORES_COLLECTION) ref: CollectionReference): Query =
+            ref.orderBy(Constants.SCORES, Query.Direction.DESCENDING)
 
         @Provides
         @AppScope
@@ -60,6 +65,12 @@ interface FirebaseModule {
         @Named(Constants.TASK_GENERAL_COLLECTION)
         fun provideTaskGeneralCollection(): CollectionReference =
             Firebase.firestore.collection(Constants.TASK_GENERAL_COLLECTION)
+
+        @Provides
+        @AppScope
+        @Named(Constants.PREDIVISION_OF_APPS_COLLECTION)
+        fun providePreDivisionOfAppsCollection(): CollectionReference =
+            Firebase.firestore.collection(Constants.PREDIVISION_OF_APPS_COLLECTION)
     }
 
 

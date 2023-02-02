@@ -42,4 +42,5 @@
     <string name="claim">Забрать</string>
     <string name="auth_error">Вы не авторизованы</string>
     <string name="promo">Промокоды</string>
+    <string name="copied_to_clipboard">Промокод скопирован</string>
 </resources>

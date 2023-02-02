@@ -5,9 +5,6 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.initialize
 import com.gtime.general.Constants
 import javax.inject.Inject
 import javax.inject.Named
@@ -24,6 +21,10 @@ class App : Application() {
     lateinit var incRequest: PeriodicWorkRequest
 
     @Inject
+    @Named(Constants.TOP_SCORES_WORKER)
+    lateinit var topScoresRequest: PeriodicWorkRequest
+
+    @Inject
     lateinit var workManager: WorkManager
 
     override fun onCreate() {
@@ -38,6 +39,11 @@ class App : Application() {
             Constants.INC_LIFE_WORKER,
             ExistingPeriodicWorkPolicy.KEEP,
             incRequest
+        )
+        workManager.enqueueUniquePeriodicWork(
+            Constants.TOP_SCORES_WORKER,
+            ExistingPeriodicWorkPolicy.KEEP,
+            topScoresRequest
         )
         FirebaseApp.initializeApp(this)
     }

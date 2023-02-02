@@ -1,6 +1,10 @@
 package com.gtime.general
 
 object Constants {
+    const val MAIN_DB = "maindb"
+    const val URL_AVATAR_FIELD = "urlAvatar"
+    const val USER_DISPLAY_FIELD = "userDisplay"
+    const val LABEL = "label"
     const val COINS = "coins"
     const val PAGE_SIZE = 20
     const val SCORES = "scores"
@@ -8,7 +12,8 @@ object Constants {
     const val TIME_OF_ALL = "ALL_TIME"
     const val KEY_LIFE = "KEY_LIFE"
     const val CACHE_INT = "CacheInt"
-    const val SCORE_TABLE = "score_table"
+    const val SCORE_OFFLINE_TABLE = "score_offline_table"
+    const val SCORE_ONLINE_TABLE = "score_online_table"
     const val CACHE_BOOLEANS = "CacheBooleans"
     const val KEY_FIRST_LAUNCH = "FirstLaunch"
     const val KEY_HARDCORE_MODE = "HardcoreMode"
@@ -49,4 +54,6 @@ object Constants {
     const val TASK_GENERAL_COLLECTION = "task_general"
     const val AWARD_FIELD = "award"
     const val DESCRIPTION_FIELD = "description"
+    const val PREDIVISION_OF_APPS_COLLECTION = "predivision_of_apps"
+    const val TOP_SCORES_WORKER = "TOP_SCORES_WORKER"
 }

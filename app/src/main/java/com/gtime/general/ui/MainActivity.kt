@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,14 +17,14 @@ import com.bumptech.glide.Glide
 import com.example.antip.R
 import com.example.antip.databinding.ActivityMainBinding
 import com.example.antip.databinding.NavHeaderMainBinding
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.app.App
+import com.gtime.general.model.UsageTimeRepository
 import com.gtime.online_mode.data.AccountRepository
 import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.model.AccountInfoModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var cache: Cache
+
+    @Inject
+    lateinit var usageTimeRepository: UsageTimeRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         switchOnlineMode.setOnCheckedChangeListener { _, b ->
             cache.setOnline(b)
             animRecreate()
+            usageTimeRepository.swap()
         }
     }
 
@@ -110,8 +115,9 @@ class MainActivity : AppCompatActivity() {
             launcher.launch(idIntent)
         }
         binding.loginOutButton.setOnClickListener {
-            accountRepository.clearAccountInfo()
-            Firebase.auth.signOut()
+            lifecycleScope.launch {
+                accountRepository.clearAccountInfo()
+            }
         }
     }
 
@@ -132,7 +138,6 @@ class MainActivity : AppCompatActivity() {
                 menu.clear()
                 inflateMenu(R.menu.menu_online)
             }
-
         }
 
     private fun offlineMenu(activityBinding: ActivityMainBinding, binding: NavHeaderMainBinding) =

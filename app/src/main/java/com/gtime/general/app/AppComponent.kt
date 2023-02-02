@@ -8,7 +8,7 @@ import dagger.BindsInstance
 import dagger.Component
 
 @AppScope
-@Component(modules = [WorkerModule::class, UsageTimeUtilityModule::class, ScopeModule::class, LocalStoragesModule::class, YandexIDModule::class, FirebaseModule::class])
+@Component(modules = [WorkerModule::class, SystemServicesModule::class, ScopeModule::class, LocalStoragesModule::class, YandexIDModule::class, FirebaseModule::class])
 interface AppComponent {
     @Component.Factory
     interface Factory {

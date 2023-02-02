@@ -7,18 +7,30 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.gtime.general.Constants
+import com.gtime.general.model.UsageTimeRepository
 import com.gtime.online_mode.data.TopScoresSource
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.launch
 
 class TopScoresViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
+    usageTimeRepository: UsageTimeRepository,
     topScoresSource: TopScoresSource
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
         fun create(savedStateHandle: SavedStateHandle): TopScoresViewModel
+    }
+
+    init {
+        viewModelScope.launch {
+            usageTimeRepository.refreshUsageApps()
+            topScoresSource.updateForCurrentUser(
+                usageTimeRepository.uiGeneralScores.value ?: return@launch
+            )
+        }
     }
 
     val flow =

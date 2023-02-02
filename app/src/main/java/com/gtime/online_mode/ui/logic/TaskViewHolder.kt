@@ -1,8 +1,10 @@
-package com.gtime.online_mode.ui
+package com.gtime.online_mode.ui.logic
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.antip.databinding.TaskItemBinding
+import com.gtime.online_mode.ui.StateOfTask
+import com.gtime.online_mode.ui.TaskUiModel
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
 
 class TaskViewHolder(view: View) : ViewHolder(view) {

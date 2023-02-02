@@ -1,5 +1,6 @@
 package com.gtime.online_mode.ui.logic
 
+import android.content.ClipboardManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,7 +9,7 @@ import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.online_mode.data.model.UserPromoModel
 
-class PromoCardAdapter : RecyclerView.Adapter<PromoCardViewHolder>() {
+class PromoCardAdapter (private val clipboardManager: ClipboardManager): RecyclerView.Adapter<PromoCardViewHolder>() {
     var list = emptyList<UserPromoModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PromoCardViewHolder =
         PromoCardViewHolder(
@@ -18,7 +19,7 @@ class PromoCardAdapter : RecyclerView.Adapter<PromoCardViewHolder>() {
         )
 
     override fun onBindViewHolder(holder: PromoCardViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position],clipboardManager)
     }
 
     override fun getItemCount(): Int = list.size

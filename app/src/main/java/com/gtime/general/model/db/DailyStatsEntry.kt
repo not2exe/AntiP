@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gtime.general.Constants
 
-@Entity(tableName = Constants.SCORE_TABLE)
-data class DailyStatsEntry(
-    @PrimaryKey val date: Long,
-    val scores: Int
+
+open class DailyStatsEntry(
+    open val date: Long,
+    open val scores: Int
 )

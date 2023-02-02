@@ -5,7 +5,6 @@ import com.example.antip.R
 import com.example.antip.databinding.FragmentTasksBinding
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.online_mode.state_classes.StateOfRequests
-import com.gtime.online_mode.ui.TasksAdapter
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
 
 class TaskViewController(

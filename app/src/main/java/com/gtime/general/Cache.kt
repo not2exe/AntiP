@@ -3,10 +3,7 @@ package com.gtime.general
 import android.content.Context
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.gtime.general.scopes.AppScope
-import com.gtime.online_mode.data.model.AccountInfoModel
 import javax.inject.Inject
 
 @AppScope
@@ -26,20 +23,6 @@ class Cache @Inject constructor(applicationContext: Context) {
             initLives()
         }
     }
-
-    fun saveAcc(accountInfoModel: AccountInfoModel) = accShared.edit {
-        putString(Constants.KEY_NAME, accountInfoModel.name)
-        putString(Constants.KEY_EMAIL, accountInfoModel.email)
-        putString(Constants.KEY_URL, accountInfoModel.urlAvatar)
-    }
-
-    fun getAcc(): AccountInfoModel = AccountInfoModel(
-        accShared.getString(Constants.KEY_NAME, "") ?: "",
-        accShared.getString(Constants.KEY_EMAIL, "") ?: "",
-        accShared.getString(Constants.KEY_URL, "") ?: "",
-        Firebase.auth.currentUser != null
-    )
-
 
     fun getFromBoolean(key: String): Boolean = booleanShared.getBoolean(key, false)
 

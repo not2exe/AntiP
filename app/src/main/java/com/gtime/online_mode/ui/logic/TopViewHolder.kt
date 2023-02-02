@@ -1,4 +1,4 @@
-package com.gtime.online_mode.ui
+package com.gtime.online_mode.ui.logic
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder

@@ -1,21 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/DialogCardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/linear_first"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginVertical="4dp"
         android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="380dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:src="@drawable/usage_perm_first" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:src="@drawable/usage_perm_second" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/permission_message"
-            android:textColor="@color/md_theme_dark_onPrimary"
-            android:textSize="28sp" />
+            android:text="@string/permission_message" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/open_settings_button"
             style="@style/Button"
@@ -23,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="4dp"
-            app:cornerRadius="4dp"
             android:text="@string/open_settings"
-            android:textSize="28sp" />
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            app:cornerRadius="4dp" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
 
