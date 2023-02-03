@@ -6,14 +6,17 @@
 
 ## Немного скринов(Все картинки использованы исключительно в демонстрационных целях):
 # **Главный экран, оффлайн режим:**
-
+![Screenshot_20230203-024350_GTIME](https://user-images.githubusercontent.com/91745398/216499663-3d841751-90ce-43de-865d-2700b8bdbbea.jpg)
+![Screenshot_20230203-024357_GTIME](https://user-images.githubusercontent.com/91745398/216499669-30a09801-45f5-454d-b005-4e14def59e28.jpg)
 
 
 # **Главный экран, онлайн режим:**
-
+![Screenshot_20230203-024628_GTIME](https://user-images.githubusercontent.com/91745398/216499902-6daf38e3-168d-443a-b7b3-b1a0138220d7.jpg)
+![Screenshot_20230203-024632_GTIME](https://user-images.githubusercontent.com/91745398/216499908-ba511d94-3aa4-4115-b504-42072a74125a.jpg)
 
 
 # **Экран регистрации/авторизации**
+![Screenshot_20230203-024705_GTIME](https://user-images.githubusercontent.com/91745398/216499917-12b1918c-5c27-4fa8-95f2-a5493afd38b3.jpg)
 
 
 # **Шапка профиля:**
