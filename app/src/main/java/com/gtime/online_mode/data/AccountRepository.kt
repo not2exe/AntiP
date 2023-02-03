@@ -69,5 +69,4 @@ class AccountRepository @Inject constructor(
         taskRepository.getTasks()
         usersPromoRepository.refreshUsersPromo()
     }
-
 }

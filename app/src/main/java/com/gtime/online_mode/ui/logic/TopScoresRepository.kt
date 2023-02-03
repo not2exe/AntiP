@@ -2,7 +2,6 @@ package com.gtime.online_mode.ui.logic
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.SetOptions
 import com.gtime.general.Constants
 import com.gtime.general.scopes.AppScope
 import kotlinx.coroutines.tasks.await
@@ -17,7 +16,11 @@ class TopScoresRepository @Inject constructor(
     suspend fun updateForCurrentUser(scores: Int): Boolean {
         val email = auth.currentUser?.email ?: return false
         topScoresRef.document(email).set(
-            hashMapOf(Constants.SCORES to scores), SetOptions.merge()
+            hashMapOf(
+                Constants.SCORES to scores,
+                Constants.USER_DISPLAY_FIELD to (auth.currentUser?.displayName ?: ""),
+                Constants.URL_AVATAR_FIELD to (auth.currentUser?.photoUrl.toString())
+            ),
         ).await()
         return true
     }
