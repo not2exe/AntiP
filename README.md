@@ -40,3 +40,5 @@
 
 # **Экран выбора сложности:**
 <img src = "https://user-images.githubusercontent.com/91745398/216488236-13ca53f4-604a-474c-9242-33af54dfca22.jpg" width=25% height=25%>
+
+<img src = "https://user-images.githubusercontent.com/91745398/216500869-c507459c-021a-44ad-8a04-a9667d6c20d2.gif" width=25% height=25%>
