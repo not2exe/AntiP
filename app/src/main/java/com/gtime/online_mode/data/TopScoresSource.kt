@@ -15,21 +15,11 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Named
 
-@AppScope
-class TopScoresSource @Inject constructor(
+
+class TopScoresSource (
     private val query: Query,
-    @Named(Constants.TOP_SCORES_COLLECTION) private val topScoresRef: CollectionReference,
-    private val auth: FirebaseAuth,
 ) :
     PagingSource<QuerySnapshot, TopScoresModel>() {
-
-    suspend fun updateForCurrentUser(scores: Int): Boolean {
-        val email = auth.currentUser?.email ?: return false
-        topScoresRef.document(email).set(
-            hashMapOf(Constants.SCORES to scores), SetOptions.merge()
-        ).await()
-        return true
-    }
 
     override fun getRefreshKey(state: PagingState<QuerySnapshot, TopScoresModel>): QuerySnapshot? =
         state.anchorPosition?.let { anchorPosition ->

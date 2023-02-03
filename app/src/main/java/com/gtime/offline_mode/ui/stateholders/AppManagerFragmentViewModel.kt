@@ -10,8 +10,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.math.abs
 
 class AppManagerFragmentViewModel @AssistedInject constructor(
     @Assisted savedStateHandle: SavedStateHandle,
@@ -34,9 +32,16 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
     private fun getLiveDataList(list: List<AppEntity>): LiveData<List<AppEntity>> =
         MutableLiveData(list.sortedByDescending { it.percentsOsGeneral })
 
-    fun setMultiplier(appDataBaseEntity: AppDataBaseEntity) {
+    fun setMultiplier(appDataBaseEnt: AppDataBaseEntity) {
         viewModelScope.launch {
-            usageTimeRepository.setMultiplier(appDataBaseEntity)
+            usageTimeRepository.setMultiplier(
+                AppDataBaseEntity(
+                    appDataBaseEnt.packageName ?: "",
+                    appDataBaseEnt.isGame,
+                    appDataBaseEnt.kindOfApp,
+                    appDataBaseEnt.multiplier
+                )
+            )
         }
     }
 
@@ -89,6 +94,7 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
     fun providePredictsAndPos(namesAndPos: HashMap<String, Int>) {
         hashMap = namesAndPos
     }
+
     fun getPos(name: String?): Int = hashMap[name ?: ""] ?: 0
 }
 

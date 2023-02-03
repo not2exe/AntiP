@@ -17,4 +17,6 @@ data class AppEntity(
 ) : Entity(packageName) {
     val scores = _scores
         get() = (field * multiplier).toInt()
+
+    fun getScoresWithoutMultiplier(): Int = _scores
 }

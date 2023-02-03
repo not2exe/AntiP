@@ -13,6 +13,7 @@ import com.gtime.general.model.db.AppDataBaseEntity
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 class ManagerViewHolder(item: View, private val viewModel: AppManagerFragmentViewModel) :
     RecyclerView.ViewHolder(item) {
@@ -64,8 +65,8 @@ class ManagerViewHolder(item: View, private val viewModel: AppManagerFragmentVie
                             AppDataBaseEntity(
                                 packageName = appEntity.packageName ?: "",
                                 kindOfApp = appEntity.kindOfApps,
-                                multiplier = if (appEntity.kindOfApps == KindOfApps.TOXIC) absMultiplier * -1 else absMultiplier,
-                                isGame = appEntity.isGame
+                                multiplier = if (appEntity.kindOfApps == KindOfApps.TOXIC) (absMultiplier * -1) else absMultiplier,
+                                isGame = appEntity.isGame,
                             )
                         )
                     }

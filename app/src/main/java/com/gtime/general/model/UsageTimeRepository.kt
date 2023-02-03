@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -38,6 +39,8 @@ class UsageTimeRepository @Inject constructor(
     val neutralApps = MutableLiveData<List<AppEntity>>()
     val uiGeneralScores = MutableLiveData<Int>()
 
+    private val isSwapEnded = AtomicBoolean(true)
+
     init {
         scope.launch {
             refreshAll()
@@ -52,17 +55,20 @@ class UsageTimeRepository @Inject constructor(
             when (appDataBaseEntity.kindOfApp) {
                 KindOfApps.TOXIC -> {
                     var list = getMutableList(toxicApps)
-                    list = findAndReplace(list, appDataBaseEntity) ?: return@withContext
+                    list = findAndReplace(list, appDataBaseEntity)
+                        ?: return@withContext
                     toxicApps.postValue(list)
                 }
                 KindOfApps.USEFUL -> {
                     var list = getMutableList(usefulApps)
-                    list = findAndReplace(list, appDataBaseEntity) ?: return@withContext
+                    list = findAndReplace(list, appDataBaseEntity)
+                        ?: return@withContext
                     usefulApps.postValue(list)
                 }
                 KindOfApps.NEUTRAL -> {
                     var list = getMutableList(neutralApps)
-                    list = findAndReplace(list, appDataBaseEntity) ?: return@withContext
+                    list = findAndReplace(list, appDataBaseEntity)
+                        ?: return@withContext
                     neutralApps.postValue(list)
                 }
             }
@@ -72,7 +78,7 @@ class UsageTimeRepository @Inject constructor(
 
     private fun findAndReplace(
         list: MutableList<AppEntity>,
-        appDataBaseEntity: AppDataBaseEntity
+        appDataBaseEntity: AppDataBaseEntity,
     ): MutableList<AppEntity>? {
         val appEnt = list.find { it.packageName == appDataBaseEntity.packageName }
             ?: return null
@@ -85,8 +91,9 @@ class UsageTimeRepository @Inject constructor(
                 name = appEnt.name,
                 kindOfApps = appEnt.kindOfApps,
                 multiplier = appDataBaseEntity.multiplier,
-                _scores = appEnt.scores,
-                isGame = appEnt.isGame
+                _scores = appEnt.getScoresWithoutMultiplier(),
+                isGame = appEnt.isGame,
+                percentsOsGeneral = appEnt.percentsOsGeneral
             )
         )
         return list
@@ -118,6 +125,12 @@ class UsageTimeRepository @Inject constructor(
         val useful = getMutableList(usefulApps)
         val harmful = getMutableList(toxicApps)
         val neutral = getMutableList(neutralApps)
+        if (!isSwapEnded.get()) {
+            toxicApps.postValue(harmful)
+            usefulApps.postValue(useful)
+            neutralApps.postValue(neutral)
+            return@withContext
+        }
         var uiScores = 0
         val start: Calendar = (Calendar.getInstance())
         start.set(Calendar.HOUR_OF_DAY, 0)
@@ -174,6 +187,7 @@ class UsageTimeRepository @Inject constructor(
     }
 
     fun swap() = scope.launch {
+        isSwapEnded.set(false)
         val neutral = getMutableList(neutralApps)
         val harmful = getMutableList(toxicApps)
         val useful = getMutableList(usefulApps)
@@ -202,6 +216,8 @@ class UsageTimeRepository @Inject constructor(
         neutralApps.postValue(neutral)
         toxicApps.postValue(harmful)
         usefulApps.postValue(useful)
+        refreshOnlyScores()
+        isSwapEnded.set(true)
     }
 
     suspend fun fromDataBaseToRep() = withContext(Dispatchers.IO) {
@@ -249,7 +265,7 @@ class UsageTimeRepository @Inject constructor(
         for (i in mergedList.indices) {
             val icon = getIconApp(mergedList[i].packageName ?: "")
             val name = getName(mergedList[i].packageName ?: "")
-            val scores = (mergedList[i].scores / mergedList[i].multiplier).roundToInt()
+            val scores = mergedList[i].getScoresWithoutMultiplier()
             when (mergedList[i].packageName) {
                 in harmfulPackageNames -> {
                     harmful.add(
@@ -261,7 +277,7 @@ class UsageTimeRepository @Inject constructor(
                             isGame = mergedList[i].isGame,
                             _scores = scores,
                             percentsOsGeneral = mergedList[i].percentsOsGeneral,
-                            multiplier = 1.0,
+                            multiplier = -1.0,
                         )
                     )
                 }
@@ -290,7 +306,7 @@ class UsageTimeRepository @Inject constructor(
                                 isGame = mergedList[i].isGame,
                                 _scores = scores,
                                 percentsOsGeneral = mergedList[i].percentsOsGeneral,
-                                multiplier = 1.0,
+                                multiplier = -1.0,
                             )
                         )
                     } else {
@@ -460,7 +476,7 @@ class UsageTimeRepository @Inject constructor(
                     packageName = appEntity.packageName,
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
-                    _scores = appEntity.scores,
+                    _scores = appEntity.getScoresWithoutMultiplier(),
                     multiplier = multiplier,
                     isGame = appEntity.isGame
                 )
@@ -478,7 +494,7 @@ class UsageTimeRepository @Inject constructor(
                     packageName = appEntity.packageName,
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
-                    _scores = appEntity.scores,
+                    _scores = appEntity.getScoresWithoutMultiplier(),
                     multiplier = multiplier,
                     isGame = appEntity.isGame
                 )
@@ -496,7 +512,7 @@ class UsageTimeRepository @Inject constructor(
                     packageName = appEntity.packageName,
                     kindOfApps = appEntity.kindOfApps,
                     percentsOsGeneral = appEntity.percentsOsGeneral,
-                    _scores = appEntity.scores,
+                    _scores = appEntity.getScoresWithoutMultiplier(),
                     multiplier = multiplier,
                     isGame = appEntity.isGame
                 )
@@ -504,7 +520,7 @@ class UsageTimeRepository @Inject constructor(
             neutralApps.postValue(list)
         }
 
-    private fun refreshOnlyScores() {
+    private suspend fun refreshOnlyScores() = withContext(Dispatchers.Main) {
         var scores = 0
         toxicApps.value?.forEach {
             scores += it.scores
@@ -512,6 +528,7 @@ class UsageTimeRepository @Inject constructor(
         usefulApps.value?.forEach {
             scores += it.scores
         }
+        uiGeneralScores.value = scores
     }
 
     suspend fun removeFromHarmful(appEntity: AppEntity) = withContext(Dispatchers.IO) {

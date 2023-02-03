@@ -16,6 +16,9 @@ class TopScoresViewController(
     fun setupViews() {
         setupRv()
         getScores()
+        topBinding.refreshLayout.setOnRefreshListener {
+            adapter.refresh()
+        }
     }
 
     private fun setupRv() = with(topBinding) {
@@ -27,6 +30,7 @@ class TopScoresViewController(
         lifecycleScope.launch {
             viewModel.flow.collectLatest {
                 adapter.submitData(it)
+                topBinding.refreshLayout.isRefreshing = false
             }
         }
     }

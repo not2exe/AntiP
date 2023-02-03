@@ -5,14 +5,14 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.gtime.general.Cache
 import com.gtime.general.model.UsageTimeRepository
-import com.gtime.online_mode.data.TopScoresSource
+import com.gtime.online_mode.ui.logic.TopScoresRepository
 import javax.inject.Inject
 
 class TopScoresWorker @Inject constructor(
     context: Context,
     parameters: WorkerParameters,
     private val cache: Cache,
-    private val topScoresSource: TopScoresSource,
+    private val topScoresRepository: TopScoresRepository,
     private val usageTimeRepository: UsageTimeRepository
 ) :
     CoroutineWorker(context, parameters) {
@@ -23,7 +23,7 @@ class TopScoresWorker @Inject constructor(
                 usageTimeRepository.fromDataBaseToRep()
             }
             usageTimeRepository.refreshUsageApps()
-            if (topScoresSource.updateForCurrentUser(
+            if (topScoresRepository.updateForCurrentUser(
                     usageTimeRepository.uiGeneralScores.value ?: 0
                 )
             )
