@@ -93,3 +93,11 @@
 <p align="center"> 
   <img src = "https://user-images.githubusercontent.com/91745398/216501176-8ae17f46-b5fc-4e4c-9a88-eb2a8da3f026.gif" width=25% height=25%>
   </p>
+# **Основные технологии:**
+## 1)Yandex ID, jwt, arrow
+## 2)Firebase
+## 3)Paging 3
+## 4)Dagger 2
+## 5)Coroutines
+## 6) View xml
+## 7)Room
