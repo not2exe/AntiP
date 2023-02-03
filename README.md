@@ -6,7 +6,7 @@
 
 ## Немного скринов(Все картинки использованы исключительно в демонстрационных целях):
 # **Главный экран, оффлайн режим:**
-![Screenshot_20230203-024350_GTIME](https://user-images.githubusercontent.com/91745398/216499663-3d841751-90ce-43de-865d-2700b8bdbbea.jpg =250x250)
+<img src = "https://user-images.githubusercontent.com/91745398/216499663-3d841751-90ce-43de-865d-2700b8bdbbea.jpg" width=50% height=50%>
 ![Screenshot_20230203-024357_GTIME](https://user-images.githubusercontent.com/91745398/216499669-30a09801-45f5-454d-b005-4e14def59e28.jpg)
 
 
