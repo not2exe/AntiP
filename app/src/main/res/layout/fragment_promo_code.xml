@@ -1,0 +1,16 @@
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:id="@+id/refreshLayout"
+    tools:context="com.gtime.online_mode.ui.PromoCodeFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/promoCardsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

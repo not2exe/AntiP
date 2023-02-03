@@ -3,34 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="12dp"
     android:orientation="vertical"
-    tools:context=".ui.AppManagerFragment"
-    android:background="@drawable/back">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/back"
-            android:textColor="#63739E"
-            android:textAppearance="@style/settings"
-            style="@style/Button"
-            android:background="@android:color/transparent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".ui.AppManagerFragment">
 
     <LinearLayout
+        android:id="@+id/usefulLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textUseful"
@@ -38,23 +21,23 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/useful"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:focusableInTouchMode="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/rvUseful"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/toxicLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textHarmful"
@@ -62,36 +45,39 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/harmful"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:focusableInTouchMode="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHarmful"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textOthers"
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/autoCompleteTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/others"
-            android:textSize="28sp" />
+            android:hint="@string/find_app"
+            android:focusableInTouchMode="true">
+
+        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOthers"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"/>
 
     </LinearLayout>
 

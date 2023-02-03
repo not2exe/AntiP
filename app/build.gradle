@@ -3,21 +3,23 @@ plugins {
     id 'kotlin-android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
-    id "dagger.hilt.android.plugin"
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.antip"
-        minSdk 29
-        targetSdk 31
+        minSdk 26
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [YANDEX_CLIENT_ID: "605aed98cddc4c9f8c7810534bc882d1"]
     }
 
     buildTypes {
@@ -39,41 +41,81 @@ android {
 }
 
 dependencies {
-    implementation 'com.diogobernardino:williamchart:3.10.1'
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    def diagrams = "3.10.1"
+    def viewPager = "1.0.0"
+    def room = "2.5.0"
+    def preferences = "1.2.0"
+    def navigation = "2.5.3"
+    def coroutines = "1.6.4"
+    def dagger = "2.44.2"
+    def worker = "2.7.1"
+    def flexbox = "3.0.0"
+    def yandexID = "2.3.0"
+    def jwt = "0.1.8"
+    def arrow = "1.1.2"
+    def glide = "4.14.2"
+    def paging_version = "3.1.1"
 
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-    androidTestImplementation 'androidx.test:core:1.4.0'
+    //Diagrams
+    implementation "com.diogobernardino:williamchart:$diagrams"
+    //ViewPager2
+    implementation("androidx.viewpager2:viewpager2:$viewPager")
+    //SharedPreferences
+    implementation "androidx.preference:preference-ktx:$preferences"
+    //Room
+    implementation "androidx.room:room-runtime:$room"
+    implementation "androidx.room:room-ktx:$room"
+    implementation "androidx.room:room-runtime:$room"
+    kapt "androidx.room:room-compiler:$room"
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    //Dagger 2
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    //WorkManager
+    implementation("androidx.work:work-runtime-ktx:$worker")
+    //FlexBox Layout
+    implementation "com.google.android.flexbox:flexbox:$flexbox"
+    //YandexID
+    implementation "com.yandex.android:authsdk:$yandexID"
+    //Decode jwt
+    implementation "io.github.nefilim.kjwt:kjwt-core:$jwt"
+    implementation "io.arrow-kt:arrow-core:$arrow"
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    //Firebase Analytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    //Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    //Paging 3
+    implementation("androidx.paging:paging-common-ktx:$paging_version")
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    implementation 'im.dacer:AndroidCharts:1.0.4'
-
-    androidTestImplementation 'androidx.test:runner:1.5.0-alpha03'
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    api 'com.google.android.material:material:1.7.0-alpha01'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    androidTestImplementation 'androidx.test:core:1.5.0'
     testImplementation 'junit:junit:'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation "androidx.room:room-runtime:2.4.2"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
-    implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.1'
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.room:room-runtime:2.5.0-alpha01"
-
-    implementation 'androidx.room:room-ktx:2.4.2'
-    kapt "androidx.room:room-compiler:2.4.2"
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.38.1"
 }
+
 kapt {
     correctErrorTypes = true
 }

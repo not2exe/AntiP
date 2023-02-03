@@ -1,86 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
-    tools:context=".ui.">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2"
+        tools:context="com.gtime.general.ui.MainFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_life"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/heartLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/heart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/scores"
-            style="@style/TextAppearance.Material3.TitleLarge"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/heartFirst"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_heart_48" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/heartSecond"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                android:src="@drawable/ic_heart_48" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/heartThird"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_heart_48" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/timerIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/timer" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/scores"
+                style="@style/Text.TitleExtraLarge"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="60dp"
+                android:gravity="center"
+                android:textColor="?attr/colorSecondaryTimer"
+                app:layout_constraintStart_toStartOf="@id/timerIcon"
+                app:layout_constraintTop_toTopOf="@id/timerIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/buttonChangeAdapter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="64sp"
-            app:layout_constraintBottom_toTopOf="@+id/MainTable"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_settings"
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
-            android:text="@string/settings"
-            android:textAppearance="@style/settings"
-            android:textColor="#63739E"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <ImageButton
-            android:id="@+id/refresh_button"
-            style="@style/Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="24dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_autorenew_24"
-            app:layout_constraintBottom_toTopOf="@+id/MainTable"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_gravity="end"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/useful" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/MainTable"
+            android:id="@+id/mainTable"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="-24dp"
+            android:layout_weight="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/button_change_adapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/useful"
-            app:layout_constraintBottom_toTopOf="@+id/MainTable"
-            app:layout_constraintStart_toStartOf="parent"
-
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
