@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.antip"
+        applicationId "com.notexe.gtime"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -38,23 +38,24 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.antip'
 }
 
 dependencies {
     def diagrams = "3.10.1"
     def viewPager = "1.0.0"
-    def room = "2.5.0"
-    def preferences = "1.2.0"
-    def navigation = "2.5.3"
+    def room = "2.6.1"
+    def preferences = "1.2.1"
+    def navigation = "2.7.6"
     def coroutines = "1.6.4"
     def dagger = "2.44.2"
-    def worker = "2.7.1"
+    def worker = "2.9.0"
     def flexbox = "3.0.0"
-    def yandexID = "2.3.0"
+    def yandexID = "3.1.0"
     def jwt = "0.1.8"
     def arrow = "1.1.2"
-    def glide = "4.14.2"
-    def paging_version = "3.1.1"
+    def glide = "4.15.1"
+    def paging_version = "3.2.1"
 
     //Diagrams
     implementation "com.diogobernardino:williamchart:$diagrams"
@@ -93,7 +94,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-auth-ktx'
     // Also add the dependency for the Google Play services library and specify its version
-    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
     //Firebase Analytics
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
@@ -103,14 +104,9 @@ dependencies {
     implementation("androidx.paging:paging-common-ktx:$paging_version")
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
-    implementation "androidx.fragment:fragment-ktx:1.5.5"
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.core:core-ktx:1.9.0'
-    androidTestImplementation 'androidx.test:core:1.5.0'
-    testImplementation 'junit:junit:'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    androidTestImplementation 'androidx.test:runner:1.5.1'
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"

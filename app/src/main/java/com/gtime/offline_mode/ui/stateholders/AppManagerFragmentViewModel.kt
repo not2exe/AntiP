@@ -20,17 +20,17 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): AppManagerFragmentViewModel
     }
 
-    val usefulApps =
-        Transformations.switchMap(usageTimeRepository.usefulApps) { getLiveDataList(it) }
-    val harmfulApps =
-        Transformations.switchMap(usageTimeRepository.toxicApps) { getLiveDataList(it) }
-    val neutralApps =
-        Transformations.switchMap(usageTimeRepository.neutralApps) { getLiveDataList(it) }
-    private var hashMap: Map<String, Int> = emptyMap()
+    val usefulApps = usageTimeRepository.usefulApps.map(::getLiveDataList)
+    val harmfulApps = usageTimeRepository.toxicApps.map(::getLiveDataList)
+    val neutralApps = usageTimeRepository.neutralApps.map(::getLiveDataList)
+
+    private val hashMap: LiveData<Map<String, Int>> = neutralApps.map { list ->
+        list.mapIndexed { index, element -> element.name to index }.toMap()
+    }
 
 
-    private fun getLiveDataList(list: List<AppEntity>): LiveData<List<AppEntity>> =
-        MutableLiveData(list.sortedByDescending { it.percentsOsGeneral })
+    private fun getLiveDataList(list: List<AppEntity>): List<AppEntity> =
+        list.sortedByDescending { it.percentsOsGeneral }
 
     fun setMultiplier(appDataBaseEnt: AppDataBaseEntity) {
         viewModelScope.launch {
@@ -60,6 +60,7 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
                     sourceElem,
                 )
             }
+
             R.id.rvHarmful -> {
                 usageTimeRepository.removeFromHarmful(sourceElem)
                 handleAdd(
@@ -67,6 +68,7 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
                     sourceElem,
                 )
             }
+
             R.id.rvOthers -> {
                 usageTimeRepository.removeFromOthers(sourceElem)
                 handleAdd(
@@ -91,10 +93,6 @@ class AppManagerFragmentViewModel @AssistedInject constructor(
         usageTimeRepository.put(sourceElem, kindOfApps ?: return)
     }
 
-    fun providePredictsAndPos(namesAndPos: HashMap<String, Int>) {
-        hashMap = namesAndPos
-    }
-
-    fun getPos(name: String?): Int = hashMap[name ?: ""] ?: 0
+    fun getPos(name: String?): Int = hashMap.value?.get(name ?: "") ?: 0
 }
 

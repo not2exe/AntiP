@@ -15,18 +15,11 @@ interface YandexIDModule {
         @AppScope
         @Provides
         fun provideSdk(context: Context): YandexAuthSdk =
-            YandexAuthSdk(context, YandexAuthOptions.Builder(context).build())
+            YandexAuthSdk.create(YandexAuthOptions(context))
 
         @AppScope
         @Provides
-        fun provideLoginOptionsBuilder(): YandexAuthLoginOptions.Builder =
-            YandexAuthLoginOptions.Builder()
-
-        @AppScope
-        @Provides
-        fun provideIntentID(
-            sdk: YandexAuthSdk,
-            loginOptionsBuilder: YandexAuthLoginOptions.Builder
-        ): Intent = sdk.createLoginIntent(loginOptionsBuilder.build())
+        fun provideLoginOptionsBuilder(): YandexAuthLoginOptions =
+            YandexAuthLoginOptions()
     }
 }

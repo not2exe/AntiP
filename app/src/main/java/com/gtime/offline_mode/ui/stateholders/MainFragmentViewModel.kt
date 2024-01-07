@@ -22,17 +22,15 @@ class MainFragmentViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): MainFragmentViewModel
     }
 
-    val usefulApps: LiveData<List<AppEntity>> =
-        Transformations.switchMap(usageTimeRepository.usefulApps) { list ->
-            MutableLiveData(list.filter { it.scores != 0 }.sortedByDescending { abs(it.scores) })
-        }
-    val harmfulApps: LiveData<List<AppEntity>> =
-        Transformations.switchMap(usageTimeRepository.toxicApps) { list ->
-            MutableLiveData(list.filter { it.scores != 0 }.sortedByDescending { abs(it.scores) })
-        }
-    val scoresAll: LiveData<Int> =
-        Transformations.switchMap(usageTimeRepository.uiGeneralScores) { MutableLiveData(it) }
-    val isOnline = Transformations.switchMap(cache.onlineLiveData) { MutableLiveData(it) }
+    val usefulApps: LiveData<List<AppEntity>> = usageTimeRepository.usefulApps.map { list ->
+        list.filter { it.scores != 0 }.sortedByDescending { abs(it.scores) }
+    }
+
+    val harmfulApps: LiveData<List<AppEntity>> = usageTimeRepository.toxicApps.map { list ->
+        list.filter { it.scores != 0 }.sortedByDescending { abs(it.scores) }
+    }
+    val scoresAll: LiveData<Int> = usageTimeRepository.uiGeneralScores
+    val isOnline = cache.onlineLiveData
     val stateOfKindOfApps = MutableLiveData<KindOfApps>(KindOfApps.USEFUL)
     val lives = MutableLiveData<Int>()
 

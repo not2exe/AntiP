@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53951651236:android:fd58fd45ffcf5efc6cb531",
+        "android_client_info": {
+          "package_name": "com.notexe.gtime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53951651236-foq1p7tcftet96m3pa85pqemq8d0js9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzNeYT0cVlH9e3GMAgpCIUadt3fNJqHD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53951651236-foq1p7tcftet96m3pa85pqemq8d0js9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

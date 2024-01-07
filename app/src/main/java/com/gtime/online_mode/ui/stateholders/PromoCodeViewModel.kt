@@ -2,6 +2,8 @@ package com.gtime.online_mode.ui.stateholders
 
 import androidx.lifecycle.*
 import com.gtime.online_mode.data.UsersPromoRepository
+import com.gtime.online_mode.data.model.UserPromoModel
+import com.gtime.online_mode.state_classes.StateOfRequests
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -30,7 +32,6 @@ class PromoCodeViewModel @AssistedInject constructor(
         usersPromoRepository.clearState()
     }
 
-    val usersPromo =
-        Transformations.switchMap(usersPromoRepository.usersPromoCodes) { MutableLiveData(it) }
-    val state = Transformations.switchMap(usersPromoRepository.state) { MutableLiveData(it) }
+    val usersPromo: LiveData<List<UserPromoModel>> = usersPromoRepository.usersPromoCodes
+    val state: LiveData<StateOfRequests> = usersPromoRepository.state
 }

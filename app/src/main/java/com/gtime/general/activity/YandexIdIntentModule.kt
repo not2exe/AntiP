@@ -12,6 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.gtime.general.scopes.ActivityScope
 import com.gtime.online_mode.data.AccountRepository
 import com.yandex.authsdk.YandexAuthException
+import com.yandex.authsdk.YandexAuthLoginOptions
+import com.yandex.authsdk.YandexAuthResult
 import com.yandex.authsdk.YandexAuthSdk
 import com.yandex.authsdk.YandexAuthToken
 import dagger.Module
@@ -31,15 +33,14 @@ interface YandexIdIntent {
             sdk: YandexAuthSdk,
             accountRepository: AccountRepository,
             scope: CoroutineScope,
-        ): ActivityResultLauncher<Intent> =
+        ): ActivityResultLauncher<YandexAuthLoginOptions> =
             activity.registerForActivityResult(
-                ActivityResultContracts.StartActivityForResult()
+                sdk.contract
             ) {
-                try {
-                    val yandexAuthToken: YandexAuthToken? = sdk.extractToken(it.resultCode, it.data)
-                    if (yandexAuthToken != null) {
+                when (it) {
+                    is YandexAuthResult.Success -> {
                         scope.launch {
-                            accountRepository.getDecodedJWT(yandexAuthToken)
+                            accountRepository.getDecodedJWT(it.token)
                             withContext(Dispatchers.Main) {
                                 activity.findNavController(R.id.fcvMainContainer)
                                     .navigate(R.id.loginFragment)
@@ -48,12 +49,19 @@ interface YandexIdIntent {
                             }
                         }
                     }
-                } catch (e: YandexAuthException) {
-                    Snackbar.make(
-                        activity.findViewById(android.R.id.content),
-                        R.string.error_authorization,
-                        Snackbar.LENGTH_LONG
-                    ).show()
+
+                    is YandexAuthResult.Failure -> {
+                        Snackbar.make(
+                            activity.findViewById(android.R.id.content),
+                            R.string.error_authorization,
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+
+                    is YandexAuthResult.Cancelled -> {
+
+                    }
+
                 }
             }
 

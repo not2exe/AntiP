@@ -24,6 +24,7 @@ import com.gtime.general.model.UsageTimeRepository
 import com.gtime.online_mode.data.AccountRepository
 import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.model.AccountInfoModel
+import com.yandex.authsdk.YandexAuthLoginOptions
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,10 +39,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var coinsRepository: CoinsRepository
 
     @Inject
-    lateinit var idIntent: Intent
+    lateinit var loginOptions: YandexAuthLoginOptions
 
     @Inject
-    lateinit var launcher: ActivityResultLauncher<Intent>
+    lateinit var launcher: ActivityResultLauncher<YandexAuthLoginOptions>
 
     @Inject
     lateinit var cache: Cache
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners(binding: NavHeaderMainBinding) {
         binding.authWithIDButton.setOnClickListener {
-            launcher.launch(idIntent)
+            launcher.launch(loginOptions)
         }
         binding.loginOutButton.setOnClickListener {
             lifecycleScope.launch {

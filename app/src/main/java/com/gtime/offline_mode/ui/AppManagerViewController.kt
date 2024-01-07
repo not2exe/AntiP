@@ -58,7 +58,6 @@ class AppManagerViewController(
         }
         viewModel.neutralApps.observe(viewLifecycleOwner) { list ->
             othersAdapter.updateList(list)
-            viewModel.providePredictsAndPos(provideHashMapNamesAndPos())
             adapterPredicts.clear()
             adapterPredicts.addAll(list.map { it.name })
         }

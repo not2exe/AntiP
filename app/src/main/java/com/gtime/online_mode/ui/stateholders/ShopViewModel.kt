@@ -6,6 +6,7 @@ import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.PromoRepository
 import com.gtime.online_mode.data.ShopRepository
 import com.gtime.online_mode.data.model.OfferModel
+import com.gtime.online_mode.state_classes.StateOfRequests
 import com.gtime.online_mode.ui.OfferUiModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -24,14 +25,9 @@ class ShopViewModel @AssistedInject constructor(
         fun create(savedStateHandle: SavedStateHandle): ShopViewModel
     }
 
-    val offersUI =
-        Transformations.switchMap(shopRepository.offers) { toOffersUi(it) }
-    val stateCoinRep =
-        Transformations.switchMap(
-            coinsRepository.state
-        ) { MutableLiveData(it) }
-    val statePromoRep =
-        Transformations.switchMap(promoRepository.state) { MutableLiveData(it) }
+    val offersUI: LiveData<List<OfferUiModel>> = shopRepository.offers.map(::toOffersUi)
+    val stateCoinRep: LiveData<StateOfRequests> = coinsRepository.state
+    val statePromoRep: LiveData<StateOfRequests> = promoRepository.state
 
     init {
         viewModelScope.launch {
@@ -59,8 +55,8 @@ class ShopViewModel @AssistedInject constructor(
         }
     }
 
-    private fun toOffersUi(offerModels: List<OfferModel>): MutableLiveData<List<OfferUiModel>> =
-        MutableLiveData(offerModels.map { toOfferUI(it) })
+    private fun toOffersUi(offerModels: List<OfferModel>): List<OfferUiModel> =
+        offerModels.map { toOfferUI(it) }
 
 
     private fun toOfferUI(offer: OfferModel): OfferUiModel =

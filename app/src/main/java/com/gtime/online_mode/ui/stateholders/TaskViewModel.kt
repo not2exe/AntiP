@@ -5,6 +5,7 @@ import com.gtime.general.Constants
 import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.TaskRepository
 import com.gtime.online_mode.data.model.TaskModel
+import com.gtime.online_mode.state_classes.StateOfRequests
 import com.gtime.online_mode.ui.StateOfTask
 import com.gtime.online_mode.ui.TaskUiModel
 import dagger.assisted.Assisted
@@ -24,8 +25,8 @@ class TaskViewModel @AssistedInject constructor(
         }
     }
 
-    val tasks = Transformations.switchMap(taskRepository.tasks) { convertToUI(it) }
-    val state = Transformations.switchMap(taskRepository.state) { MutableLiveData(it) }
+    val tasks: LiveData<List<TaskUiModel>> = taskRepository.tasks.map(::convertToUI)
+    val state: LiveData<StateOfRequests> = taskRepository.state
     fun onClickClaim(id: String, stateOfTask: StateOfTask, award: Int) = viewModelScope.launch {
         taskRepository.changeState(id, convertFromStateToString(stateOfTask))
         coinsRepository.addCoins(award)
@@ -52,8 +53,7 @@ class TaskViewModel @AssistedInject constructor(
             description = taskModel.description
         )
 
-    private fun convertToUI(list: List<TaskModel>): MutableLiveData<List<TaskUiModel>> =
-        MutableLiveData(list.map { toUiObject(it) })
+    private fun convertToUI(list: List<TaskModel>): List<TaskUiModel> = list.map { toUiObject(it) }
 
     fun refresh() = viewModelScope.launch {
         taskRepository.getTasks()
