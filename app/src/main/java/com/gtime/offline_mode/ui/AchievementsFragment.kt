@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
-import com.example.antip.databinding.FragmentAchievementsBinding
-import com.gtime.general.app.App
 import com.gtime.general.LambdaFactory
+import com.gtime.general.app.App
 import com.gtime.offline_mode.ui.adapters.AchievementsAdapter
 import com.gtime.offline_mode.ui.stateholders.AchievementsFragmentViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentAchievementsBinding
 import javax.inject.Inject
 
 

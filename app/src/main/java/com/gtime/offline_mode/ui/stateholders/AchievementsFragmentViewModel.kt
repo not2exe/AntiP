@@ -3,10 +3,10 @@ package com.gtime.offline_mode.ui.stateholders
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.antip.R
-import com.gtime.general.Constants
 import com.gtime.general.Cache
+import com.gtime.general.Constants
 import com.gtime.general.model.dataclasses.Achievement
+import com.notexe.gtime.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

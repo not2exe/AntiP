@@ -2,11 +2,11 @@ package com.gtime.online_mode.ui.logic
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.antip.R
-import com.example.antip.databinding.FragmentShopBinding
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.online_mode.state_classes.StateOfRequests
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentShopBinding
 
 class ShopViewController(
     private val binding: FragmentShopBinding,

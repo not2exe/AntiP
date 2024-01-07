@@ -2,8 +2,8 @@ package com.gtime.offline_mode.ui
 
 import android.view.View
 import androidx.navigation.NavController
-import com.example.antip.databinding.FragmentChangeModeBinding
 import com.gtime.offline_mode.ui.stateholders.ChangeModeViewModel
+import com.notexe.gtime.databinding.FragmentChangeModeBinding
 
 class ChangeModeViewController(
     private val binding: FragmentChangeModeBinding,

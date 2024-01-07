@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.databinding.FragmentAppManagerBinding
 import com.gtime.offline_mode.ui.adapters.ManagerAdapter
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.notexe.gtime.databinding.FragmentAppManagerBinding
 
 class AppManagerViewController(
     private val usefulAdapter: ManagerAdapter,

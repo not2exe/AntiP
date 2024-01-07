@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.online_mode.ui.OfferUiModel
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.notexe.gtime.R
 
 class ShopAdapter(private val viewModel: ShopViewModel) : RecyclerView.Adapter<ShopViewHolder>() {
     var list = emptyList<OfferUiModel>()

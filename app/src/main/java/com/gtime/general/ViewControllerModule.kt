@@ -6,8 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.antip.R
-import com.example.antip.databinding.*
 import com.gtime.general.scopes.FragmentViewScope
 import com.gtime.general.ui.AppAdapter
 import com.gtime.general.ui.MainFragment
@@ -23,6 +21,15 @@ import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
 import com.gtime.online_mode.ui.*
 import com.gtime.online_mode.ui.logic.*
 import com.gtime.online_mode.ui.stateholders.*
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentAppManagerBinding
+import com.notexe.gtime.databinding.FragmentChangeModeBinding
+import com.notexe.gtime.databinding.FragmentLoginBinding
+import com.notexe.gtime.databinding.FragmentMainBinding
+import com.notexe.gtime.databinding.FragmentPromoCodeBinding
+import com.notexe.gtime.databinding.FragmentShopBinding
+import com.notexe.gtime.databinding.FragmentTasksBinding
+import com.notexe.gtime.databinding.FragmentTopBinding
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.example.antip.R
 import com.gtime.online_mode.data.model.TopScoresModel
+import com.notexe.gtime.R
 
 class TopAdapter : PagingDataAdapter<TopScoresModel, TopViewHolder>(Companion) {
     override fun onBindViewHolder(holder: TopViewHolder, position: Int) {

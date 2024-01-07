@@ -2,8 +2,8 @@ package com.gtime.general.ui
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.databinding.AppItemBinding
 import com.gtime.general.model.dataclasses.AppEntity
+import com.notexe.gtime.databinding.AppItemBinding
 
 class AppHolder(item: View) : RecyclerView.ViewHolder(item) {
     private val binding = AppItemBinding.bind(item)

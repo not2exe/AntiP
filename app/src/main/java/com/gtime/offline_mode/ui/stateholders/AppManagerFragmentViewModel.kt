@@ -1,11 +1,11 @@
 package com.gtime.offline_mode.ui.stateholders
 
 import androidx.lifecycle.*
-import com.example.antip.R
 import com.gtime.general.KindOfApps
 import com.gtime.general.model.UsageTimeRepository
 import com.gtime.general.model.dataclasses.AppEntity
 import com.gtime.general.model.db.AppDataBaseEntity
+import com.notexe.gtime.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

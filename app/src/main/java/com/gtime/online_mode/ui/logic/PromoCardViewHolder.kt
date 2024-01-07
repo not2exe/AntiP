@@ -4,10 +4,10 @@ import android.content.ClipboardManager
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.example.antip.databinding.PromoCardItemBinding
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.gtime.online_mode.data.model.UserPromoModel
+import com.notexe.gtime.databinding.PromoCardItemBinding
 
 class PromoCardViewHolder(view: View) : ViewHolder(view) {
     private val binding = PromoCardItemBinding.bind(view)

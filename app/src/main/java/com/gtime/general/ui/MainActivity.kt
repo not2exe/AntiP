@@ -1,7 +1,6 @@
 package com.gtime.general.ui
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
@@ -14,9 +13,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.example.antip.R
-import com.example.antip.databinding.ActivityMainBinding
-import com.example.antip.databinding.NavHeaderMainBinding
 import com.gtime.general.Cache
 import com.gtime.general.Constants
 import com.gtime.general.app.App
@@ -24,6 +20,9 @@ import com.gtime.general.model.UsageTimeRepository
 import com.gtime.online_mode.data.AccountRepository
 import com.gtime.online_mode.data.CoinsRepository
 import com.gtime.online_mode.data.model.AccountInfoModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.ActivityMainBinding
+import com.notexe.gtime.databinding.NavHeaderMainBinding
 import com.yandex.authsdk.YandexAuthLoginOptions
 import kotlinx.coroutines.launch
 import javax.inject.Inject

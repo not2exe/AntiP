@@ -1,21 +1,17 @@
 package com.gtime.general.activity
 
-import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
-import com.example.antip.R
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.general.scopes.ActivityScope
 import com.gtime.online_mode.data.AccountRepository
-import com.yandex.authsdk.YandexAuthException
+import com.notexe.gtime.R
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthResult
 import com.yandex.authsdk.YandexAuthSdk
-import com.yandex.authsdk.YandexAuthToken
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineScope

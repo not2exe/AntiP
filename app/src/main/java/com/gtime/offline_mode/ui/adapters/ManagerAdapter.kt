@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
 import com.gtime.general.DiffUtilAppManager
 import com.gtime.general.model.dataclasses.AppEntity
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.notexe.gtime.R
 
 
 class ManagerAdapter(

@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.antip.R
 import com.gtime.general.app.App
 import com.gtime.online_mode.domain.ioc.PromoCodeFragmentComponent
 import com.gtime.online_mode.domain.ioc.PromoCodeFragmentViewComponent
 import com.gtime.online_mode.ui.logic.PromoCodeViewController
-import com.gtime.online_mode.ui.logic.ShopViewController
+import com.notexe.gtime.R
 import javax.inject.Inject
 
 

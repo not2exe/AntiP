@@ -1,11 +1,11 @@
 package com.gtime.online_mode.ui.logic
 
 import androidx.lifecycle.LifecycleOwner
-import com.example.antip.R
-import com.example.antip.databinding.FragmentPromoCodeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.online_mode.state_classes.StateOfRequests
 import com.gtime.online_mode.ui.stateholders.PromoCodeViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentPromoCodeBinding
 
 class PromoCodeViewController(
     private val binding: FragmentPromoCodeBinding,

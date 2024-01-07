@@ -5,9 +5,9 @@ import android.content.ClipboardManager
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.antip.R
-import com.example.antip.databinding.PromoItemBinding
 import com.gtime.general.Constants
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.PromoItemBinding
 
 
 class PromoViewHolder(view: View) : ViewHolder(view) {

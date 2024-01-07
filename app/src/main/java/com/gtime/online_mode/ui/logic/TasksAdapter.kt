@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.online_mode.ui.TaskUiModel
 import com.gtime.online_mode.ui.stateholders.TaskViewModel
+import com.notexe.gtime.R
 
 class TasksAdapter(private val viewModel: TaskViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
     var list = emptyList<TaskUiModel>()

@@ -4,7 +4,7 @@ import android.content.ClipboardManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
+import com.notexe.gtime.R
 
 class PromoAdapter(private val list: List<String>, private val clipboardManager: ClipboardManager) :
     RecyclerView.Adapter<PromoViewHolder>() {

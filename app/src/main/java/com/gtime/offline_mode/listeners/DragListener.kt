@@ -6,11 +6,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
-import com.example.antip.databinding.FragmentAppManagerBinding
-import com.example.antip.databinding.ManagerItemBinding
 import com.gtime.general.model.dataclasses.AppEntity
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentAppManagerBinding
+import com.notexe.gtime.databinding.ManagerItemBinding
 
 class DragListener(
     private val viewModel: AppManagerFragmentViewModel,

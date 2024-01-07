@@ -5,15 +5,14 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
-import com.example.antip.databinding.ManagerItemBinding
 import com.gtime.general.KindOfApps
 import com.gtime.general.model.dataclasses.AppEntity
 import com.gtime.general.model.db.AppDataBaseEntity
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.ManagerItemBinding
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 class ManagerViewHolder(item: View, private val viewModel: AppManagerFragmentViewModel) :
     RecyclerView.ViewHolder(item) {

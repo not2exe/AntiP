@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.general.model.dataclasses.Achievement
+import com.notexe.gtime.R
 
 class AchievementsAdapter :
     RecyclerView.Adapter<AchievementsHolder>() {

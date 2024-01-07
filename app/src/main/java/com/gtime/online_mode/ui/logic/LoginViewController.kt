@@ -3,12 +3,12 @@ package com.gtime.online_mode.ui.logic
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.bumptech.glide.Glide
-import com.example.antip.R
-import com.example.antip.databinding.FragmentLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.gtime.general.Constants
-import com.gtime.online_mode.ui.stateholders.LoginViewModel
 import com.gtime.online_mode.state_classes.StateOfAuth
+import com.gtime.online_mode.ui.stateholders.LoginViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentLoginBinding
 
 class LoginViewController(
     private val binding: FragmentLoginBinding,

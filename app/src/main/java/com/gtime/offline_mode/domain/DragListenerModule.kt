@@ -1,12 +1,12 @@
 package com.gtime.offline_mode.domain
 
 import androidx.fragment.app.viewModels
-import com.example.antip.databinding.FragmentAppManagerBinding
 import com.gtime.general.LambdaFactory
 import com.gtime.general.scopes.FragmentScope
 import com.gtime.offline_mode.listeners.DragListener
 import com.gtime.offline_mode.ui.AppManagerFragment
 import com.gtime.offline_mode.ui.stateholders.AppManagerFragmentViewModel
+import com.notexe.gtime.databinding.FragmentAppManagerBinding
 import dagger.Module
 import dagger.Provides
 

@@ -3,9 +3,9 @@ package com.gtime.online_mode.ui.logic
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.example.antip.databinding.ShopItemBinding
 import com.gtime.online_mode.ui.OfferUiModel
 import com.gtime.online_mode.ui.stateholders.ShopViewModel
+import com.notexe.gtime.databinding.ShopItemBinding
 
 
 class ShopViewHolder(view: View) : ViewHolder(view) {

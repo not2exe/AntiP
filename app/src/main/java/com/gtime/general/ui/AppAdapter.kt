@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.gtime.general.model.dataclasses.AppEntity
-import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
+import com.gtime.general.model.dataclasses.AppEntity
+import com.notexe.gtime.R
 
 class AppAdapter : RecyclerView.Adapter<AppHolder>() {
     private var list = emptyList<AppEntity>()

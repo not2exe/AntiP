@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.antip.R
 import com.gtime.general.app.App
 import com.gtime.offline_mode.domain.AppManagerFragmentViewComponent
+import com.notexe.gtime.R
 import javax.inject.Inject
 
 
 class AppManagerFragment : Fragment() {
     private val appManagerFragmentComponent by lazy {
-        (requireContext().applicationContext as App).appComponent.activity().create(requireActivity())
+        (requireContext().applicationContext as App).appComponent.activity()
+            .create(requireActivity())
             .appManagerFragmentComponent().create(this)
     }
     private var appManagerFragmentViewComponent: AppManagerFragmentViewComponent? = null

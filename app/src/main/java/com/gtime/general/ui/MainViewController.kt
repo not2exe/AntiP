@@ -3,7 +3,6 @@ package com.gtime.general.ui
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
 import android.util.TypedValue
@@ -13,14 +12,14 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.antip.R
-import com.example.antip.databinding.FragmentMainBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.gtime.general.KindOfApps
 import com.gtime.offline_mode.AnimateState
 import com.gtime.offline_mode.ui.stateholders.MainFragmentViewModel
+import com.notexe.gtime.R
+import com.notexe.gtime.databinding.FragmentMainBinding
 import kotlinx.coroutines.launch
 
 
@@ -76,20 +75,24 @@ class MainViewController(
             AnimateState.PULSATE_FIRST -> {
                 animateState = AnimateState.PULSATE_SECOND
             }
+
             AnimateState.PULSATE_SECOND -> {
                 scaleX = getFloat(R.dimen.heart_pre_expand)
                 scaleY = getFloat(R.dimen.heart_pre_expand)
                 animateState = AnimateState.PULSATE_THIRD
             }
+
             AnimateState.PULSATE_THIRD -> {
                 animateState = AnimateState.END_PULSATE
             }
+
             AnimateState.END_PULSATE -> {
                 duration = context.resources.getInteger(R.integer.heart_calm_duration)
                 scaleX = getFloat(R.dimen.heart_calm)
                 scaleY = getFloat(R.dimen.heart_calm)
                 animateState = AnimateState.END_ANIM
             }
+
             AnimateState.END_ANIM -> {
                 if (isBroken) {
                     view.setImageResource(R.drawable.ic_heart_broken_48)

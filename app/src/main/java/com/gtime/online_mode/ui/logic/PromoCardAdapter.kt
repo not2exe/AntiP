@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.antip.R
 import com.gtime.general.DiffUtilCallbackImpl
 import com.gtime.online_mode.data.model.UserPromoModel
+import com.notexe.gtime.R
 
 class PromoCardAdapter (private val clipboardManager: ClipboardManager): RecyclerView.Adapter<PromoCardViewHolder>() {
     var list = emptyList<UserPromoModel>()
